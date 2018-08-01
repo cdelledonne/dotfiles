@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 
 import os
+import subprocess
 
 # Get CWD and HOME
 cwd  = os.getcwd()
@@ -36,5 +37,5 @@ install_ycm = input("Install Vim's YouCompleteMe? (y/n): ")
 if install_ycm == 'y':
     print("Installing YCM...")
     os.chdir('./.vim/pack/plugins/start/YouCompleteMe/')
-    import install
+    subprocess.call(['./install.py', '--clang-completer'])
     os.chdir(cwd)
