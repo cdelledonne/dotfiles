@@ -2,7 +2,7 @@ This repository contains Carlo's dotfiles
 
 ## Adding new dotfile
 
-After adding a new dotfile, modify the variable `DOTFILES` in `install.sh` by adding
+After adding a new dotfile, modify the variable `dotfiles` in `install.py` by adding
 the new dotfile's name, then commit the changes to `git`.
 
 ### Submodules
@@ -34,4 +34,4 @@ rm -rf .git/modules/.vim/pack/plugins/start/old-plugin
 
 ## Installation
 
-To install the dotfiles run `install.sh`.
+To install the dotfiles run `install.py`.
