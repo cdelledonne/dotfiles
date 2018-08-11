@@ -111,7 +111,7 @@ if has('gui_running')
     let g:airline_symbols.maxlinenr = ''
 endif
 let g:airline_detect_modified = 1
-" let g:airline_skip_empty_sections = 1
+let g:airline_skip_empty_sections = 1
 
 " Configure section z (current position in the file)
 function! AirlineInit()
