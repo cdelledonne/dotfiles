@@ -28,9 +28,6 @@
 [submodule ".vim/pack/plugins/start/nerdcommenter"]
 	path = .vim/pack/plugins/start/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter
-[submodule ".vim/pack/plugins/start/lexima"]
-	path = .vim/pack/plugins/start/lexima
-	url = https://github.com/cohama/lexima.vim
 [submodule ".vim/pack/plugins/start/gruvbox"]
 	path = .vim/pack/plugins/start/gruvbox
 	url = https://github.com/morhetz/gruvbox
@@ -40,3 +37,6 @@
 [submodule ".vim/pack/plugins/start/vim-surround"]
 	path = .vim/pack/plugins/start/vim-surround
 	url = https://github.com/tpope/vim-surround
+[submodule ".vim/pack/plugins/start/lexima"]
+	path = .vim/pack/plugins/start/lexima
+	url = https://github.com/cohama/lexima.vim
