@@ -6,3 +6,7 @@
 ################
 *.swp
 *.swo
+
+# YouCompleteMe compile commands files
+######################################
+compile_commands.json
