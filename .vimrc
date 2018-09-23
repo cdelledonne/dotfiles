@@ -171,7 +171,7 @@ let g:NERDSpaceDelims = 1
 """""""""""""""""""""""""""""""
 
 " Path to configuration file for semantic support
-" let g:ycm_global_ycm_extra_conf = '/Users/Carlo/.vim/pack/plugins/start/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 
 " Python interpreter (point to the one got from homebrew)
 " let g:ycm_python_binary_path = '/usr/local/bin/python3'
@@ -188,6 +188,10 @@ let g:ycm_show_diagnostics_ui = 0
 " Close preview window after autocompletion
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
+
+" Remap subcommands
+nnoremap <leader>gg :YcmCompleter GoTo<CR>
+nnoremap <leader>gd :YcmCompleter GetDoc<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lexima configuration "

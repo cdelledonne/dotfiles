@@ -13,7 +13,8 @@ dotfiles = [
     '.gitconfig',
     '.gitignore_global',
     '.vim',
-    '.vimrc'
+    '.vimrc',
+    '.ycm_extra_conf.py'
 ]
 
 # Install (symlink) dotfiles
