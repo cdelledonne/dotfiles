@@ -15,6 +15,8 @@ HEADER_DIRECTORIES = ['include', 'inc']
 
 INCLUDE_FLAGS = ['-I', '--include=', '-isystem', '-iquote', '--sysroot=']
 
+BASE_FLAGS = ['-Wall']
+
 
 def IsHeaderFile(filename):
     """Check is given file is a header."""
@@ -120,18 +122,18 @@ def FlagsForCompilationDatabase(root, filename):
         # Find nearest compilation database
         db_path = FindNearest(root, 'compile_commands.json')
         if not db_path:
-            return None
+            return None, None
 
         # Get database from YCM
         db_dir = os.path.dirname(db_path)
         db = ycm_core.CompilationDatabase(db_dir)
         if not db:
-            return None
+            return None, None
 
         # Get compilation info
         info, translation_unit = GetCompilationInfoForFile(db, filename)
         if not info:
-            return None
+            return None, None
 
         # For include paths:
         # look at the path of the file currently opened in the editor
@@ -144,7 +146,7 @@ def FlagsForCompilationDatabase(root, filename):
         return flags, translation_unit
 
     except:
-        return None
+        return None, None
 
 
 def FlagsForFile(filename):
@@ -161,6 +163,8 @@ def FlagsForFile(filename):
                 'override_filename': translation_unit,
                 'do_cache': True
                 }
-    # Otherwise, don't return anything
+    # Otherwise, return fallback flags
     else:
-        return {}
+        return {
+                'flags': BASE_FLAGS
+                }
