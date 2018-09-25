@@ -22,12 +22,19 @@ filetype plugin indent on
 " Show line number
 set number
 
+" Display keystrokes in the command line in normal mode
+set showcmd
+
 " Hide buffers when abandoned
 set hidden
 
 " Highlight cursor line
 set cursorline
 
+" Use console dialogs instead of popup dialogs
+set guioptions+=c
+
+" Hide scrollbars
 set guioptions-=r
 set guioptions-=L
 set t_Co=256
@@ -73,16 +80,14 @@ augroup END
 " imap kj <Esc>
 
 " Windows navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
 
 " Buffers navigation
 nnoremap <C-Tab>   :bn<CR>
 nnoremap <S-C-Tab> :bp<CR>
-inoremap <C-Tab>   <Esc>:bn<CR>i
-inoremap <S-C-Tab> <Esc>:bp<CR>i
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline configuration "
@@ -171,7 +176,7 @@ let g:NERDSpaceDelims = 1
 """""""""""""""""""""""""""""""
 
 " Path to configuration file for semantic support
-" let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Python interpreter (point to the one got from homebrew)
 " let g:ycm_python_binary_path = '/usr/local/bin/python3'
@@ -185,13 +190,35 @@ let g:ycm_min_num_of_chars_for_completion = 3
 " Disable diagnostic
 let g:ycm_show_diagnostics_ui = 0
 
-" Close preview window after autocompletion
+" Close preview window after leaving insert mode...
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
+" ... but keep it open after accepting a completion option
+let g:ycm_autoclose_preview_window_after_completion = 0
 
 " Remap subcommands
 nnoremap <leader>gg :YcmCompleter GoTo<CR>
 nnoremap <leader>gd :YcmCompleter GetDoc<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" UltiSnips configuration "
+"""""""""""""""""""""""""""""""
+
+" Open snippet file in a split window
+" (horizontal or vertical, depending on context)
+let g:UltiSnipsEditSplit = 'context'
+
+" Directory containing snippets
+let g:UltiSnipsSnippetsDir = '~/.vim/ultisnips'
+
+" Unmap default CTRL-J and CTRL-K in insert mode
+let g:i_CTRL_J = 'off'
+let g:i_CTRL_K = 'off'
+
+" Remap triggers
+let g:UltiSnipsExpandTrigger       = '<C-Tab>'
+let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+let g:UltiSnipsListSnippets        = '<C-e>'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lexima configuration "

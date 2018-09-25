@@ -107,7 +107,7 @@ def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
                 path = flag[ len(path_flag): ]
                 new_flag = path_flag + os.path.join(working_directory, path)
                 break
- 
+
         # Populate list
         if new_flag:
             new_flags.append(new_flag)

@@ -20,3 +20,4 @@ export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagacad
 
 alias sshpi='ssh -p 10022 pi@cdelledonne.dynu.com'
+alias p3='python3'

@@ -1,0 +1,90 @@
+# Global python code
+############################################################
+global !p
+
+from usutils import CommentFunction, IsFunctionSignature
+
+# Expand snippet for function comment
+def AddFunctionCommentSnippet(f_signature):
+	snip.expand_anon(CommentFunction(f_signature))
+
+endglobal
+############################################################
+
+
+# if statement
+############################################################
+snippet if "if (condition) {...}"
+if (${1:/* condition */}) {
+	${0:${VISUAL}}
+}
+endsnippet
+
+
+# switch statement
+############################################################
+snippet switch "switch (expression) {...}"
+switch (${1:/* expression */}) {
+	case ${2:/* CONST_EXPR */}:
+		${3:/* statements */}
+	default:
+		${4:/* statements */}
+}
+endsnippet
+
+
+# while loop
+############################################################
+snippet while "while (condition) {...}"
+while (${1:/* condition */}) {
+	${0:${VISUAL}}
+}
+endsnippet
+
+
+# for loop
+############################################################
+snippet for "for (init; condition; increment) {...}"
+for (${1:/* init */}; ${1/^(\w+\s+)?(\w+)?(.)*/(?3:$2 )/}${2:}; ${1/^(\w+\s+)?(\w+)?(.*)/(?3:$2)/}${3:++}) {
+	${0:${VISUAL}}
+}
+endsnippet
+
+
+# printf
+############################################################
+snippet printf "printf(const char *format, ...)"
+printf("${1:%s}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$2${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
+endsnippet
+
+
+# Pre-processor ifdef
+############################################################
+snippet ifdef "#ifdef ... #endif" b
+#ifdef ${1:SYMBOL}
+#endif
+endsnippet
+
+
+# Header guards
+############################################################
+snippet hguard "#ifndef ... #define ... #endif" b
+#ifndef ${1:INCLUDE_`!v substitute(toupper(expand('%:t:r')), "-", "_", "g")`_H}
+#define $1
+
+
+$0
+
+
+#endif /* $1 */
+endsnippet
+
+
+# Function comment for documentation
+############################################################
+# Only expand when next line matches function signature
+context "IsFunctionSignature(snip.buffer[snip.line + 1])"
+# Post-expand snippet
+post_jump "AddFunctionCommentSnippet(snip.buffer[snip.line + 1])"
+snippet /** "Function comment" be
+endsnippet

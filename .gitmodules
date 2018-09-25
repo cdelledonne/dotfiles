@@ -40,3 +40,6 @@
 [submodule ".vim/pack/plugins/start/lexima"]
 	path = .vim/pack/plugins/start/lexima
 	url = https://github.com/cohama/lexima.vim
+[submodule ".vim/pack/plugins/start/ultisnips"]
+	path = .vim/pack/plugins/start/ultisnips
+	url = https://github.com/SirVer/ultisnips/
