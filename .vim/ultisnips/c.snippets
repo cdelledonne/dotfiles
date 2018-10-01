@@ -5,19 +5,40 @@ global !p
 from usutils import CommentFunction, IsFunctionSignature
 
 # Expand snippet for function comment
-def AddFunctionCommentSnippet(f_signature):
+def AddFunctionComment(f_signature):
 	snip.expand_anon(CommentFunction(f_signature))
+
+# Condition of a for loop
+def GetForCondition(init):
+	return init.split('=')[0].split()[-1] + ' ' if '=' in init else '/* condition */'
+
+# Increment of a for loop
+def GetForIncrement(init):
+	return init.split('=')[0].split()[-1] if '=' in init else '/* increment */'
+
+# Struct name
+def GetStructName(alias):
+	return alias[0:-2] + ' ' if alias.endswith('_t') else ''
 
 endglobal
 ############################################################
+
+
+# typedef'd struct
+############################################################
+snippet ts "typedef struct {...}"
+typedef struct `!p snip.rv = GetStructName(t[2])`{
+	${1:/* members */}
+} ${2:/* alias */};
+endsnippet
 
 
 # if statement
 ############################################################
 snippet if "if (condition) {...}"
 if (${1:/* condition */}) {
-	${0:${VISUAL}}
-}
+	${2:${VISUAL}}
+}$0
 endsnippet
 
 
@@ -29,7 +50,7 @@ switch (${1:/* expression */}) {
 		${3:/* statements */}
 	default:
 		${4:/* statements */}
-}
+}$0
 endsnippet
 
 
@@ -37,31 +58,55 @@ endsnippet
 ############################################################
 snippet while "while (condition) {...}"
 while (${1:/* condition */}) {
-	${0:${VISUAL}}
-}
+	${2:${VISUAL:\/* statements *\////}}
+}$0
 endsnippet
 
 
 # for loop
 ############################################################
 snippet for "for (init; condition; increment) {...}"
-for (${1:/* init */}; ${1/^(\w+\s+)?(\w+)?(.)*/(?3:$2 )/}${2:}; ${1/^(\w+\s+)?(\w+)?(.*)/(?3:$2)/}${3:++}) {
-	${0:${VISUAL}}
-}
+for (${1:/* init */}; `!p snip.rv = GetForCondition(t[1])`$2; `!p snip.rv = GetForIncrement(t[1])`$3) {
+	${4:${VISUAL:\/* statements *\////}}
+}$0
 endsnippet
 
 
-# printf
+# printf, with editable function name
 ############################################################
 snippet printf "printf(const char *format, ...)"
-printf("${1:%s}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$2${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
+${1:printf}("${2:%s}\n"${2/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${2/([^%]|%%)*(%.)?.*/(?2:\);)/}
+endsnippet
+
+
+# TODO
+############################################################
+snippet todo "// TODO: ..."
+// TODO: $1
+endsnippet
+
+
+# TODO, with timestamp
+############################################################
+snippet todofull "// TODO: ... (user, timestamp)"
+// TODO: $1 (`!v expand($USER)`, `!v strftime("%d %b %Y")`)
 endsnippet
 
 
 # Pre-processor ifdef
 ############################################################
-snippet ifdef "#ifdef ... #endif" b
+snippet #ifdef "#ifdef ... #endif" b
 #ifdef ${1:SYMBOL}
+${2:`!p snip.rv = snip.v.text[0:-1] if (len(snip.v.text) > 0 and snip.v.text[-1]) == '\n' else snip.v.text`}
+#endif
+endsnippet
+
+
+# Pre-processor if
+############################################################
+snippet #if "#if ... #endif" b
+#if ${1:EXPRESSION}
+${2:`!p snip.rv = snip.v.text[0:-1] if (len(snip.v.text) > 0 and snip.v.text[-1]) == '\n' else snip.v.text`}
 #endif
 endsnippet
 
@@ -85,6 +130,12 @@ endsnippet
 # Only expand when next line matches function signature
 context "IsFunctionSignature(snip.buffer[snip.line + 1])"
 # Post-expand snippet
-post_jump "AddFunctionCommentSnippet(snip.buffer[snip.line + 1])"
+post_jump "AddFunctionComment(snip.buffer[snip.line + 1])"
 snippet /** "Function comment" be
+endsnippet
+
+
+# File description
+############################################################
+snippet fd "File description" b
 endsnippet

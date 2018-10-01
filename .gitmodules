@@ -43,3 +43,6 @@
 [submodule ".vim/pack/plugins/start/ultisnips"]
 	path = .vim/pack/plugins/start/ultisnips
 	url = https://github.com/SirVer/ultisnips/
+[submodule ".vim/pack/plugins/start/calendar"]
+	path = .vim/pack/plugins/start/calendar
+	url = https://github.com/itchyny/calendar.vim

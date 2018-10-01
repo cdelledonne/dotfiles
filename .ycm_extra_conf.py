@@ -149,22 +149,26 @@ def FlagsForCompilationDatabase(root, filename):
         return None, None
 
 
-def FlagsForFile(filename):
+def Settings(**kwargs):
     """Entry point for YCM."""
 
-    # Search for flags
-    root = os.path.realpath(filename)
-    flags, translation_unit = FlagsForCompilationDatabase(root, filename)
+    filename = kwargs['filename']
 
-    # Return flags, if found
-    if flags:
-        return {
-                'flags': flags,
-                'override_filename': translation_unit,
-                'do_cache': True
-                }
-    # Otherwise, return fallback flags
-    else:
-        return {
-                'flags': BASE_FLAGS
-                }
+    if kwargs['language'] == 'cfamily':
+        # Search for flags
+        root = os.path.realpath(filename)
+        flags, translation_unit = FlagsForCompilationDatabase(root, filename)
+        # Return flags, if found
+        if flags:
+            return {
+                    'flags': flags,
+                    'override_filename': translation_unit,
+                    'do_cache': True
+            }
+        # Otherwise, return fallback flags
+        else:
+            return {
+                    'flags': BASE_FLAGS
+            }
+
+    return {}

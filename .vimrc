@@ -179,7 +179,7 @@ let g:NERDSpaceDelims = 1
 " let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Python interpreter (point to the one got from homebrew)
-" let g:ycm_python_binary_path = '/usr/local/bin/python3'
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
 let g:ycm_python_interpreter = '/usr/local/bin/python3'
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
 
@@ -228,3 +228,9 @@ let g:UltiSnipsListSnippets        = '<C-e>'
 " call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
 " call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
 " call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" calendar configuration "
+"""""""""""""""""""""""""""""""
+
+let g:calendar_google_calendar = 1
