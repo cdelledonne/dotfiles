@@ -4,9 +4,13 @@
 
 # Vim swap files
 ################
-*.swp
-*.swo
+*.sw[po]
 
 # YouCompleteMe compile commands files
 ######################################
 compile_commands.json
+
+# Python compiled code
+######################
+*.py[cod]
+__pycache__
