@@ -6,7 +6,7 @@ set guifont=Source\ Code\ Pro\ for\ Powerline:h13
 
 " Set colorscheme
 set background=dark
-colo gruvbox
+colo gruvbox-edit
 
 " Set tab behaviour
 set expandtab
@@ -18,6 +18,10 @@ set softtabstop=4
 
 " Autoindent based on file type
 filetype plugin indent on
+
+" Set folding method but do not fold on start-up
+set foldmethod=indent
+set nofoldenable
 
 " Show line number
 set number

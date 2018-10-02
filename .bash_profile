@@ -16,6 +16,12 @@ if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
 
+# Case-insensitive bash completion
+bind "set completion-ignore-case on"
+
+# Avoid pressing Tab twice when there is more than one match for autocompletion
+bind "set show-all-if-ambiguous on"
+
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagacad
 

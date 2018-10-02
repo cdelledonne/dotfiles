@@ -1,16 +1,15 @@
 This repository contains Carlo's dotfiles
 
-## Adding new dotfile
+## Installation
 
-After adding a new dotfile, modify the variable `dotfiles` in `install.py` by adding
-the new dotfile's name, then commit the changes to `git`.
+To install the dotfiles run `install.py`.
 
-### Submodules
+## Submodules
 
 When adding a submodule to a dotfile, e.g. a plugin to the `.vim` dotfile,
 perform the following:
 
-```bash
+```
 git submodule add https://url/of/new-plugin.git .vim/pack/plugins/start/new-plugin
 ```
 
@@ -18,7 +17,7 @@ then commit the changes to `git`.
 
 To update submodules run:
 
-```bash
+```
 git submodule update --remote --merge
 ```
 
@@ -26,12 +25,8 @@ then commit.
 
 To remove submodules run:
 
-```bash
+```
 git submodule deinit .vim/pack/plugins/start/old-plugin
 git rm .vim/pack/plugins/start/old-plugin
 rm -rf .git/modules/.vim/pack/plugins/start/old-plugin
 ```
-
-## Installation
-
-To install the dotfiles run `install.py`.
