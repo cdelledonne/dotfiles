@@ -46,3 +46,6 @@
 [submodule ".vim/pack/plugins/start/calendar"]
 	path = .vim/pack/plugins/start/calendar
 	url = https://github.com/itchyny/calendar.vim
+[submodule ".vim/pack/plugins/start/ctrlsf"]
+	path = .vim/pack/plugins/start/ctrlsf
+	url = https://github.com/dyng/ctrlsf.vim

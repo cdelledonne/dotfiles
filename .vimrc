@@ -20,7 +20,7 @@ set softtabstop=4
 filetype plugin indent on
 
 " Set folding method but do not fold on start-up
-set foldmethod=indent
+set foldmethod=syntax
 set nofoldenable
 
 " Show line number
@@ -92,6 +92,9 @@ nnoremap <C-h> <C-w>h
 " Buffers navigation
 nnoremap <C-Tab>   :bn<CR>
 nnoremap <S-C-Tab> :bp<CR>
+
+" Custom commands
+command! RemoveTrailingSpaces %s/\s\+$//g | noh
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline configuration "

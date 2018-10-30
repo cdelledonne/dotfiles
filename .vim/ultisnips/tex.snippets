@@ -1,0 +1,31 @@
+snippet begin "\begin{environment} ... \end{environment}"
+\begin{$1}
+	${2:${VISUAL}}
+\end{$1}
+$0
+endsnippet
+
+snippet fig "\begin{figure} ... \end{figure}"
+\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{$1}
+	\caption{$2}
+	\label{fig:$3}
+\end{figure}
+$0
+endsnippet
+
+snippet s "\section{title}"
+\section{$1}
+$0
+endsnippet
+
+snippet ss "\subsection{title}"
+\subsection{$1}
+$0
+endsnippet
+
+snippet sss "\subsubsection{title}"
+\subsubsection{$1}
+$0
+endsnippet

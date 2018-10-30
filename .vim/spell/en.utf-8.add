@@ -1,6 +1,3 @@
-#ntermittency/!
-#ntermittency/!
-#PCs/!
 backscatter
 intermittency
 microcontrollers
@@ -23,3 +20,11 @@ timestamp
 datasheet
 goodput
 comparator
+batteryless
+Capacitive
+capacitive
+MCU
+RTC
+priori
+SRAM
+RFID
