@@ -46,6 +46,9 @@ set t_Co=256
 " Highlight search matches
 set hlsearch
 
+" Toggle highlighting for search matches
+" nnoremap <silent><expr> <Leader>h (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
+
 " Case-sensitive search ONLY when capital letters appear in the search string
 set ignorecase
 set smartcase
@@ -64,7 +67,7 @@ set scrolloff=3
 
 " Do not wrap text except for some file types
 set nowrap
-autocmd FileType tex,txt setlocal wrap
+autocmd FileType tex,txt setlocal wrap linebreak
 
 " Open .tex files as LaTeX files
 let g:tex_flavor='latex'
@@ -208,7 +211,7 @@ nnoremap <leader>gd :YcmCompleter GetDoc<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " UltiSnips configuration "
-"""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""
 
 " Open snippet file in a split window
 " (horizontal or vertical, depending on context)
@@ -229,7 +232,7 @@ let g:UltiSnipsListSnippets        = '<C-e>'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lexima configuration "
-"""""""""""""""""""""""""""""""
+""""""""""""""""""""""""
 
 " Auto close dollar sign in LaTeX files
 " call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
@@ -237,7 +240,13 @@ let g:UltiSnipsListSnippets        = '<C-e>'
 " call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vimtex configuration "
+""""""""""""""""""""""""
+
+let g:vimtex_fold_enabled = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " calendar configuration "
-"""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""
 
 let g:calendar_google_calendar = 1

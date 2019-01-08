@@ -18,6 +18,9 @@ bind "set show-all-if-ambiguous on"
 export PYTHONPATH=/Users/Carlo/Developer/Python/packages
 export PYTHONSTARTUP=~/.pythonrc
 
+# For Vim
+export VIMRC=/Users/Carlo/.vimrc
+
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagacad
 
