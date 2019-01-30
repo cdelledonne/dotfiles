@@ -4,7 +4,7 @@
 
 # Vim swap files
 ################
-*.sw[po]
+*.sw[pon]
 
 # YouCompleteMe compile commands files
 ######################################

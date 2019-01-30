@@ -49,3 +49,12 @@
 [submodule ".vim/pack/plugins/start/ctrlsf"]
 	path = .vim/pack/plugins/start/ctrlsf
 	url = https://github.com/dyng/ctrlsf.vim
+[submodule ".vim/pack/plugins/start/tagbar"]
+	path = .vim/pack/plugins/start/tagbar
+	url = https://github.com/majutsushi/tagbar
+[submodule ".vim/pack/plugins/start/SimpylFold"]
+	path = .vim/pack/plugins/start/SimpylFold
+	url = https://github.com/tmhedberg/SimpylFold
+[submodule ".vim/pack/plugins/opt/vdebug"]
+	path = .vim/pack/plugins/opt/vdebug
+	url = https://github.com/vim-vdebug/vdebug

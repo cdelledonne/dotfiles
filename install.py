@@ -112,7 +112,7 @@ if __name__ == '__main__':
                 # Install YCM
                 print("Installing YCM...")
                 os.chdir('./.vim/pack/plugins/start/YouCompleteMe/')
-                subprocess.call(['./install.py', '--clang-completer'])
+                subprocess.call(['python3', './install.py', '--clang-completer'])
                 os.chdir(CWD)
 
     except KeyboardInterrupt:

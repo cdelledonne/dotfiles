@@ -23,6 +23,9 @@ filetype plugin indent on
 set foldmethod=syntax
 set nofoldenable
 
+" Fold Python files based on indent
+au BufNewFile,BufRead *.py set foldmethod=indent
+
 " Show line number
 set number
 
@@ -95,6 +98,15 @@ nnoremap <C-h> <C-w>h
 " Buffers navigation
 nnoremap <C-Tab>   :bn<CR>
 nnoremap <S-C-Tab> :bp<CR>
+
+" Folding
+nnoremap <space> za
+
+" NERDTree toggle window
+nnoremap <S-F12> :NERDTreeToggle<CR>
+
+" Tagbar toggle window
+nnoremap <F12> :TagbarToggle<CR>
 
 " Custom commands
 command! RemoveTrailingSpaces %s/\s\+$//g | noh
@@ -250,3 +262,24 @@ let g:vimtex_fold_enabled = 1
 """"""""""""""""""""""""""
 
 let g:calendar_google_calendar = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tagbar configuration "
+""""""""""""""""""""""""
+
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SimpylFold configuration "
+""""""""""""""""""""""""""""
+
+let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Conque-Shell configuration "
+""""""""""""""""""""""""""""""
+
+let g:ConqueTerm_PyVersion = 3

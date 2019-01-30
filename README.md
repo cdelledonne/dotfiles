@@ -30,3 +30,5 @@ git submodule deinit .vim/pack/plugins/start/old-plugin
 git rm .vim/pack/plugins/start/old-plugin
 rm -rf .git/modules/.vim/pack/plugins/start/old-plugin
 ```
+
+Note that the last `rm` command targets a different path then the other two.
