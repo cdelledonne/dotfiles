@@ -2,7 +2,11 @@
 syntax on
 
 " Set font
-set guifont=Source\ Code\ Pro\ for\ Powerline:h13
+if has('macunix')
+    set guifont=Source\ Code\ Pro\ for\ Powerline:h13
+else
+    set guifont=Meslo\ LG\ S\ for\ Powerline\ 10
+endif
 
 " Set colorscheme
 set background=dark
@@ -42,6 +46,10 @@ set cursorline
 " Use console dialogs instead of popup dialogs
 set guioptions+=c
 
+" Remove menubar and toolbar
+set guioptions-=m
+set guioptions-=T
+
 " Hide scrollbars
 set guioptions-=r
 set guioptions-=L
@@ -56,6 +64,9 @@ set hlsearch
 " Case-sensitive search ONLY when capital letters appear in the search string
 set ignorecase
 set smartcase
+
+" Case-insensitive path completion in commands
+set wildignorecase
 
 " Show diff in vertical mode
 set diffopt+=vertical
@@ -104,7 +115,7 @@ nnoremap <S-C-Tab> :bp<CR>
 nnoremap <space> za
 
 " NERDTree toggle window
-nnoremap <S-F12> :NERDTreeToggle<CR>
+nnoremap <F11> :NERDTreeToggle<CR>
 
 " Tagbar toggle window
 nnoremap <F12> :TagbarToggle<CR>
