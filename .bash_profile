@@ -1,7 +1,11 @@
-export PS1="\[\033[32;1m\]\u\[\033[m\][\[\033[36;1m\]\W\[\033[m\]]\$ "
+# export PS1="\[\033[32;1m\]\u\[\033[m\][\[\033[36;1m\]\W\[\033[m\]]\$ "
+export PS1="\[\033[32;1m\]\u\[\033[m\] \$ "
 # export PS1="\[\033[32;1m\]\u\[\033[32;1m\]@\[\033[32;1m\]\h\[\033[m\]:\[\033[36;1m\]\w\[\033[m\]\$ "
 
 export PATH=/usr/local/bin:$PATH:/Users/Carlo/Developer/Scripts
+
+# Use Homebrew's curl
+export PATH=/usr/local/opt/curl/bin:$PATH
 
 # git autocompletion script
 if [ -f ~/.git-completion.bash ]; then
@@ -27,6 +31,3 @@ export LSCOLORS=GxFxCxDxBxegedabagacad
 alias ll='ls -la'
 alias sshpi='ssh -p 10022 pi@cdelledonne.dynu.com'
 alias p3='python3'
-
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
