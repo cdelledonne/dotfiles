@@ -58,3 +58,6 @@
 [submodule ".vim/pack/plugins/opt/vdebug"]
 	path = .vim/pack/plugins/opt/vdebug
 	url = https://github.com/vim-vdebug/vdebug
+[submodule ".vim/pack/plugins/start/indentLine"]
+	path = .vim/pack/plugins/start/indentLine
+	url = https://github.com/Yggdroot/indentLine

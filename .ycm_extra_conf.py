@@ -28,31 +28,7 @@ def IsHeaderFile(filename):
 def GetCompilationInfoForFile(database, filename):
     """Get compilation info."""
 
-    if IsHeaderFile(filename):
-        basename = os.path.splitext(filename)[0]
-        for extension in SOURCE_EXTENSIONS:
-
-            # Translate header files into their respective source files
-            replacement = basename + extension
-            if os.path.exists(replacement):
-                info = database.GetCompilationInfoForFile(replacement)
-                if info.compiler_flags_:
-                    return info, replacement
-
-            # Try in other directories
-            for header_dir in HEADER_DIRECTORIES:
-                for source_dir in SOURCE_DIRECTORIES:
-                    src_file = replacement.replace(header_dir, source_dir)
-                    if os.path.exists(src_file):
-                        info = database.GetCompilationInfoForFile(src_file)
-                        if info.compiler_flags_:
-                            return info, src_file
-
-        # Unsuccessful return
-        return None
-
-    # For non-header files
-    return database.GetCompilationInfoForFile(filename), filename
+    return database.GetCompilationInfoForFile(filename)
 
 
 def FindNearest(path, target):
@@ -118,30 +94,61 @@ def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
 def FlagsForCompilationDatabase(root, filename):
     """Search for compilation flags."""
 
+    translation_unit = filename
+
+    # Change translation unit of header files to their related source file
+    if IsHeaderFile(filename):
+
+        basename = os.path.splitext(filename)[0]
+
+        for extension in SOURCE_EXTENSIONS:
+
+            # Translate header files into their respective source files
+            replacement = basename + extension
+            if os.path.exists(replacement):
+                translation_unit = replacement
+
+            # Try in other directories
+            for header_dir in HEADER_DIRECTORIES:
+                for source_dir in SOURCE_DIRECTORIES:
+                    src_file = replacement.replace(header_dir, source_dir)
+                    if os.path.exists(src_file):
+                        translation_unit = src_file
+
     try:
+
         # Find nearest compilation database
         db_path = FindNearest(root, 'compile_commands.json')
-        if not db_path:
-            return None, None
 
-        # Get database from YCM
-        db_dir = os.path.dirname(db_path)
-        db = ycm_core.CompilationDatabase(db_dir)
-        if not db:
-            return None, None
+        if db_path:
 
-        # Get compilation info
-        info, translation_unit = GetCompilationInfoForFile(db, filename)
-        if not info:
-            return None, None
+            # Get database from YCM
+            db_dir = os.path.dirname(db_path)
+            db = ycm_core.CompilationDatabase(db_dir)
 
-        # For include paths:
-        # look at the path of the file currently opened in the editor
-        # rather than the one from the configuration file
-        flags = MakeRelativePathsInFlagsAbsolute(
-                info.compiler_flags_,
-                info.compiler_working_dir_
-                )
+            if db:
+
+                # Get compilation info
+                info = GetCompilationInfoForFile(db, translation_unit)
+
+                if info:
+
+                    # For include paths:
+                    # look at the path of the file currently opened in the editor
+                    # rather than the one from the configuration file
+                    flags = MakeRelativePathsInFlagsAbsolute(
+                            info.compiler_flags_,
+                            info.compiler_working_dir_
+                            )
+
+                else:
+                    flags = None
+
+            else:
+                flags = None
+
+        else:
+            flags = None
 
         return flags, translation_unit
 
@@ -155,6 +162,7 @@ def FlagsForFile(filename):
     # Search for flags
     root = os.path.realpath(filename)
     flags, translation_unit = FlagsForCompilationDatabase(root, filename)
+
     # Return flags, if found
     if flags:
         return {
@@ -165,7 +173,8 @@ def FlagsForFile(filename):
     # Otherwise, return fallback flags
     else:
         return {
-                'flags': BASE_FLAGS
+                'flags': BASE_FLAGS,
+                'override_filename': translation_unit
         }
 
     return {}

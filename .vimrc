@@ -27,8 +27,9 @@ filetype plugin indent on
 set foldmethod=syntax
 set nofoldenable
 
-" Fold Python files based on indent
+" Fold specific files based on indent
 au BufNewFile,BufRead *.py set foldmethod=indent
+au BufNewFile,BufRead *.bas set foldmethod=indent
 
 " Show line number
 set number
