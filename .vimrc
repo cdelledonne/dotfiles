@@ -240,8 +240,11 @@ nnoremap <leader>gd :YcmCompleter GetDoc<CR>
 " (horizontal or vertical, depending on context)
 let g:UltiSnipsEditSplit = 'context'
 
-" Directory containing snippets
+" Directory containing user-defined snippets
 let g:UltiSnipsSnippetsDir = '~/.vim/ultisnips'
+
+" Search snippets in above directory, plus the default 'UltiSnips'
+let g:UltiSnipsSnippetDirectories = ['ultisnips', 'UltiSninps']
 
 " Unmap default CTRL-J and CTRL-K in insert mode
 let g:i_CTRL_J = 'off'
