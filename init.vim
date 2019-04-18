@@ -1,0 +1,205 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" List of plugins (managed by vim-plug)                                        "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+call plug#begin('~/.local/share/nvim/plug')
+
+" gruvbox color scheme
+Plug 'morhetz/gruvbox'
+
+" Status/tabline
+Plug 'vim-airline/vim-airline'
+
+" Show git modifications
+Plug 'airblade/vim-gitgutter'
+
+" Git wrapper
+Plug 'tpope/vim-fugitive'
+
+" File navigator
+Plug 'scrooloose/nerdtree'
+
+" Commenter
+Plug 'scrooloose/nerdcommenter'
+
+" Auto-close pairs
+Plug 'jiangmiao/auto-pairs'
+
+call plug#end()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General settings                                                             "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Enable true colors
+if $COLORTERM == 'truecolor'
+    set termguicolors
+endif
+
+" Color scheme
+set background=dark
+let g:gruvbox_italic=1
+colorscheme gruvbox
+
+" Set tab behaviour
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+
+" Set folding method but do not fold on start-up
+set foldmethod=syntax
+set nofoldenable
+
+" Fold specific files based on indent
+autocmd BufNewFile,BufRead *.py,*.bas set foldmethod=indent
+
+" Show line number
+set number
+
+" Display keystrokes in the command line in normal mode
+set showcmd
+
+" Hide buffers when abandoned
+set hidden
+
+" Highlight cursor line
+set cursorline
+
+" Case-sensitive search ONLY when capital letters appear in the search string
+set ignorecase
+set smartcase
+
+" Case-insensitive path completion in commands
+set wildignorecase
+
+" Show diff in vertical mode
+set diffopt+=vertical
+
+" Put new window to the right when using a vertical split
+set splitright
+
+" Set update delay (in milliseconds)
+" set updatetime=100
+
+" Set minimal number of screen lines to keep above and below the cursor
+set scrolloff=3
+
+" Do not wrap text except for some file types
+set nowrap
+autocmd FileType tex,txt,markdown setlocal wrap linebreak
+
+" Open .tex files as LaTeX files
+let g:tex_flavor='latex'
+
+" Configure nesC syntax
+" augroup filetypedetect
+    " au! BufRead,BufNewFile *.nc setfiletype nc
+" augroup END
+
+" Windows navigation
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+
+" Buffers navigation
+" nnoremap <C-Tab>   :bn<CR>
+" nnoremap <S-C-Tab> :bp<CR>
+
+" Folding
+nnoremap <space> za
+
+" NERDTree toggle window
+nnoremap <F11> :NERDTreeToggle<CR>
+
+" Tagbar toggle window
+" nnoremap <F12> :TagbarToggle<CR>
+
+" Custom commands
+command! RemoveTrailingSpaces %s/\s\+$//g | noh
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" airline configuration                                                        "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" Enable powerline fonts
+" if has('gui_running')
+    let g:airline_powerline_fonts = 1
+    " let g:airline_left_sep = ''
+    " let g:airline_left_alt_sep = ''
+    " let g:airline_right_sep = ''
+    " let g:airline_right_alt_sep = ''
+" endif
+
+" Configure statusline symbols
+" if has('gui_running')
+    let g:airline_symbols.branch = ''
+    let g:airline_symbols.readonly = ''
+    let g:airline_symbols.linenr = '☰'
+    let g:airline_symbols.maxlinenr = ''
+" endif
+
+" Detect modified buffers
+let g:airline_detect_modified = 1
+
+" Skip empty sections
+let g:airline_skip_empty_sections = 1
+
+" Configure section z (current position in the file)
+function! AirlineInit()
+    " let g:airline_section_z = airline#section#create(['%#__accent_bold#%{g:airline_symbols.linenr}%4l/%L%#__restore__#:%3v'])
+    let g:airline_section_z = airline#section#create(['%#__accent_bold#%4l/%L%#__restore__#:%3v'])
+endfunction
+autocmd VimEnter * call AirlineInit()
+
+" Enable and configure tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_min_count = 2
+" let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+" let g:airline#extensions#tabline#left_sep = ''
+" let g:airline#extensions#tabline#left_alt_sep = ''
+
+" Enable fugitive (git extension)
+let g:airline#extensions#fugitiveline#enabled = 1
+
+" Enable hunks to show VCS modifications
+let g:airline#extensions#hunks#enabled = 1
+
+" Enable YCM integration
+let g:airline#extensions#ycm#enabled = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" gitgutter configuration                                                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:gitgutter_signs = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDTree configuration                                                       "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Show hidden files and sort them first
+let NERDTreeShowHidden = 1
+let NERDTreeSortHiddenFirst = 1
+
+" Ignore some files
+let NERDTreeIgnore = ['.DS_Store', '\.swp$', '\~$']
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDCommenter configuration                                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Use alternative delimiters '//' for c files
+let g:NERDAltDelims_c = 1
+
+" Insert a space after comment delimiters
+let g:NERDSpaceDelims = 1
+
+" Use '#' delimiter (and not '# ') for python files
+let g:NERDCustomDelimiters = { 'python': { 'left': '#' } }
