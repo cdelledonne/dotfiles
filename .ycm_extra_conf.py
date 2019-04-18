@@ -19,7 +19,7 @@ BASE_FLAGS = ['-Wall']
 
 
 def IsHeaderFile(filename):
-    """Check is given file is a header."""
+    """Check if given file is a header."""
 
     extension = os.path.splitext(filename)[1]
     return extension in HEADER_EXTENSIONS
