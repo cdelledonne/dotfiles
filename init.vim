@@ -25,6 +25,16 @@ Plug 'scrooloose/nerdcommenter'
 " Auto-close pairs
 Plug 'jiangmiao/auto-pairs'
 
+" Show indent lines
+Plug 'Yggdroot/indentLine'
+
+" Markdown preview and additional tools
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+" Plug 'SidOfc/mkdx'
+
+" Code snippets
+Plug 'SirVer/ultisnips'
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -109,12 +119,6 @@ nnoremap <C-h> <C-w>h
 " Folding
 nnoremap <space> za
 
-" NERDTree toggle window
-nnoremap <F11> :NERDTreeToggle<CR>
-
-" Tagbar toggle window
-" nnoremap <F12> :TagbarToggle<CR>
-
 " Custom commands
 command! RemoveTrailingSpaces %s/\s\+$//g | noh
 
@@ -191,6 +195,11 @@ let NERDTreeSortHiddenFirst = 1
 " Ignore some files
 let NERDTreeIgnore = ['.DS_Store', '\.swp$', '\~$']
 
+let NERDTreeStatusline = 'NERDTree'
+
+" NERDTree toggle window
+nnoremap <F11> :NERDTreeToggle<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDCommenter configuration                                                  "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -203,3 +212,46 @@ let g:NERDSpaceDelims = 1
 
 " Use '#' delimiter (and not '# ') for python files
 let g:NERDCustomDelimiters = { 'python': { 'left': '#' } }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" indentLine configuration                                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Change default indent line character
+let g:indentLine_char = '┊'
+
+" Enable for certain file types only
+let g:indentLine_fileType = ['c', 'cpp', 'python']
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tagbar configuration                                                         "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Tagbar toggle window
+" nnoremap <F12> :TagbarToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" UltiSnips configuration                                                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Open snippet file in a split (horizontal or vertical, depending on context)
+let g:UltiSnipsEditSplit = 'context'
+
+" Directory containing user-defined snippets
+let g:UltiSnipsSnippetsDir = '~/.config/nvim/ultisnips'
+
+" Search snippets in above directory, plus the default 'UltiSnips'
+let g:UltiSnipsSnippetDirectories = ['ultisnips', 'UltiSnips']
+
+" Unmap default CTRL-J and CTRL-K in insert mode
+let g:i_CTRL_J = 'off'
+let g:i_CTRL_K = 'off'
+
+" Remap triggers
+let g:UltiSnipsExpandTrigger       = '<C-e>'
+let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+let g:UltiSnipsListSnippets        = '<C-s>'
+
+" Import C snippets into C++ files
+autocmd FileType cpp UltiSnipsAddFiletypes cpp.c

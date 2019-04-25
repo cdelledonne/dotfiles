@@ -16,9 +16,6 @@ colo gruvbox-edit
 set expandtab
 set shiftwidth=4
 set softtabstop=4
-" set tabstop=4
-" set softtabstop=0 noexpandtab
-" set shiftwidth=4
 
 " Autoindent based on file type
 filetype plugin indent on
@@ -28,8 +25,7 @@ set foldmethod=syntax
 set nofoldenable
 
 " Fold specific files based on indent
-au BufNewFile,BufRead *.py set foldmethod=indent
-au BufNewFile,BufRead *.bas set foldmethod=indent
+au BufNewFile,BufRead *.py,*.bas set foldmethod=indent
 
 " Show line number
 set number
@@ -91,15 +87,6 @@ let g:tex_flavor='latex'
 augroup filetypedetect
     au! BufRead,BufNewFile *.nc setfiletype nc
 augroup END
-
-" Insert a new line after the current without entering INSERT mode
-" nmap <CR> o<Esc>
-
-" Insert a new line before the current without entering INSERT mode
-" nmap <S-CR> O<Esc>
-
-" Remap ESC to 'kj'
-" imap kj <Esc>
 
 " Windows navigation
 nnoremap <C-j> <C-w>j
@@ -252,10 +239,13 @@ let g:i_CTRL_J = 'off'
 let g:i_CTRL_K = 'off'
 
 " Remap triggers
-let g:UltiSnipsExpandTrigger       = '<C-Tab>'
+let g:UltiSnipsExpandTrigger       = '<C-e>'
 let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-let g:UltiSnipsListSnippets        = '<C-e>'
+let g:UltiSnipsListSnippets        = '<C-s>'
+
+" Import C snippets in C++ files
+autocmd FileType cpp UltiSnipsAddFiletypes cpp.c
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lexima configuration "
