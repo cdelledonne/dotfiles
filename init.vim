@@ -35,6 +35,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " Code snippets
 Plug 'SirVer/ultisnips'
 
+" Terminal wrapper
+Plug 'kassio/neoterm'
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -106,11 +109,20 @@ let g:tex_flavor='latex'
     " au! BufRead,BufNewFile *.nc setfiletype nc
 " augroup END
 
-" Windows navigation
+" Use Esc to exit terminal mode
+tnoremap <Esc> <C-\><C-n>
+
+" Windows navigation in normal mode
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
+
+" Windows navigation in terminal mode
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <C-h> <C-\><C-n><C-w>h
 
 " Buffers navigation
 " nnoremap <C-Tab>   :bn<CR>
