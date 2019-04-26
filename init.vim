@@ -38,6 +38,9 @@ Plug 'SirVer/ultisnips'
 " Terminal wrapper
 Plug 'kassio/neoterm'
 
+" Search (and replace) multiple files
+Plug 'dyng/ctrlsf.vim'
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -267,3 +270,10 @@ let g:UltiSnipsListSnippets        = '<C-s>'
 
 " Import C snippets into C++ files
 autocmd FileType cpp UltiSnipsAddFiletypes cpp.c
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CtrlSF configuration                                                         "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Focus CtrlSF window when search is done
+let g:ctrlsf_auto_focus = { 'at' : 'done', 'duration_less_than' : 2000 }
