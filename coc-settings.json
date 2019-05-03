@@ -1,0 +1,21 @@
+{
+    "suggest.minTriggerInputLength": 3,
+    "suggest.snippetIndicator": " ...",
+    "coc.source.around.shortcut": "B",
+    "coc.source.around.disableSyntaxes": ["comment, string"],
+    "coc.source.around.enable": false,
+    "coc.source.buffer.enable": false,
+    "suggest.autoTrigger": "trigger",
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "args": ["-log-file=/tmp/ccls.log", "-v=1"],
+            "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+            "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+            "initializationOptions": {
+                "cache": { "directory": "/tmp/ccls" },
+                "client": { "snippetSupport": true }
+            }
+        }
+    }
+}

@@ -158,7 +158,7 @@ do
         then
             # Default destinations
             case $filename in
-                "init.vim") dst=$HOME/.config/nvim/;;
+                "init.vim"|"coc-config.json") dst=$HOME/.config/nvim/;;
                 *) dst=$HOME;;
             esac
             # Ask the user whether to use something different than the default

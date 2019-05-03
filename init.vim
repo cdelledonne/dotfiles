@@ -41,6 +41,9 @@ Plug 'kassio/neoterm'
 " Search (and replace) multiple files
 Plug 'dyng/ctrlsf.vim'
 
+" Completion framework and language server client
+Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -160,6 +163,7 @@ endif
     let g:airline_symbols.readonly = ''
     let g:airline_symbols.linenr = '☰'
     let g:airline_symbols.maxlinenr = ''
+    let g:airline_symbols.dirty = ''
 " endif
 
 " Detect modified buffers
@@ -242,8 +246,12 @@ let g:indentLine_fileType = ['c', 'cpp', 'python']
 " Tagbar configuration                                                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Tagbar toggle window
-" nnoremap <F12> :TagbarToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" AutoPairs configuration                                                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:AutoPairsFlyMode = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " UltiSnips configuration                                                      "
@@ -277,3 +285,16 @@ autocmd FileType cpp UltiSnipsAddFiletypes cpp.c
 
 " Focus CtrlSF window when search is done
 let g:ctrlsf_auto_focus = { 'at' : 'done', 'duration_less_than' : 2000 }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Coc configuration                                                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Use <Tab> and <S-Tab> to navigate completion list
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Use <C-Space> to trigger completion
+inoremap <silent><expr> <C-Space> coc#refresh()
+
+nnoremap <leader>gg <Plug>(coc-definition)
