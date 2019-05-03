@@ -31,3 +31,6 @@ export LSCOLORS=GxFxCxDxBxegedabagacad
 alias ll='ls -la'
 alias sshpi='ssh -p 10022 pi@cdelledonne.dynu.com'
 alias p3='python3'
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
