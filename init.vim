@@ -103,9 +103,12 @@ set splitright
 " Set minimal number of screen lines to keep above and below the cursor
 set scrolloff=3
 
-" Do not wrap text except for some file types
+" Do not wrap text except for textual files
 set nowrap
-autocmd FileType tex,txt,markdown setlocal wrap linebreak
+autocmd FileType tex,text,markdown setlocal wrap linebreak
+
+" Enable spell checking for textual files
+autocmd FileType tex,text,markdown setlocal spell spelllang=en_us
 
 " Open .tex files as LaTeX files
 let g:tex_flavor='latex'
