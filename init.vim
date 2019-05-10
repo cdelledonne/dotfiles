@@ -44,7 +44,7 @@ Plug 'dyng/ctrlsf.vim'
 " Completion framework and language server client
 " Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 call plug#end()
@@ -304,18 +304,31 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <silent><expr> <C-Space> coc#refresh()
 
 nnoremap <leader>gg <Plug>(coc-definition)
-"
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LanguageClient-neovim configuration                                          "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
+let g:LanguageClient_loggingLevel = 'DEBUG'
+
+" Enable loading of settings file
 let g:LanguageClient_loadSettings = 1
 let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
 
+" Filetype-specific commands (language servers)
 let g:LanguageClient_serverCommands = {
-    \ 'c': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
+    \ 'c': ['ccls', '-log-file=/tmp/ccls.log', '-v=2'],
     \ 'cpp': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
     \ 'objc': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
     \ 'objcpp': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
     \ 'cuda': ['ccls', '-log-file=/tmp/ccls.log', '-v=1']
     \ }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-lsp-cxx-highlight configuration                                          "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Enable logging
+let g:lsp_cxx_hl_log_file = '/tmp/vim-lsp-cxx-hl.log'
+let g:lsp_cxx_hl_verbose = 1

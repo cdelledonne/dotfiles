@@ -1,0 +1,8 @@
+{
+    "initializationOptions": {
+        "cache": { "directory": "/tmp/ccls" },
+        "compilationDatabaseDirectory": "build",
+        "client": { "snippetSupport": true },
+        "highlight": { "lsRanges": true }
+    }
+}
