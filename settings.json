@@ -4,5 +4,8 @@
         "compilationDatabaseDirectory": "build",
         "client": { "snippetSupport": true },
         "highlight": { "lsRanges": true }
-    }
+    },
+    "pyls.configurationSources": ["flake8"],
+    "pyls.plugins.pycodestyle.enabled": false,
+    "pyls.plugins.mccabe.enabled": false
 }

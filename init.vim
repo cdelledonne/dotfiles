@@ -41,11 +41,17 @@ Plug 'kassio/neoterm'
 " Search (and replace) multiple files
 Plug 'dyng/ctrlsf.vim'
 
-" Completion framework and language server client
+" Completion framework
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
+
+" Language server client
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+
+" Fuzzy search (for buffers and multiple-entry selection)
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -145,6 +151,9 @@ nnoremap <space> za
 
 " Custom commands
 command! RemoveTrailingSpaces %s/\s\+$//g | noh
+
+" Set insert mode cursor as block
+set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline configuration                                                        "
@@ -246,7 +255,7 @@ let g:NERDCustomDelimiters = { 'python': { 'left': '#' } }
 let g:indentLine_char = '┊'
 
 " Enable for certain file types only
-let g:indentLine_fileType = ['c', 'cpp', 'python']
+let g:indentLine_fileType = ['c', 'cpp', 'python', 'bash', 'rust', 'vim']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar configuration                                                         "
@@ -318,12 +327,21 @@ let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
 
 " Filetype-specific commands (language servers)
 let g:LanguageClient_serverCommands = {
-    \ 'c': ['ccls', '-log-file=/tmp/ccls.log', '-v=2'],
+    \ 'c': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
     \ 'cpp': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
-    \ 'objc': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
-    \ 'objcpp': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
-    \ 'cuda': ['ccls', '-log-file=/tmp/ccls.log', '-v=1']
+    \ 'python': ['pyls'],
     \ }
+
+let g:LanguageClient_rootMarkers = {
+    \ 'c': ['build/compile_commands.json'],
+    \ 'cpp': ['build/compile_commands.json'],
+    \ }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" deoplete configuration                                                       "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:deoplete#enable_at_startup = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-lsp-cxx-highlight configuration                                          "
@@ -332,3 +350,9 @@ let g:LanguageClient_serverCommands = {
 " Enable logging
 let g:lsp_cxx_hl_log_file = '/tmp/vim-lsp-cxx-hl.log'
 let g:lsp_cxx_hl_verbose = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fzf configuration                                                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <silent> <leader>f :FZF<CR>
