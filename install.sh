@@ -158,7 +158,7 @@ do
         then
             # Default destinations
             case $filename in
-                "init.vim"|"coc-config.json") dst=$HOME/.config/nvim/;;
+                "init.vim"|"coc-config.json"|"settings.json") dst=$NVIM_CONFIG_DIR/;;
                 *) dst=$HOME;;
             esac
             # Ask the user whether to use something different than the default
@@ -188,7 +188,7 @@ do
                     read -p "File already exists, open for revision? (y/n): " open_target
                     if [ $open_target = "y" ] || [ $open_target = "Y" ]
                     then
-                        echo "edit $target"
+                        edit $target
                     fi
                 fi
                 # Ask the user whether to override the existing target
@@ -196,12 +196,14 @@ do
                 if [ $override_target = "y" ] || [ $override_target = "Y" ]
                 then
                     # Remove existing target
-                    echo "rm -rf $target"
+                    rm -rf $target
                     # Create link
+                    ln -s $f $target
                     echo "$target -> $f"
                 fi
             # Otherwise, just create the link
             else
+                ln -s $f $target
                 echo "$target -> $f"
             fi
         fi
