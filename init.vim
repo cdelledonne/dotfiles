@@ -53,6 +53,9 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" Seamless navigation between tmux panes and vim splits
+Plug 'christoomey/vim-tmux-navigator'
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -129,12 +132,6 @@ let g:tex_flavor='latex'
 
 " Use Esc to exit terminal mode
 tnoremap <Esc> <C-\><C-n>
-
-" Windows navigation in normal mode
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
 
 " Windows navigation in terminal mode
 tnoremap <C-j> <C-\><C-n><C-w>j
@@ -333,8 +330,8 @@ let g:LanguageClient_serverCommands = {
     \ }
 
 let g:LanguageClient_rootMarkers = {
-    \ 'c': ['build/compile_commands.json'],
-    \ 'cpp': ['build/compile_commands.json'],
+    \ 'c': ['build/compile_commands.json, compile_commands.json'],
+    \ 'cpp': ['build/compile_commands.json, compile_commands.json'],
     \ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
