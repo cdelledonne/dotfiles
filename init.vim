@@ -56,6 +56,12 @@ Plug 'junegunn/fzf.vim'
 " Seamless navigation between tmux panes and vim splits
 Plug 'christoomey/vim-tmux-navigator'
 
+" Quoting/parenthesizing made simple
+Plug 'tpope/vim-surround'
+
+" Allow repetition (dot command) for plugin mappings
+Plug 'tpope/vim-repeat'
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -152,6 +158,9 @@ command! RemoveTrailingSpaces %s/\s\+$//g | noh
 " Set insert mode cursor as block
 set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20
 
+" Enable reading of project-specific .vimrc
+set exrc
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline configuration                                                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -172,6 +181,7 @@ endif
 " Configure statusline symbols
 " if has('gui_running')
     let g:airline_symbols.branch = ''
+    let g:airline_symbols.notexists = ' Ɇ'
     let g:airline_symbols.readonly = ''
     let g:airline_symbols.linenr = '☰'
     let g:airline_symbols.maxlinenr = ''
@@ -228,8 +238,11 @@ let NERDTreeIgnore = ['.DS_Store', '\.swp$', '\~$']
 
 let NERDTreeStatusline = 'NERDTree'
 
-" NERDTree toggle window
+" Toggle window
 nnoremap <F11> :NERDTreeToggle<CR>
+
+" Focus window
+nnoremap <F10> :NERDTreeFocus<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDCommenter configuration                                                  "
@@ -330,8 +343,8 @@ let g:LanguageClient_serverCommands = {
     \ }
 
 let g:LanguageClient_rootMarkers = {
-    \ 'c': ['build/compile_commands.json, compile_commands.json'],
-    \ 'cpp': ['build/compile_commands.json, compile_commands.json'],
+    \ 'c': ['build/compile_commands.json', 'compile_commands.json'],
+    \ 'cpp': ['build/compile_commands.json', 'compile_commands.json'],
     \ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -353,3 +366,15 @@ let g:lsp_cxx_hl_verbose = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nnoremap <silent> <leader>f :FZF<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" markdown-preview configuration                                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nmap <F12> <Plug>MarkdownPreviewToggle
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" More general settings                                                        "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set secure

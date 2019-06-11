@@ -6,9 +6,10 @@
 ################
 *.sw[pon]
 
-# YouCompleteMe compile commands files
+# Autocompletion/language server stuff
 ######################################
 compile_commands.json
+.ccls
 
 # Python compiled code
 ######################

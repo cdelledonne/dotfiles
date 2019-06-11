@@ -3,6 +3,7 @@
         "cache": { "directory": "/tmp/ccls" },
         "compilationDatabaseDirectory": "build",
         "client": { "snippetSupport": true },
+        "clang" : { "extraArgs": ["-Wno-extra"] },
         "highlight": { "lsRanges": true }
     },
     "pyls.configurationSources": ["flake8"],
