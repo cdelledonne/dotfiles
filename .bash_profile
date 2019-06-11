@@ -34,3 +34,7 @@ alias p3='python3'
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
