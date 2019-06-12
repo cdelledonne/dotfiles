@@ -45,6 +45,11 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
 
+" Completion sources for deoplete
+Plug 'Shougo/neco-vim'
+Plug 'wellle/tmux-complete.vim'
+Plug 'Shougo/neco-syntax'
+
 " Language server client
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -161,6 +166,8 @@ set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20
 " Enable reading of project-specific .vimrc
 set exrc
 
+" set completeopt+=noinsert
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline configuration                                                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -220,6 +227,12 @@ let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#ycm#enabled = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fugitive configuration                                                       "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <silent> <leader>s :Gstatus<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -239,10 +252,10 @@ let NERDTreeIgnore = ['.DS_Store', '\.swp$', '\~$']
 let NERDTreeStatusline = 'NERDTree'
 
 " Toggle window
-nnoremap <F11> :NERDTreeToggle<CR>
+nnoremap <silent> <F11> :NERDTreeToggle<CR>
 
 " Focus window
-nnoremap <F10> :NERDTreeFocus<CR>
+nnoremap <silent> <F10> :NERDTreeFocus<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDCommenter configuration                                                  "
@@ -316,13 +329,13 @@ let g:ctrlsf_auto_focus = { 'at' : 'done', 'duration_less_than' : 2000 }
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Use <Tab> and <S-Tab> to navigate completion list
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Use <C-Space> to trigger completion
-inoremap <silent><expr> <C-Space> coc#refresh()
+" inoremap <silent><expr> <C-Space> coc#refresh()
 
-nnoremap <leader>gg <Plug>(coc-definition)
+" nnoremap <leader>gg <Plug>(coc-definition)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LanguageClient-neovim configuration                                          "
@@ -347,13 +360,53 @@ let g:LanguageClient_rootMarkers = {
     \ 'cpp': ['build/compile_commands.json', 'compile_commands.json'],
     \ }
 
+" Define key bindings
+function! SetLSPShortcuts()
+  nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+  " nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+  nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+  " nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+  " nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
+  nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+  nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+endfunction()
+
+" Set key bindings for some specific file types
+augroup LSP
+  autocmd!
+  autocmd FileType c,cpp,python call SetLSPShortcuts()
+augroup END
+
+" Disable diagnostics
+let g:LanguageClient_diagnosticsEnable = 0
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " deoplete configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let g:deoplete#enable_at_startup = 1
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use <Tab> and <S-Tab> to navigate completion list
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Enable around and buffer sources in some textual filetypes only
+call deoplete#custom#source('around', 'filetypes', ['text', 'markdown'])
+call deoplete#custom#source('buffer', 'filetypes', ['text', 'markdown'])
+
+" Enable tmux source in tmux files only
+call deoplete#custom#source('tmux-complete', 'filetypes', ['tmux'])
+
+" Enable syntax source in some filetypes only
+call deoplete#custom#source('syntax', 'filetypes', ['make', 'cmake'])
+
+" Trigger completion after typing 3 characters
+call deoplete#custom#source('_', 'min_pattern_length', 3)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-lsp-cxx-highlight configuration                                          "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
