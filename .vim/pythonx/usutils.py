@@ -12,7 +12,7 @@ VOID_TYPES         = ['void', 'VOID']
 def IsFunctionSignature(line):
     """Check if next line matches function signature."""
 
-    regex = "^\s*(\w+\s)*\w+\([^)]*\)"
+    regex = "^\s*([\w\*]+\s)*\w+\([^)]*\)"
     return re.match(regex, line)
 
 
@@ -27,7 +27,7 @@ def GetParamComment(function, placeholder_count):
     args = function[arg_start:arg_end].split(',')
 
     # Check if there's at least one argument and parameter names are present
-    if len(args) > 0 and len(args[0].split()) == 2:
+    if len(args) > 0 and len(args[0].split()) >= 2:
 
         # Insert blank line
         comment_string += os.linesep + " *"
@@ -35,7 +35,12 @@ def GetParamComment(function, placeholder_count):
         # Extract parameter names
         params = []
         for arg in args:
-            params.append(arg.split()[1])
+            # Get parameter name, e.g. "const char *title" -> "*title"
+            p = arg.split()[-1]
+            # Remove pointer operator, e.g. "*title" -> "title"
+            p = p.strip('*')
+            # Add name to list
+            params.append(p)
 
         # Compute length of longest parameter
         l_max = len(max(params, key=len))
