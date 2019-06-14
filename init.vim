@@ -270,6 +270,9 @@ let g:NERDSpaceDelims = 1
 " Use '#' delimiter (and not '# ') for python files
 let g:NERDCustomDelimiters = { 'python': { 'left': '#' } }
 
+" Insert comment in insert mode
+imap <C-c> <Plug>NERDCommenterInsert
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " indentLine configuration                                                     "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -362,16 +365,17 @@ let g:LanguageClient_rootMarkers = {
 
 " Define key bindings
 function! SetLSPShortcuts()
-  nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
-  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
-  " nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
-  nnoremap <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
-  " nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
-  " nnoremap <leader>lc :call LanguageClient#textDocument_completion()<CR>
-  nnoremap <leader>lh :call LanguageClient#textDocument_hover()<CR>
-  nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-  nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+  nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <silent> <leader>lD :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
+  nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
+  " nnoremap <silent> <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+  nnoremap <silent> <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+  nnoremap <silent> <leader>lx :call LanguageClient#textDocument_references()<CR>
+  " nnoremap <silent> <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+  nnoremap <silent> <leader>lc :call LanguageClient#textDocument_completion()<CR>
+  nnoremap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <silent> <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+  nnoremap <silent> <leader>lm :call LanguageClient_contextMenu()<CR>
 endfunction()
 
 " Set key bindings for some specific file types
@@ -379,9 +383,6 @@ augroup LSP
   autocmd!
   autocmd FileType c,cpp,python call SetLSPShortcuts()
 augroup END
-
-" Disable diagnostics
-let g:LanguageClient_diagnosticsEnable = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " deoplete configuration                                                       "
@@ -402,9 +403,19 @@ call deoplete#custom#source('tmux-complete', 'filetypes', ['tmux'])
 
 " Enable syntax source in some filetypes only
 call deoplete#custom#source('syntax', 'filetypes', ['make', 'cmake'])
+let g:necosyntax#max_syntax_lines = 50000
 
-" Trigger completion after typing 3 characters
-call deoplete#custom#source('_', 'min_pattern_length', 3)
+" Trigger completion of some sources after typing 3 characters
+call deoplete#custom#source('LanguageClient', 'min_pattern_length', 3)
+call deoplete#custom#source('tmux-complete', 'min_pattern_length', 3)
+call deoplete#custom#source('syntax', 'min_pattern_length', 3)
+
+" Disable the truncate feature
+call deoplete#custom#source('_', 'max_abbr_width', 0)
+call deoplete#custom#source('_', 'max_menu_width', 0)
+
+" Close preview window after completion
+autocmd CompleteDone * silent! pclose!
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-lsp-cxx-highlight configuration                                          "
@@ -418,7 +429,29 @@ let g:lsp_cxx_hl_verbose = 1
 " fzf configuration                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <leader>f :FZF<CR>
+nnoremap <silent> <leader>f :FZF  --inline-info --prompt >\ <CR>
+
+" Hide statusline in fzf buffers
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+    \ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+" Match colorscheme
+let g:fzf_colors = {
+    \ 'fg':      ['fg', 'Comment'],
+    \ 'bg':      ['bg', 'Normal'],
+    \ 'hl':      ['fg', 'Statement'],
+    \ 'fg+':     ['fg', 'Normal'],
+    \ 'bg+':     ['bg', 'Normal'],
+    \ 'hl+':     ['fg', 'Statement'],
+    \ 'info':    ['fg', 'Comment'],
+    \ 'border':  ['fg', 'PreProc'],
+    \ 'prompt':  ['fg', 'PreProc'],
+    \ 'pointer': ['fg', 'Label'],
+    \ 'marker':  ['fg', 'Label'],
+    \ 'spinner': ['fg', 'Function'],
+    \ 'header':  ['fg', 'Comment']
+    \ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
