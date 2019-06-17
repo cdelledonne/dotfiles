@@ -378,7 +378,7 @@ function! SetLSPShortcuts()
   " nnoremap <silent> <leader>la :call LanguageClient_workspace_applyEdit()<CR>
   nnoremap <silent> <leader>lc :call LanguageClient#textDocument_completion()<CR>
   nnoremap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
-  nnoremap <silent> <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+  " nnoremap <silent> <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
   nnoremap <silent> <leader>lm :call LanguageClient_contextMenu()<CR>
 endfunction()
 
@@ -493,6 +493,7 @@ let g:vista_top_level_blink = [0, 0]
 " Map some commands
 autocmd FileType c,cpp,python,rust,vim nmap <silent> <F12> :Vista!!<CR>
 autocmd FileType markdown nmap <silent> <F12> :Vista toc<CR>
+nnoremap <silent> <leader>ls :Vista finder lcn<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
