@@ -421,9 +421,6 @@ call deoplete#custom#source('_', 'max_menu_width', 0)
 " Close preview window when leaving INSERT mode
 autocmd InsertLeave * silent! pclose!
 
-" Autoselect complete candidate when typing after focusing on one candidate
-set completeopt+=noinsert
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neopairs configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -490,8 +487,24 @@ let g:vista_cursor_delay = 0
 let g:vista_blink = [0, 0]
 let g:vista_top_level_blink = [0, 0]
 
+function! VistaFocus() abort
+    if exists("t:vista") && winnr() == t:vista.winnr()
+        wincmd p
+    else
+        call vista#sidebar#Open()
+    endif
+endfunction
+
+function! VistaClose() abort
+    if exists("t:vista") && winnr() == t:vista.winnr()
+        wincmd p
+    endif
+    call vista#sidebar#Close()
+endfunction
+
+
 " Map some commands
-autocmd FileType c,cpp,python,rust,vim nmap <silent> <F12> :Vista!!<CR>
+autocmd FileType c,cpp,python,rust,vim nmap <silent> <F12> :call VistaFocus()<CR>
 autocmd FileType markdown nmap <silent> <F12> :Vista toc<CR>
 nnoremap <silent> <leader>ls :Vista finder lcn<CR>
 
