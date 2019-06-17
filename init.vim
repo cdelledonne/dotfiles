@@ -50,6 +50,9 @@ Plug 'Shougo/neco-vim'
 Plug 'wellle/tmux-complete.vim'
 Plug 'Shougo/neco-syntax'
 
+" Plugins for deoplete
+Plug 'Shougo/neopairs.vim'
+
 " Language server client
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -57,6 +60,9 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 " Fuzzy search (for buffers and multiple-entry selection)
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+" Viewer & Finder for LSP symbols and tags in Vim
+Plug 'liuchengxu/vista.vim'
 
 " Seamless navigation between tmux panes and vim splits
 Plug 'christoomey/vim-tmux-navigator'
@@ -165,8 +171,6 @@ set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20
 
 " Enable reading of project-specific .vimrc
 set exrc
-
-" set completeopt+=noinsert
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline configuration                                                        "
@@ -414,10 +418,20 @@ call deoplete#custom#source('syntax', 'min_pattern_length', 3)
 call deoplete#custom#source('_', 'max_abbr_width', 0)
 call deoplete#custom#source('_', 'max_menu_width', 0)
 
-" Close preview window after completion
-autocmd CompleteDone * silent! pclose!
+" Close preview window when leaving INSERT mode
+autocmd InsertLeave * silent! pclose!
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autoselect complete candidate when typing after focusing on one candidate
+set completeopt+=noinsert
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" neopairs configuration                                                       "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Autoclose parentheses when completing a functio with deoplete
+let g:neopairs#enable = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-lsp-cxx-highlight configuration                                          "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -454,10 +468,37 @@ let g:fzf_colors = {
     \ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vista configuration                                                          "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Set LanguageClient-neovim as default source for Vista
+let g:vista_default_executive = 'lcn'
+
+" Position and size of FZF window
+let g:vista_fzf_preview = ['right:25%']
+
+" Disable icons
+let g:vista#renderer#enable_icon = 0
+
+" Display info in floating window when hovering over tags
+" let g:vista_echo_cursor_strategy = 'floating_win'
+
+" Display info immediately when hovering over tags
+let g:vista_cursor_delay = 0
+
+" Do not blink when jumping
+let g:vista_blink = [0, 0]
+let g:vista_top_level_blink = [0, 0]
+
+" Map some commands
+autocmd FileType c,cpp,python,rust,vim nmap <silent> <F12> :Vista!!<CR>
+autocmd FileType markdown nmap <silent> <F12> :Vista toc<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <F12> <Plug>MarkdownPreviewToggle
+nmap <leader>p <Plug>MarkdownPreviewToggle
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " More general settings                                                        "
