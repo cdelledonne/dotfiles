@@ -63,6 +63,7 @@ Plug 'junegunn/fzf.vim'
 
 " Viewer & Finder for LSP symbols and tags in Vim
 Plug 'liuchengxu/vista.vim'
+" Plug 'cdelledonne/vista.vim', { 'dir': '~/.local/share/nvim/forkedplug/vista.vim' }
 
 " Seamless navigation between tmux panes and vim splits
 Plug 'christoomey/vim-tmux-navigator'
@@ -476,6 +477,8 @@ let g:vista_executive_for = {
     \ 'rust': 'lcn',
     \ 'vim': 'lcn'
     \ }
+
+let g:vista_icon_indent = ["▸ ", "▸ "]
 
 " Position and size of FZF window
 let g:vista_fzf_preview = ['right:25%']
