@@ -137,7 +137,7 @@ set nowrap
 autocmd FileType tex,text,markdown setlocal wrap linebreak
 
 " Enable spell checking for textual files
-autocmd FileType tex,text,markdown setlocal spell spelllang=en_us
+autocmd FileType tex,text,markdown,gitcommit setlocal spell spelllang=en_us
 
 " Open .tex files as LaTeX files
 let g:tex_flavor='latex'
@@ -425,7 +425,7 @@ autocmd InsertLeave * silent! pclose!
 " neopairs configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Autoclose parentheses when completing a functio with deoplete
+" Autoclose parentheses when completing a function with deoplete
 let g:neopairs#enable = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -468,8 +468,14 @@ let g:fzf_colors = {
 " Vista configuration                                                          "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Set LanguageClient-neovim as default source for Vista
-let g:vista_default_executive = 'lcn'
+" Set LanguageClient-neovim as default source for Vista for some filetypes
+let g:vista_executive_for = {
+    \ 'c': 'lcn',
+    \ 'cpp': 'lcn',
+    \ 'python': 'lcn',
+    \ 'rust': 'lcn',
+    \ 'vim': 'lcn'
+    \ }
 
 " Position and size of FZF window
 let g:vista_fzf_preview = ['right:25%']
@@ -487,25 +493,8 @@ let g:vista_cursor_delay = 0
 let g:vista_blink = [0, 0]
 let g:vista_top_level_blink = [0, 0]
 
-function! VistaFocus() abort
-    if exists("t:vista") && winnr() == t:vista.winnr()
-        wincmd p
-    else
-        call vista#sidebar#Open()
-    endif
-endfunction
-
-function! VistaClose() abort
-    if exists("t:vista") && winnr() == t:vista.winnr()
-        wincmd p
-    endif
-    call vista#sidebar#Close()
-endfunction
-
-
-" Map some commands
-autocmd FileType c,cpp,python,rust,vim nmap <silent> <F12> :call VistaFocus()<CR>
-autocmd FileType markdown nmap <silent> <F12> :Vista toc<CR>
+" Map commands
+nnoremap <silent> <F12> :Vista focus<CR>
 nnoremap <silent> <leader>ls :Vista finder lcn<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
