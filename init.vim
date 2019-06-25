@@ -511,3 +511,22 @@ nmap <leader>p <Plug>MarkdownPreviewToggle
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set secure
+
+function! Make() abort
+    let l:curr_dir = expand('%:p:h')
+    if match(l:curr_dir, $HOME) != 0
+        echo 'Cannot run outside $HOME directory.'
+        return
+    endif
+    while match(l:curr_dir, $HOME) == 0
+        let l:build_dir = expand(l:curr_dir . '/build')
+        if filereadable(expand(l:build_dir . '/Makefile'))
+            execute '!make ' . '-C ' . l:build_dir
+            return
+        endif
+        let l:curr_dir = fnamemodify(l:curr_dir, ':h')
+    endwhile
+    echo "Makefile not found."
+endfunction
+
+nnoremap <leader>m :call Make()<CR>
