@@ -74,7 +74,8 @@ Plug 'tpope/vim-surround'
 " Allow repetition (dot command) for plugin mappings
 Plug 'tpope/vim-repeat'
 
-Plug '~/.local/share/nvim/plug/hilsp.nvim'
+" Local plugins
+Plug '~/Nextcloud/Developer/Neovim/hilsp.nvim'
 
 call plug#end()
 
