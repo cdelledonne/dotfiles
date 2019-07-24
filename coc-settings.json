@@ -11,6 +11,7 @@
             "command": "ccls",
             "args": ["-log-file=/tmp/ccls.log", "-v=1"],
             "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+            "trace.server": "verbose",
             "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
             "initializationOptions": {
                 "cache": { "directory": "/tmp/ccls" },

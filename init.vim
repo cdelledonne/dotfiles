@@ -55,7 +55,7 @@ Plug 'Shougo/neopairs.vim'
 
 " Language server client
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'jackguo380/vim-lsp-cxx-highlight'
+" Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Fuzzy search (for buffers and multiple-entry selection)
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -73,6 +73,8 @@ Plug 'tpope/vim-surround'
 
 " Allow repetition (dot command) for plugin mappings
 Plug 'tpope/vim-repeat'
+
+Plug '~/.local/share/nvim/plug/hilsp.nvim'
 
 call plug#end()
 
@@ -286,7 +288,7 @@ imap <C-c> <Plug>NERDCommenterInsert
 let g:indentLine_char = '┊'
 
 " Enable for certain file types only
-let g:indentLine_fileType = ['c', 'cpp', 'python', 'bash', 'rust', 'vim']
+let g:indentLine_fileType = ['c', 'cpp', 'python', 'bash', 'rust', 'vim', 'lua']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar configuration                                                         "
@@ -436,6 +438,12 @@ let g:neopairs#enable = 1
 " Enable logging
 let g:lsp_cxx_hl_log_file = '/tmp/vim-lsp-cxx-hl.log'
 let g:lsp_cxx_hl_verbose = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" hilsp configuration                                                          "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:hilsp_log_file = '/tmp/hilsp.log'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf configuration                                                            "
