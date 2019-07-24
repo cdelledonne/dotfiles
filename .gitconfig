@@ -5,3 +5,11 @@
 	default = simple
 [core]
 	excludesfile = ~/.gitignore_global
+[diff]
+	tool = vimdiff3
+[difftool "vimdiff3"]
+	path = nvim
+[merge]
+	tool = vimdiff3
+[mergetool "vimdiff3"]
+	path = nvim
