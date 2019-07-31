@@ -39,7 +39,8 @@ Plug 'SirVer/ultisnips'
 Plug 'kassio/neoterm'
 
 " Search (and replace) multiple files
-Plug 'dyng/ctrlsf.vim'
+" Plug 'dyng/ctrlsf.vim'
+Plug 'wincent/ferret'
 
 " Completion framework
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -238,7 +239,7 @@ let g:airline#extensions#ycm#enabled = 1
 " fugitive configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <leader>s :Gstatus<CR>
+nnoremap <silent> <leader>gs :Gstatus<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
@@ -334,6 +335,12 @@ autocmd FileType cpp UltiSnipsAddFiletypes cpp.c
 
 " Focus CtrlSF window when search is done
 let g:ctrlsf_auto_focus = { 'at' : 'done', 'duration_less_than' : 2000 }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ferret configuration                                                         "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:FerretAutojump = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Coc configuration                                                            "
