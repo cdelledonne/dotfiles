@@ -218,6 +218,7 @@ done
 VIM_SUBDIRS=(
     "pythonx"
     "spell"
+    "syntax"
     "ultisnips"
 )
 
