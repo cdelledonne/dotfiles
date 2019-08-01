@@ -75,6 +75,9 @@ Plug 'tpope/vim-surround'
 " Allow repetition (dot command) for plugin mappings
 Plug 'tpope/vim-repeat'
 
+" LaTeX autocompletion and other features
+Plug 'lervag/vimtex'
+
 " Local plugins
 Plug '~/Nextcloud/Developer/Neovim/hilsp.nvim'
 
@@ -366,6 +369,12 @@ let g:LanguageClient_loggingLevel = 'DEBUG'
 let g:LanguageClient_loadSettings = 1
 let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
 
+" Always show hover in preview window
+let g:LanguageClient_hoverPreview = 'Always'
+
+" Show signature help after completion
+let g:LanguageClient_signatureHelpOnCompleteDone = 1
+
 " Filetype-specific commands (language servers)
 let g:LanguageClient_serverCommands = {
     \ 'c': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
@@ -428,6 +437,11 @@ call deoplete#custom#source('syntax', 'min_pattern_length', 3)
 " Disable the truncate feature
 call deoplete#custom#source('_', 'max_abbr_width', 0)
 call deoplete#custom#source('_', 'max_menu_width', 0)
+
+" LaTeX autocompletion with vimtex
+call deoplete#custom#var('omni', 'input_patterns', {
+        \ 'tex': g:vimtex#re#deoplete
+        \ })
 
 " Close preview window when leaving INSERT mode
 autocmd InsertLeave * silent! pclose!
@@ -519,6 +533,9 @@ nnoremap <silent> <leader>ls :Vista finder lcn<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Do not close preview when switching to another buffer
+let g:mkdp_auto_close = 0
 
 nmap <leader>p <Plug>MarkdownPreviewToggle
 

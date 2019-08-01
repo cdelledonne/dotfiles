@@ -5,6 +5,8 @@
 	default = simple
 [core]
 	excludesfile = ~/.gitignore_global
+[credential]
+        helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 [diff]
 	tool = vimdiff3
 [difftool "vimdiff3"]
