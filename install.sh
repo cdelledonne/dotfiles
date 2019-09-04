@@ -28,7 +28,7 @@ do
         # Check if default directory does not exist and has to be created
         if ! [ -d $VIM_CONFIG_DIR ]
         then
-            echo "mkdir -p $VIM_CONFIG_DIR"
+            mkdir -p $VIM_CONFIG_DIR
         fi
         # Terminate loop
         vim_config_dir_done=1
@@ -50,7 +50,7 @@ do
                 then
                     # Create directory and terminate loop
                     VIM_CONFIG_DIR=$input_vim_config_dir
-                    echo "mkdir -p $VIM_CONFIG_DIR"
+                    mkdir -p $VIM_CONFIG_DIR
                     vim_config_dir_done=1
                     break
                 elif [ $create_dir = "n" ] || [ $create_dir = "N" ]
@@ -75,7 +75,7 @@ do
         # Check if default directory does not exist and has to be created
         if ! [ -d $NVIM_CONFIG_DIR ]
         then
-            echo "mkdir -p $NVIM_CONFIG_DIR"
+            mkdir -p $NVIM_CONFIG_DIR
         fi
         # Terminate loop
         nvim_config_dir_done=1
@@ -97,7 +97,7 @@ do
                 then
                     # Create directory and terminate loop
                     NVIM_CONFIG_DIR=$input_nvim_config_dir
-                    echo "mkdir -p $NVIM_CONFIG_DIR"
+                    mkdir -p $NVIM_CONFIG_DIR
                     nvim_config_dir_done=1
                     break
                 elif [ $create_dir = "n" ] || [ $create_dir = "N" ]
