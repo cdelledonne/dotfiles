@@ -8,7 +8,5 @@
         "completion": { "detailedLabel": false },
         "diagnostics": { "onChange": -1 }
     },
-    "pyls.configurationSources": ["flake8"],
-    "pyls.plugins.pycodestyle.enabled": false,
-    "pyls.plugins.mccabe.enabled": false
+    "pyls.configurationSources": ["flake8"]
 }
