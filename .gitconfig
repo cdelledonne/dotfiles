@@ -6,7 +6,7 @@
 [core]
 	excludesfile = ~/.gitignore_global
 [credential]
-        helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+	helper = /usr/share/git/credential/gnome-keyring/git-credential-gnome-keyring
 [diff]
 	tool = vimdiff3
 [difftool "vimdiff3"]
