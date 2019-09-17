@@ -1,3 +1,10 @@
+# Homebrew autocompletion (must be called before compinit)
+if [[ "$(uname)" == "Darwin" ]]; then
+    if type brew &>/dev/null; then
+        FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+    fi
+fi
+
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _expand _complete _ignored
@@ -28,7 +35,11 @@ promptinit
 PS1='[%B%F{green}%1~%f%b] $ '
 
 # Aliases
-alias ls='ls --color=auto --group-directories-first'
-alias ll='ls -al'
+if [[ "$(uname)" == "Darwin" ]]; then
+    alias ls='gls --color=auto --group-directories-first'
+else
+    alias ls='ls --color=auto --group-directories-first'
+fi
+alias ll='ls -Fhal'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
