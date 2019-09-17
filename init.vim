@@ -79,7 +79,7 @@ Plug 'tpope/vim-repeat'
 Plug 'lervag/vimtex'
 
 " Local plugins
-Plug '~/Nextcloud/Developer/Neovim/hilsp.nvim'
+" Plug '~/Nextcloud/Developer/Neovim/hilsp.nvim'
 
 call plug#end()
 
