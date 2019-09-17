@@ -2,15 +2,21 @@
 # Configuration directories (Vim and Neovim)                                   #
 ################################################################################
 
+# Colors
+RED='\033[1;31m'   # Bold red
+GREEN='\033[1;32m' # Bold green
+NC='\033[0m'       # No color
+
 # Default directories
 VIM_CONFIG_DIR="$HOME/.vim"
 NVIM_CONFIG_DIR="$HOME/.config/nvim"
+ALACRITTY_CONFIG="$HOME/.config/alacritty"
 
 echo ""
 echo "General configuration"
 echo "====================="
 echo ""
-echo "* Use absolute pahts."
+echo -e "* ${RED}Use absolute pahts.${NC}"
 echo "* Default options are shown in square brackets, return empty answers to use them."
 
 vim_config_dir_done=0
@@ -139,9 +145,8 @@ echo ""
 echo "Dotfiles installation"
 echo "====================="
 echo ""
-echo "* Use absolute pahts."
+echo -e "* ${RED}Use absolute pahts.${NC}"
 echo "* Default options are shown in square brackets, return empty answers to use them."
-echo "* Round brackets list valid answers to some questions."
 
 # Loop through files in current directory
 for f in `find $PWD/ -maxdepth 1 -not -path $PWD/`
@@ -153,12 +158,13 @@ do
     then
         # Ask the user whether to install (symlink) this dotfile
         echo ""
-        read -p "Install '$filename'? (y/n): " install_df
+        read -p "$(echo -e "Install ${GREEN}${filename}${NC}? (y/n): ")" install_df
         if [ $install_df = "y" ] || [ $install_df = "Y" ]
         then
             # Default destinations
             case $filename in
                 "init.vim"|"coc-config.json"|"settings.json") dst=$NVIM_CONFIG_DIR/;;
+                "alacritty.yml") dst=$ALACRITTY_CONFIG_DIR/;;
                 *) dst=$HOME;;
             esac
             # Ask the user whether to use something different than the default
@@ -234,8 +240,6 @@ elementIn () {
 echo ""
 echo "Neovim links to Vim subdirectories"
 echo "=================================="
-echo ""
-echo "* Round brackets list valid answers to some questions."
 
 for f in `find $VIM_CONFIG_DIR/ -maxdepth 1 -not -path $VIM_CONFIG_DIR/`
 do
@@ -246,7 +250,7 @@ do
     then
         # Ask the user whether to symlink this subdirectory
         echo ""
-        read -p "Link '$dirname' to Neovim's config directory? (y/n): " link_sd
+        read -p "$(echo -e "Link ${GREEN}${dirname}${NC} to Neovim's config directory? (y/n): ")" link_sd
         if [ $link_sd = "y" ] || [ $link_sd = "Y" ]
         then
             # Check if target already exists
@@ -282,11 +286,9 @@ done
 echo ""
 echo "Installation of vim-plug"
 echo "========================"
-echo ""
-echo "* Round brackets list valid answers to some questions."
 
 echo ""
-read -p "Install vim-plug? (y/n): " install_vp
+read -p "$(echo -e "Install ${GREEN}vim-plug${NC}? (y/n): ")" install_vp
 if [ $install_vp = "y" ] || [ $install_vp = "Y" ]
 then
     curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
