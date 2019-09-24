@@ -42,4 +42,7 @@ else
 fi
 alias ll='ls -Fhal'
 
+# PATH
+export PATH=~/.local/bin:$PATH
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
