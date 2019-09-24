@@ -43,19 +43,19 @@ Plug 'kassio/neoterm'
 Plug 'wincent/ferret'
 
 " Completion framework
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() } }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Completion sources for deoplete
-Plug 'Shougo/neco-vim'
-Plug 'wellle/tmux-complete.vim'
-Plug 'Shougo/neco-syntax'
+" Plug 'Shougo/neco-vim'
+" Plug 'wellle/tmux-complete.vim'
+" Plug 'Shougo/neco-syntax'
 
 " Plugins for deoplete
-Plug 'Shougo/neopairs.vim'
+" Plug 'Shougo/neopairs.vim'
 
 " Language server client
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 " Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Fuzzy search (for buffers and multiple-entry selection)
@@ -350,108 +350,114 @@ let g:FerretAutojump = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Use <Tab> and <S-Tab> to navigate completion list
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Use <C-Space> to trigger completion
-" inoremap <silent><expr> <C-Space> coc#refresh()
+inoremap <silent><expr> <C-Space> coc#refresh()
 
-" nnoremap <leader>gg <Plug>(coc-definition)
+" Highlight comments in JSON files
+autocmd FileType json syntax match Comment +\/\/.\+$+
+
+nnoremap <leader>ld <Plug>(coc-definition)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LanguageClient-neovim configuration                                          "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
-let g:LanguageClient_loggingLevel = 'DEBUG'
+" let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
+" let g:LanguageClient_loggingLevel = 'DEBUG'
 
 " Enable loading of settings file
-let g:LanguageClient_loadSettings = 1
-let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
+" let g:LanguageClient_loadSettings = 1
+" let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
 
 " Always show hover in preview window
-let g:LanguageClient_hoverPreview = 'Always'
+" let g:LanguageClient_hoverPreview = 'Always'
 
 " Show signature help after completion
-let g:LanguageClient_signatureHelpOnCompleteDone = 1
+" let g:LanguageClient_signatureHelpOnCompleteDone = 1
 
 " Filetype-specific commands (language servers)
-let g:LanguageClient_serverCommands = {
-    \ 'c': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
-    \ 'cpp': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
-    \ 'python': ['pyls'],
-    \ }
+" let g:LanguageClient_serverCommands = {
+    " \ 'c': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
+    " \ 'cpp': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
+    " \ 'python': ['pyls'],
+    " \ }
+    " \ 'python': ['pyls'],
+    " \ 'c': ['clangd', '-compile-commands-dir=build', '-log=verbose'],
+    " \ 'cpp': ['clangd', '-compile-commands-dir=build', '-log=verbose'],
 
-let g:LanguageClient_rootMarkers = {
-    \ 'c': ['build/compile_commands.json', 'compile_commands.json'],
-    \ 'cpp': ['build/compile_commands.json', 'compile_commands.json'],
-    \ }
+" let g:LanguageClient_rootMarkers = {
+    " \ 'c': ['build/compile_commands.json', 'compile_commands.json'],
+    " \ 'cpp': ['build/compile_commands.json', 'compile_commands.json'],
+    " \ }
 
 " Define key bindings
-function! SetLSPShortcuts()
-  nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
-  nnoremap <silent> <leader>lD :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
-  nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
+" function! SetLSPShortcuts()
+  " nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
+  " nnoremap <silent> <leader>lD :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
+  " nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
   " nnoremap <silent> <leader>lf :call LanguageClient#textDocument_formatting()<CR>
-  nnoremap <silent> <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-  nnoremap <silent> <leader>lx :call LanguageClient#textDocument_references()<CR>
+  " nnoremap <silent> <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
+  " nnoremap <silent> <leader>lx :call LanguageClient#textDocument_references()<CR>
   " nnoremap <silent> <leader>la :call LanguageClient_workspace_applyEdit()<CR>
-  nnoremap <silent> <leader>lc :call LanguageClient#textDocument_completion()<CR>
-  nnoremap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
+  " nnoremap <silent> <leader>lc :call LanguageClient#textDocument_completion()<CR>
+  " nnoremap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
   " nnoremap <silent> <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-  nnoremap <silent> <leader>lm :call LanguageClient_contextMenu()<CR>
-endfunction()
+  " nnoremap <silent> <leader>lm :call LanguageClient_contextMenu()<CR>
+" endfunction()
 
 " Set key bindings for some specific file types
-augroup LSP
-  autocmd!
-  autocmd FileType c,cpp,python call SetLSPShortcuts()
-augroup END
+" augroup LSP
+  " autocmd!
+  " autocmd FileType c,cpp,python call SetLSPShortcuts()
+" augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " deoplete configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 " Use <Tab> and <S-Tab> to navigate completion list
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Enable around and buffer sources in some textual filetypes only
-call deoplete#custom#source('around', 'filetypes', ['text', 'markdown'])
-call deoplete#custom#source('buffer', 'filetypes', ['text', 'markdown'])
+" call deoplete#custom#source('around', 'filetypes', ['text', 'markdown'])
+" call deoplete#custom#source('buffer', 'filetypes', ['text', 'markdown'])
 
 " Enable tmux source in tmux files only
-call deoplete#custom#source('tmux-complete', 'filetypes', ['tmux'])
+" call deoplete#custom#source('tmux-complete', 'filetypes', ['tmux'])
 
 " Enable syntax source in some filetypes only
-call deoplete#custom#source('syntax', 'filetypes', ['make', 'cmake'])
-let g:necosyntax#max_syntax_lines = 50000
+" call deoplete#custom#source('syntax', 'filetypes', ['make', 'cmake'])
+" let g:necosyntax#max_syntax_lines = 50000
 
 " Trigger completion of some sources after typing 3 characters
-call deoplete#custom#source('LanguageClient', 'min_pattern_length', 3)
-call deoplete#custom#source('tmux-complete', 'min_pattern_length', 3)
-call deoplete#custom#source('syntax', 'min_pattern_length', 3)
+" call deoplete#custom#source('LanguageClient', 'min_pattern_length', 3)
+" call deoplete#custom#source('tmux-complete', 'min_pattern_length', 3)
+" call deoplete#custom#source('syntax', 'min_pattern_length', 3)
 
 " Disable the truncate feature
-call deoplete#custom#source('_', 'max_abbr_width', 0)
-call deoplete#custom#source('_', 'max_menu_width', 0)
+" call deoplete#custom#source('_', 'max_abbr_width', 0)
+" call deoplete#custom#source('_', 'max_menu_width', 0)
 
 " LaTeX autocompletion with vimtex
-call deoplete#custom#var('omni', 'input_patterns', {
-        \ 'tex': g:vimtex#re#deoplete
-        \ })
+" call deoplete#custom#var('omni', 'input_patterns', {
+        " \ 'tex': g:vimtex#re#deoplete
+        " \ })
 
 " Close preview window when leaving INSERT mode
-autocmd InsertLeave * silent! pclose!
+" autocmd InsertLeave * silent! pclose!
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neopairs configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Autoclose parentheses when completing a function with deoplete
-let g:neopairs#enable = 1
+" let g:neopairs#enable = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-lsp-cxx-highlight configuration                                          "

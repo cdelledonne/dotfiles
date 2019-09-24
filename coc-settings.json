@@ -1,21 +1,46 @@
 {
+    // Competion menu options.
+    "suggest.labelMaxLength": 35,
+    "suggest.detailMaxLength": 4,
+    // "suggest.enablePreview": true,
+    // "suggest.floatEnable": false,
+    "suggest.detailField": "preview",
+    "suggest.autoTrigger": "always",
+    // "suggest.disableMenu": true,
+    "suggest.snippetIndicator": "...",
     "suggest.minTriggerInputLength": 3,
-    "suggest.snippetIndicator": " ...",
-    "coc.source.around.shortcut": "B",
-    "coc.source.around.disableSyntaxes": ["comment, string"],
+    // "suggest.acceptSuggestionOnCommitCharacter": true,
+
+    // Diagnostic options.
+    // "diagnostic.enableSign": false,
+
+    //  Other preferences.
+    // "coc.preferences.rootPatterns": [".vim", ".git", ".hg"],
+
+    // Sources priorities.
+    // "coc.source.around.priority": 1,
+    // "coc.source.buffer.priority": 1,
+    // "coc.source.file.priority": 10,
+
+    // Sources options.
     "coc.source.around.enable": false,
     "coc.source.buffer.enable": false,
-    "suggest.autoTrigger": "trigger",
+    // "coc.source.around.shortcut": "B",
+    // "coc.source.around.disableSyntaxes": ["comment, string"],
+
+    // Language servers configuration.
     "languageserver": {
         "ccls": {
             "command": "ccls",
             "args": ["-log-file=/tmp/ccls.log", "-v=1"],
             "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-            "trace.server": "verbose",
-            "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+            // "trace.server": "verbose",
+            "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/"],
             "initializationOptions": {
                 "cache": { "directory": "/tmp/ccls" },
-                "client": { "snippetSupport": true }
+                "client": { "snippetSupport": true },
+                "completion": { "detailedLabel": false },
+                "compilationDatabaseDirectory": "build"
             }
         }
     }
