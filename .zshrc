@@ -32,7 +32,7 @@ autoload -Uz promptinit
 promptinit
 
 # Prompt
-PS1='[%B%F{green}%1~%f%b] $ '
+PS1='[%B%F{yellow}%1~%f%b] $ '
 
 # Aliases
 if [[ "$(uname)" == "Darwin" ]]; then
