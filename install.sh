@@ -165,8 +165,7 @@ do
         then
             # Default destinations
             case $filename in
-                "init.vim"|"coc-config.json"|"settings.json") dst=$NVIM_CONFIG_DIR/;;
-                "init-server.vim") dst=$NVIM_CONFIG_DIR/init.vim;;
+                "init.vim"|"init-server.vim"|"coc-config.json"|"settings.json") dst=$NVIM_CONFIG_DIR/;;
                 "alacritty.yml") dst=$ALACRITTY_CONFIG_DIR/;;
                 *) dst=$HOME;;
             esac
@@ -188,7 +187,10 @@ do
                 echo "ERROR: '$test_dst' is not a valid path"
             done
             # Check if target already exists
-            target=$dst/$filename
+            case $filename in
+                "init-server.vim") target=$dst/init.vim;;
+                *) target=$dst/$filename;;
+            esac
             if [ -e $target ]
             then
                 # Ask the user whether to revise the file, in case target is not a directory
