@@ -107,7 +107,7 @@ set foldmethod=syntax
 set nofoldenable
 
 " Fold specific files based on indent
-autocmd BufNewFile,BufRead *.py,*.bas set foldmethod=indent
+autocmd FileType python,basic,yaml set foldmethod=indent
 
 " Show line number
 set number

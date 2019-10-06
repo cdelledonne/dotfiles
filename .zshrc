@@ -34,6 +34,15 @@ promptinit
 # Prompt
 PS1='[%B%F{yellow}%1~%f%b] $ '
 
+# PATH
+export PATH=~/.local/bin:$PATH
+
+# Other environment variables
+if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+    export MOZ_ENABLE_WAYLAND=1
+    export QT_QPA_PLATFORM=wayland
+fi
+
 # Aliases
 if [[ "$(uname)" == "Darwin" ]]; then
     alias ls='gls --color=auto --group-directories-first'
@@ -41,8 +50,5 @@ else
     alias ls='ls --color=auto --group-directories-first'
 fi
 alias ll='ls -Fhal'
-
-# PATH
-export PATH=~/.local/bin:$PATH
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

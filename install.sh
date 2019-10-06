@@ -164,6 +164,7 @@ do
             # Default destinations
             case $filename in
                 "init.vim"|"coc-config.json"|"settings.json") dst=$NVIM_CONFIG_DIR/;;
+                "init-server.vim") dst=$NVIM_CONFIG_DIR/init.vim;;
                 "alacritty.yml") dst=$ALACRITTY_CONFIG_DIR/;;
                 *) dst=$HOME;;
             esac
@@ -293,6 +294,23 @@ if [ $install_vp = "y" ] || [ $install_vp = "Y" ]
 then
     curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
+echo ""
+
+################################################################################
+# Installation of Tmux Plugin Manager                                          #
+################################################################################
+
+echo ""
+echo "Installation of Tmux Plugin Manager"
+echo "==================================="
+
+echo ""
+read -p "$(echo -e "Install ${GREEN}TPM${NC}? (y/n): ")" install_tmp
+if [ $install_tmp = "y" ] || [ $install_tmp = "Y" ]
+then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
 echo ""
