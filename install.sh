@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ################################################################################
 # Configuration directories (Vim and Neovim)                                   #
 ################################################################################
@@ -178,7 +180,7 @@ do
                 else
                     test_dst=$dst
                 fi
-                if [ -d $test_dst ]
+                if [ -e $test_dst ]
                 then
                     dst=$test_dst
                     break
