@@ -293,7 +293,9 @@ imap <C-c> <Plug>NERDCommenterInsert
 let g:indentLine_char = '┊'
 
 " Enable for certain file types only
-let g:indentLine_fileType = ['c', 'cpp', 'python', 'bash', 'rust', 'vim', 'lua']
+let g:indentLine_fileType = [
+    \ 'c', 'cpp', 'python', 'bash', 'rust', 'vim', 'lua', 'yaml'
+    \ ]
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar configuration                                                         "
