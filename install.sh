@@ -285,6 +285,43 @@ do
 done
 
 ################################################################################
+# Installation of Oh My Zsh                                                    #
+################################################################################
+
+echo ""
+echo "Installation of Oh My Zsh"
+echo "========================="
+
+echo ""
+read -p "$(echo -e "Install ${GREEN}Oh My Zsh${NC}? (y/n): ")" install_omz
+if [ $install_omz = "y" ] || [ $install_omz = "Y" ]
+then
+    # Install Oh My Zsh
+    # export CHSH=no
+    # export RUNZSH=no
+    # export REPLACE_RC=no
+    # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    # Bypass some internals
+    mkdir -p $HOME/.oh-my-zsh/custom/lib
+    touch $HOME/.oh-my-zsh/custom/lib/bzr.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/clipboard.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/compfix.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/completion.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/correction.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/diagnostics.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/directories.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/history.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/key-bindings.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/misc.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/nvm.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/prompt_info_functions.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/spectrum.zsh
+    touch $HOME/.oh-my-zsh/custom/lib/termsupport.zsh
+fi
+
+echo ""
+
+################################################################################
 # Installation of vim-plug                                                     #
 ################################################################################
 

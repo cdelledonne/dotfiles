@@ -1,9 +1,17 @@
+################################################################################
+# Things to do before compinit                                                 #
+################################################################################
+
 # Homebrew autocompletion (must be called before compinit)
 if [[ "$(uname)" == "Darwin" ]]; then
     if type brew &>/dev/null; then
         FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
     fi
 fi
+
+################################################################################
+# Automatic settings                                                           #
+################################################################################
 
 # The following lines were added by compinstall
 
@@ -24,31 +32,59 @@ HISTSIZE=5000
 SAVEHIST=5000
 # End of lines configured by zsh-newuser-install
 
+################################################################################
+# Other completion settings                                                    #
+################################################################################
+
 # Complete './' and '../'
 zstyle ':completion:*' special-dirs true
 
-# Enable themes
-autoload -Uz promptinit
-promptinit
-
-# Prompt
-PS1='[%B%F{yellow}%1~%f%b] $ '
+################################################################################
+# Environment                                                                  #
+################################################################################
 
 # PATH
 export PATH=~/.local/bin:$PATH
 
-# Other environment variables
+# Wayland-related
 if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
     export MOZ_ENABLE_WAYLAND=1
     export QT_QPA_PLATFORM=wayland
 fi
 
-# Aliases
+################################################################################
+# Aliases                                                                      #
+################################################################################
+
 if [[ "$(uname)" == "Darwin" ]]; then
     alias ls='gls --color=auto --group-directories-first'
 else
     alias ls='ls --color=auto --group-directories-first'
 fi
-alias ll='ls -Fhal'
+alias ll='ls -Fhl'
+alias la='ls -FhAl'
+
+################################################################################
+# Add-ons                                                                      #
+################################################################################
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+################################################################################
+# Oh My Zsh                                                                    #
+################################################################################
+
+export ZSH=$HOME/.oh-my-zsh
+DISABLE_LS_COLORS="true"
+ZSH_DISABLE_COMPFIX="true"
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
+# Prompt
+PROMPT='[%B%F{yellow}%1~%f%b] '
+PROMPT+='$(git_prompt_info)'
+PROMPT+='$ '
+ZSH_THEME_GIT_PROMPT_PREFIX="(%B%F{blue}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b) "
+ZSH_THEME_GIT_PROMPT_DIRTY="%B%F{red} *%f%b"
+ZSH_THEME_GIT_PROMPT_CLEAN=""
