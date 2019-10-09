@@ -297,10 +297,10 @@ read -p "$(echo -e "Install ${GREEN}Oh My Zsh${NC}? (y/n): ")" install_omz
 if [ $install_omz = "y" ] || [ $install_omz = "Y" ]
 then
     # Install Oh My Zsh
-    # export CHSH=no
-    # export RUNZSH=no
-    # export REPLACE_RC=no
-    # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    export CHSH=no
+    export RUNZSH=no
+    export REPLACE_RC=no
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     # Bypass some internals
     mkdir -p $HOME/.oh-my-zsh/custom/lib
     touch $HOME/.oh-my-zsh/custom/lib/bzr.zsh
