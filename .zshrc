@@ -80,10 +80,23 @@ ZSH_DISABLE_COMPFIX="true"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
-# Prompt
-PROMPT='[%B%F{yellow}%1~%f%b] '
+# Prompt, part 1: aostname, only if in an ssh session
+if [[ "$SSH_CONNECTION" == "" ]]; then
+    PROMPT=''
+else
+    PROMPT='{%B%F{magenta}$(hostname)%f%b} '
+fi
+
+# Prompt, part 2: current directory (not full path)
+PROMPT+='[%B%F{yellow}%1~%f%b] '
+
+# Prompt, part 3: Git branch and dirty status
 PROMPT+='$(git_prompt_info)'
+
+# Prompt, part 4: dollar sign
 PROMPT+='$ '
+
+# Theme of the Git prompt info
 ZSH_THEME_GIT_PROMPT_PREFIX="(%B%F{blue}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b) "
 ZSH_THEME_GIT_PROMPT_DIRTY="%B%F{red} *%f%b"
