@@ -52,6 +52,8 @@ if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
     export QT_QPA_PLATFORM=wayland
 fi
 
+export EDITOR=nvim
+
 ################################################################################
 # Aliases                                                                      #
 ################################################################################
@@ -77,7 +79,7 @@ alias la='ls -FhAl'
 export ZSH=$HOME/.oh-my-zsh
 DISABLE_LS_COLORS="true"
 ZSH_DISABLE_COMPFIX="true"
-plugins=(git)
+plugins=(git sudo)
 source $ZSH/oh-my-zsh.sh
 
 # Prompt, part 1: aostname, only if in an ssh session
