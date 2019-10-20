@@ -30,7 +30,10 @@ Plug 'Yggdroot/indentLine'
 
 " Markdown preview and additional tools
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-" Plug 'SidOfc/mkdx'
+Plug 'plasticboy/vim-markdown'
+
+" TOML syntax highlighting
+Plug 'cespare/vim-toml'
 
 " Code snippets
 Plug 'SirVer/ultisnips'
@@ -39,7 +42,6 @@ Plug 'SirVer/ultisnips'
 Plug 'kassio/neoterm'
 
 " Search (and replace) multiple files
-" Plug 'dyng/ctrlsf.vim'
 Plug 'wincent/ferret'
 
 " Completion framework
@@ -62,10 +64,6 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Viewer & Finder for LSP symbols and tags in Vim
-Plug 'liuchengxu/vista.vim'
-" Plug 'cdelledonne/vista.vim', { 'dir': '~/.local/share/nvim/forkedplug/vista.vim' }
-
 " Seamless navigation between tmux panes and vim splits
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -77,9 +75,6 @@ Plug 'tpope/vim-repeat'
 
 " LaTeX autocompletion and other features
 Plug 'lervag/vimtex'
-
-" Local plugins
-" Plug '~/Nextcloud/Developer/Neovim/hilsp.nvim'
 
 call plug#end()
 
@@ -150,11 +145,6 @@ autocmd FileType tex,text,markdown,gitcommit setlocal spell spelllang=en_us
 " Open .tex files as LaTeX files
 let g:tex_flavor='latex'
 
-" Configure nesC syntax
-" augroup filetypedetect
-    " au! BufRead,BufNewFile *.nc setfiletype nc
-" augroup END
-
 " Use Esc to exit terminal mode
 tnoremap <Esc> <C-\><C-n>
 
@@ -163,10 +153,6 @@ tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 tnoremap <C-h> <C-\><C-n><C-w>h
-
-" Buffers navigation
-" nnoremap <C-Tab>   :bn<CR>
-" nnoremap <S-C-Tab> :bp<CR>
 
 " Folding
 nnoremap <space> za
@@ -296,11 +282,6 @@ let g:indentLine_char = '┊'
 let g:indentLine_fileType = [
     \ 'c', 'cpp', 'python', 'bash', 'rust', 'vim', 'lua', 'yaml'
     \ ]
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tagbar configuration                                                         "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " AutoPairs configuration                                                      "
@@ -504,41 +485,6 @@ let g:fzf_colors = {
     \ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vista configuration                                                          "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Set LanguageClient-neovim as default source for Vista for some filetypes
-let g:vista_executive_for = {
-    \ 'c': 'lcn',
-    \ 'cpp': 'lcn',
-    \ 'python': 'lcn',
-    \ 'rust': 'lcn',
-    \ 'vim': 'lcn'
-    \ }
-
-let g:vista_icon_indent = ["▸ ", "▸ "]
-
-" Position and size of FZF window
-let g:vista_fzf_preview = ['right:25%']
-
-" Disable icons
-let g:vista#renderer#enable_icon = 0
-
-" Display info in floating window when hovering over tags
-" let g:vista_echo_cursor_strategy = 'floating_win'
-
-" Display info immediately when hovering over tags
-let g:vista_cursor_delay = 0
-
-" Do not blink when jumping
-let g:vista_blink = [0, 0]
-let g:vista_top_level_blink = [0, 0]
-
-" Map commands
-nnoremap <silent> <F12> :Vista focus<CR>
-nnoremap <silent> <leader>ls :Vista finder lcn<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -548,26 +494,18 @@ let g:mkdp_auto_close = 0
 nmap <leader>p <Plug>MarkdownPreviewToggle
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-markdown configuration                                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Highlight YAML-style frontmatter (starts and ends with '---')
+let g:vim_markdown_frontmatter = 1
+
+" Prevent problems when using automatic line wrapping
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_new_list_item_indent = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " More general settings                                                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set secure
-
-function! Make() abort
-    let l:curr_dir = expand('%:p:h')
-    if match(l:curr_dir, $HOME) != 0
-        echo 'Cannot run outside $HOME directory.'
-        return
-    endif
-    while match(l:curr_dir, $HOME) == 0
-        let l:build_dir = expand(l:curr_dir . '/build')
-        if filereadable(expand(l:build_dir . '/Makefile'))
-            execute '!make ' . '-C ' . l:build_dir
-            return
-        endif
-        let l:curr_dir = fnamemodify(l:curr_dir, ':h')
-    endwhile
-    echo "Makefile not found."
-endfunction
-
-nnoremap <leader>m :call Make()<CR>
