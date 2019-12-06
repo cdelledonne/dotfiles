@@ -79,7 +79,7 @@ alias la='ls -FhAl'
 export ZSH=$HOME/.oh-my-zsh
 DISABLE_LS_COLORS="true"
 ZSH_DISABLE_COMPFIX="true"
-plugins=(git sudo)
+plugins=(sudo)
 source $ZSH/oh-my-zsh.sh
 
 # Prompt, part 1: aostname, only if in an ssh session
