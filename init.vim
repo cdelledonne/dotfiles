@@ -494,11 +494,18 @@ nmap <leader>p <Plug>MarkdownPreviewToggle
 " vim-markdown configuration                                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Highlight YAML-style frontmatter (starts and ends with '---')
+" Highlight YAML-style frontmatter (starts and ends with '---') and TOML-style
+" frontmatter (starts and ends with '+++')
 let g:vim_markdown_frontmatter = 1
-
-nmap <leader>p <Plug>MarkdownPreviewToggle
+let g:vim_markdown_toml_frontmatter = 1
 
 " Prevent problems when using automatic line wrapping
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
+
+" Override some syntax highlighting
+hi def link mkdHeading Delimiter
+
+map <F12> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
