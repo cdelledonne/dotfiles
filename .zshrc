@@ -82,7 +82,7 @@ ZSH_DISABLE_COMPFIX="true"
 plugins=(sudo)
 source $ZSH/oh-my-zsh.sh
 
-# Prompt, part 1: aostname, only if in an ssh session
+# Prompt, part 1: hostname, only if in an ssh session
 if [[ "$SSH_CONNECTION" == "" ]]; then
     PROMPT=''
 else
