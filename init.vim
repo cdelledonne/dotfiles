@@ -44,9 +44,12 @@ Plug 'kassio/neoterm'
 " Search (and replace) multiple files
 Plug 'wincent/ferret'
 
+" Nvim LSP client configurations
+Plug 'neovim/nvim-lsp'
+
 " Completion framework
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Completion sources for deoplete
 " Plug 'Shougo/neco-vim'
@@ -75,6 +78,9 @@ Plug 'tpope/vim-repeat'
 
 " LaTeX autocompletion and other features
 Plug 'lervag/vimtex'
+
+" Peek content of registers
+Plug 'junegunn/vim-peekaboo'
 
 call plug#end()
 
@@ -505,3 +511,20 @@ let g:vim_markdown_new_list_item_indent = 0
 
 " Override some syntax highlighting
 hi def link mkdHeading Delimiter
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-peekaboo configuration                                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Delay opening of Peekaboo window
+let g:peekaboo_delay = 1000
+
+" Create Peekaboo window below current window
+let g:peekaboo_window = 'bel 30new'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Nvim LSP configuration                                                       "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Lua config file in ~/.config/nvim/lua
+lua require 'lspinit'
