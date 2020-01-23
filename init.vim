@@ -148,6 +148,9 @@ autocmd FileType tex,text,markdown setlocal wrap linebreak
 " Enable spell checking for textual files
 autocmd FileType tex,text,markdown,rst,gitcommit setlocal spell spelllang=en_us
 
+" Set text width for line breaks for textual files
+autocmd FileType tex,text,markdown,rst,gitcommit setlocal textwidth=80
+
 " Open .tex files as LaTeX files
 let g:tex_flavor='latex'
 
@@ -527,4 +530,6 @@ let g:peekaboo_window = 'bel 30new'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Lua config file in ~/.config/nvim/lua
-lua require 'lspinit'
+if has('nvim-0.5')
+    lua require 'lspinit'
+endif
