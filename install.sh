@@ -231,6 +231,7 @@ VIM_SUBDIRS=(
     "spell"
     "syntax"
     "ultisnips"
+    "lua"
 )
 
 # Helper function to check whether input string matches (part of)

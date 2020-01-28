@@ -48,13 +48,14 @@ Plug 'wincent/ferret'
 Plug 'neovim/nvim-lsp'
 
 " Completion framework
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Completion sources for deoplete
 " Plug 'Shougo/neco-vim'
 " Plug 'wellle/tmux-complete.vim'
 " Plug 'Shougo/neco-syntax'
+Plug 'Shougo/deoplete-lsp'            " source: 'lsp'
 
 " Plugins for deoplete
 " Plug 'Shougo/neopairs.vim'
@@ -339,16 +340,16 @@ let g:FerretAutojump = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Use <Tab> and <S-Tab> to navigate completion list
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Use <C-Space> to trigger completion
-inoremap <silent><expr> <C-Space> coc#refresh()
+" inoremap <silent><expr> <C-Space> coc#refresh()
 
 " Highlight comments in JSON files
-autocmd FileType json syntax match Comment +\/\/.\+$+
+" autocmd FileType json syntax match Comment +\/\/.\+$+
 
-nnoremap <silent> <leader>ld :call CocAction('jumpDefinition')<CR>
+" nnoremap <silent> <leader>ld :call CocAction('jumpDefinition')<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LanguageClient-neovim configuration                                          "
@@ -407,15 +408,15 @@ nnoremap <silent> <leader>ld :call CocAction('jumpDefinition')<CR>
 " deoplete configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 
 " Use <Tab> and <S-Tab> to navigate completion list
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Enable around and buffer sources in some textual filetypes only
-" call deoplete#custom#source('around', 'filetypes', ['text', 'markdown'])
-" call deoplete#custom#source('buffer', 'filetypes', ['text', 'markdown'])
+call deoplete#custom#source('around', 'filetypes', ['text', 'markdown'])
+call deoplete#custom#source('buffer', 'filetypes', ['text', 'markdown'])
 
 " Enable tmux source in tmux files only
 " call deoplete#custom#source('tmux-complete', 'filetypes', ['tmux'])
@@ -428,10 +429,19 @@ nnoremap <silent> <leader>ld :call CocAction('jumpDefinition')<CR>
 " call deoplete#custom#source('LanguageClient', 'min_pattern_length', 3)
 " call deoplete#custom#source('tmux-complete', 'min_pattern_length', 3)
 " call deoplete#custom#source('syntax', 'min_pattern_length', 3)
+call deoplete#custom#source('lsp', 'min_pattern_length', 3)
+call deoplete#custom#source('ultisnips', 'min_pattern_length', 3)
+
+call deoplete#custom#source('lsp', 'mark', '[+]')
+call deoplete#custom#source('ultisnips', 'mark', '[$]')
+
+call deoplete#custom#source('lsp', 'rank', 1)
+call deoplete#custom#source('ultisnips', 'rank', 2)
+call deoplete#custom#source('ultisnips', 'rank', 2)
 
 " Disable the truncate feature
-" call deoplete#custom#source('_', 'max_abbr_width', 0)
-" call deoplete#custom#source('_', 'max_menu_width', 0)
+call deoplete#custom#source('_', 'max_abbr_width', 0)
+call deoplete#custom#source('_', 'max_menu_width', 0)
 
 " LaTeX autocompletion with vimtex
 " call deoplete#custom#var('omni', 'input_patterns', {
@@ -460,7 +470,7 @@ let g:lsp_cxx_hl_verbose = 1
 " hilsp configuration                                                          "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:hilsp_log_file = '/tmp/hilsp.log'
+" let g:hilsp_log_file = '/tmp/hilsp.log'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf configuration                                                            "
