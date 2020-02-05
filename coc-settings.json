@@ -31,6 +31,7 @@
             "initializationOptions": {
                 "cache": { "directory": "/tmp/ccls" },
                 "client": { "snippetSupport": true },
+                "highlight": { "lsRanges": true },
                 "completion": { "detailedLabel": false, "caseSensitivity": 1 },
                 "compilationDatabaseDirectory": "build",
                 "clang": { "extraArgs": ["-Wno-extra", "-Wno-empty-body"] }

@@ -62,8 +62,7 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 " Plug 'Shougo/neosnippet.vim'
 
 " Language server client
-" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-" Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Fuzzy search (for buffers and multiple-entry selection)
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -236,7 +235,7 @@ let g:airline#extensions#ycm#enabled = 1
 " fugitive configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <leader>gs :Gstatus<CR>
+" nnoremap <silent> <leader>gs :Gstatus<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
@@ -347,60 +346,27 @@ inoremap <silent><expr> <C-Space> coc#refresh()
 " Highlight comments in JSON files
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
-nnoremap <silent> <leader>ld :call CocAction('jumpDefinition')<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" LanguageClient-neovim configuration                                          "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
-" let g:LanguageClient_loggingLevel = 'DEBUG'
-
-" Enable loading of settings file
-" let g:LanguageClient_loadSettings = 1
-" let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
-
-" Always show hover in preview window
-" let g:LanguageClient_hoverPreview = 'Always'
-
-" Show signature help after completion
-" let g:LanguageClient_signatureHelpOnCompleteDone = 1
-
-" Filetype-specific commands (language servers)
-" let g:LanguageClient_serverCommands = {
-    " \ 'c': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
-    " \ 'cpp': ['ccls', '-log-file=/tmp/ccls.log', '-v=1'],
-    " \ 'python': ['pyls'],
-    " \ }
-    " \ 'python': ['pyls'],
-    " \ 'c': ['clangd', '-compile-commands-dir=build', '-log=verbose'],
-    " \ 'cpp': ['clangd', '-compile-commands-dir=build', '-log=verbose'],
-
-" let g:LanguageClient_rootMarkers = {
-    " \ 'c': ['build/compile_commands.json', 'compile_commands.json'],
-    " \ 'cpp': ['build/compile_commands.json', 'compile_commands.json'],
-    " \ }
-
 " Define key bindings
-" function! SetLSPShortcuts()
-  " nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
-  " nnoremap <silent> <leader>lD :call LanguageClient#textDocument_definition({'gotoCmd': 'vsplit'})<CR>
-  " nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
-  " nnoremap <silent> <leader>lf :call LanguageClient#textDocument_formatting()<CR>
-  " nnoremap <silent> <leader>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-  " nnoremap <silent> <leader>lx :call LanguageClient#textDocument_references()<CR>
-  " nnoremap <silent> <leader>la :call LanguageClient_workspace_applyEdit()<CR>
-  " nnoremap <silent> <leader>lc :call LanguageClient#textDocument_completion()<CR>
-  " nnoremap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
-  " nnoremap <silent> <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-  " nnoremap <silent> <leader>lm :call LanguageClient_contextMenu()<CR>
-" endfunction()
+function! SetLSPShortcuts()
+    nmap <silent> <leader>df <Plug>(coc-definition)
+    nmap <silent> <leader>dc <Plug>(coc-declaration)
+    nmap <silent> <leader>im <Plug>(coc-implementation)
+    nmap <silent> <leader>td <Plug>(coc-type-definition)
+    nmap <silent> <leader>dn <Plug>(coc-diagnostic-next)
+    nmap <silent> <leader>dp <Plug>(coc-diagnostic-previous)
+    nmap <silent> <leader>dl :CocList diagnostics<CR>
+    nmap <silent> <leader>rf <Plug>(coc-references)
+    vmap <silent> <leader>fs <Plug>(coc-format-selected)
+    nmap <silent> <leader>rn <Plug>(coc-rename)
+    nmap <silent> <leader>fx <Plug>(coc-fix-current)
+    nmap <silent> <leader>h  :call CocAction('doHover')<CR>
+endfunction()
 
 " Set key bindings for some specific file types
-" augroup LSP
-  " autocmd!
-  " autocmd FileType c,cpp,python call SetLSPShortcuts()
-" augroup END
+augroup LSP
+    autocmd!
+    autocmd FileType c,cpp,python call SetLSPShortcuts()
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " deoplete configuration                                                       "
@@ -483,11 +449,12 @@ nnoremap <silent> <leader>ld :call CocAction('jumpDefinition')<CR>
 let g:lsp_cxx_hl_log_file = '/tmp/vim-lsp-cxx-hl.log'
 let g:lsp_cxx_hl_verbose = 1
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" hilsp configuration                                                          "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" let g:hilsp_log_file = '/tmp/hilsp.log'
+" Clear/change some highlight groups
+hi link LspCxxHlSymVariable   NONE
+hi link LspCxxHlSymParameter  NONE
+hi link LspCxxHlSymUnknown    NONE
+hi link LspCxxHlSymField      NONE
+hi link LspCxxHlSymEnumMember Constant
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimtex configuration                                                         "
