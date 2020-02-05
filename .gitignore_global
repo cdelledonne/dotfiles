@@ -2,9 +2,10 @@
 ####################
 .DS_Store
 
-# Vim swap files
-################
+# Vim files
+###########
 *.sw[pon]
+.vim/sessions/
 
 # Autocompletion/language server stuff
 ######################################
