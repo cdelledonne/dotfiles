@@ -45,20 +45,21 @@ Plug 'kassio/neoterm'
 Plug 'wincent/ferret'
 
 " Nvim LSP client configurations
-Plug 'neovim/nvim-lsp'
+" Plug 'neovim/nvim-lsp'
 
 " Completion framework
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Completion sources for deoplete
 " Plug 'Shougo/neco-vim'
 " Plug 'wellle/tmux-complete.vim'
 " Plug 'Shougo/neco-syntax'
-Plug 'Shougo/deoplete-lsp'            " source: 'lsp'
+" Plug 'Shougo/deoplete-lsp' " source: 'lsp'
 
 " Plugins for deoplete
 " Plug 'Shougo/neopairs.vim'
+" Plug 'Shougo/neosnippet.vim'
 
 " Language server client
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
@@ -303,11 +304,8 @@ let g:AutoPairsFlyMode = 1
 " Open snippet file in a split (horizontal or vertical, depending on context)
 let g:UltiSnipsEditSplit = 'context'
 
-" Directory containing user-defined snippets
-let g:UltiSnipsSnippetsDir = '~/.config/nvim/ultisnips'
-
-" Search snippets in above directory, plus the default 'UltiSnips'
-let g:UltiSnipsSnippetDirectories = ['ultisnips', 'UltiSnips']
+" Search snippets in the 'ultisnips' directory, relative to this file
+let g:UltiSnipsSnippetDirectories = ['ultisnips']
 
 " Unmap default CTRL-J and CTRL-K in insert mode
 let g:i_CTRL_J = 'off'
@@ -340,16 +338,16 @@ let g:FerretAutojump = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Use <Tab> and <S-Tab> to navigate completion list
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Use <C-Space> to trigger completion
-" inoremap <silent><expr> <C-Space> coc#refresh()
+inoremap <silent><expr> <C-Space> coc#refresh()
 
 " Highlight comments in JSON files
-" autocmd FileType json syntax match Comment +\/\/.\+$+
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
-" nnoremap <silent> <leader>ld :call CocAction('jumpDefinition')<CR>
+nnoremap <silent> <leader>ld :call CocAction('jumpDefinition')<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LanguageClient-neovim configuration                                          "
@@ -408,15 +406,18 @@ let g:FerretAutojump = 0
 " deoplete configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
+
+" Do not show preview
+" set completeopt-=preview
 
 " Use <Tab> and <S-Tab> to navigate completion list
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Enable around and buffer sources in some textual filetypes only
-call deoplete#custom#source('around', 'filetypes', ['text', 'markdown'])
-call deoplete#custom#source('buffer', 'filetypes', ['text', 'markdown'])
+" call deoplete#custom#source('around', 'filetypes', ['text', 'markdown'])
+" call deoplete#custom#source('buffer', 'filetypes', ['text', 'markdown'])
 
 " Enable tmux source in tmux files only
 " call deoplete#custom#source('tmux-complete', 'filetypes', ['tmux'])
@@ -429,19 +430,19 @@ call deoplete#custom#source('buffer', 'filetypes', ['text', 'markdown'])
 " call deoplete#custom#source('LanguageClient', 'min_pattern_length', 3)
 " call deoplete#custom#source('tmux-complete', 'min_pattern_length', 3)
 " call deoplete#custom#source('syntax', 'min_pattern_length', 3)
-call deoplete#custom#source('lsp', 'min_pattern_length', 3)
-call deoplete#custom#source('ultisnips', 'min_pattern_length', 3)
+" call deoplete#custom#source('lsp', 'min_pattern_length', 3)
+" call deoplete#custom#source('ultisnips', 'min_pattern_length', 3)
 
-call deoplete#custom#source('lsp', 'mark', '[+]')
-call deoplete#custom#source('ultisnips', 'mark', '[$]')
+" call deoplete#custom#source('lsp', 'mark', '[+]')
+" call deoplete#custom#source('ultisnips', 'mark', '[$]')
 
-call deoplete#custom#source('lsp', 'rank', 1)
-call deoplete#custom#source('ultisnips', 'rank', 2)
-call deoplete#custom#source('ultisnips', 'rank', 2)
+" call deoplete#custom#source('lsp', 'rank', 1)
+" call deoplete#custom#source('ultisnips', 'rank', 2)
+" call deoplete#custom#source('ultisnips', 'rank', 2)
 
 " Disable the truncate feature
-call deoplete#custom#source('_', 'max_abbr_width', 0)
-call deoplete#custom#source('_', 'max_menu_width', 0)
+" call deoplete#custom#source('_', 'max_abbr_width', 0)
+" call deoplete#custom#source('_', 'max_menu_width', 0)
 
 " LaTeX autocompletion with vimtex
 " call deoplete#custom#var('omni', 'input_patterns', {
@@ -457,6 +458,22 @@ call deoplete#custom#source('_', 'max_menu_width', 0)
 
 " Autoclose parentheses when completing a function with deoplete
 " let g:neopairs#enable = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" neosnippet configuration                                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" let g:neosnippet#disable_runtime_snippets = 1
+" let g:neosnippet#enable_completed_snippet = 1
+" let g:neosnippet#enable_complete_done = 1
+
+" imap <C-K> <Plug>(neosnippet_expand_or_jump)
+" smap <C-K> <Plug>(neosnippet_expand_or_jump)
+" xmap <C-K> <Plug>(neosnippet_expand_target)
+
+" if has('conceal')
+  " set conceallevel=2 concealcursor=niv
+" endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-lsp-cxx-highlight configuration                                          "
@@ -547,6 +564,6 @@ let g:peekaboo_window = 'bel 30new'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Lua config file in ~/.config/nvim/lua
-if has('nvim-0.5')
-    lua require 'lspinit'
-endif
+" if has('nvim-0.5')
+    " lua require 'lspinit'
+" endif

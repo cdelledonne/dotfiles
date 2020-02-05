@@ -4,13 +4,13 @@ local os = vim.loop.os_uname().sysname
 
 if os == "Linux" then
     nvim_lsp.ccls.setup{
-        cmd = { "/Users/carlo/builds/ccls/Release/ccls", "-v=2", "-log-file=/tmp/ccls.log" };
+        cmd = { "ccls", "-v=1", "-log-file=/tmp/ccls.log" };
         init_options = {
             cache = { directory = "/tmp/ccls-cache" },
             compilationDatabaseDirectory = "build",
+            client = { snippetSupport = true },
             clang = { extraArgs = { "-Wno-extra", "-Wno-empty-body" } },
             completion = { detailedLabel = false, caseSensitivity = 1 },
-            diagnostics = { onChange = -1 }
         };
     }
 elseif os == "Darwin" then

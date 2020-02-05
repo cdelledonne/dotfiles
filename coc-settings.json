@@ -2,20 +2,13 @@
     // Competion menu options.
     "suggest.labelMaxLength": 35,
     "suggest.detailMaxLength": 4,
-    // "suggest.enablePreview": true,
-    // "suggest.floatEnable": false,
     "suggest.detailField": "preview",
     "suggest.autoTrigger": "always",
-    // "suggest.disableMenu": true,
     "suggest.snippetIndicator": "...",
     "suggest.minTriggerInputLength": 3,
-    // "suggest.acceptSuggestionOnCommitCharacter": true,
 
     // Diagnostic options.
-    // "diagnostic.enableSign": false,
-
-    //  Other preferences.
-    // "coc.preferences.rootPatterns": [".vim", ".git", ".hg"],
+    "diagnostic.enableSign": false,
 
     // Sources priorities.
     // "coc.source.around.priority": 1,
@@ -34,13 +27,13 @@
             "command": "ccls",
             "args": ["-log-file=/tmp/ccls.log", "-v=1"],
             "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-            // "trace.server": "verbose",
             "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/"],
             "initializationOptions": {
                 "cache": { "directory": "/tmp/ccls" },
                 "client": { "snippetSupport": true },
-                "completion": { "detailedLabel": false },
-                "compilationDatabaseDirectory": "build"
+                "completion": { "detailedLabel": false, "caseSensitivity": 1 },
+                "compilationDatabaseDirectory": "build",
+                "clang": { "extraArgs": ["-Wno-extra", "-Wno-empty-body"] }
             }
         }
     }
