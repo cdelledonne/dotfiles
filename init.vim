@@ -473,7 +473,7 @@ let g:vimtex_compiler_progname = 'nvr'
 " fzf configuration                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <leader>f :FZF  --inline-info --prompt >\ <CR>
+" nnoremap <silent> <leader>f :FZF  --inline-info --prompt >\ <CR>
 
 " Hide statusline in fzf buffers
 autocmd! FileType fzf
@@ -481,21 +481,28 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
     \ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 " Match colorscheme
-let g:fzf_colors = {
-    \ 'fg':      ['fg', 'Comment'],
-    \ 'bg':      ['bg', 'Normal'],
-    \ 'hl':      ['fg', 'Statement'],
-    \ 'fg+':     ['fg', 'Normal'],
-    \ 'bg+':     ['bg', 'Normal'],
-    \ 'hl+':     ['fg', 'Statement'],
-    \ 'info':    ['fg', 'Comment'],
-    \ 'border':  ['fg', 'PreProc'],
-    \ 'prompt':  ['fg', 'PreProc'],
-    \ 'pointer': ['fg', 'Label'],
-    \ 'marker':  ['fg', 'Label'],
-    \ 'spinner': ['fg', 'Function'],
-    \ 'header':  ['fg', 'Comment']
-    \ }
+" let g:fzf_colors = {
+    " \ 'fg':      ['fg', 'Comment'],
+    " \ 'bg':      ['bg', 'Normal'],
+    " \ 'hl':      ['fg', 'Statement'],
+    " \ 'fg+':     ['fg', 'Normal'],
+    " \ 'bg+':     ['bg', 'Normal'],
+    " \ 'hl+':     ['fg', 'Statement'],
+    " \ 'info':    ['fg', 'Comment'],
+    " \ 'border':  ['fg', 'PreProc'],
+    " \ 'prompt':  ['fg', 'PreProc'],
+    " \ 'pointer': ['fg', 'Label'],
+    " \ 'marker':  ['fg', 'Label'],
+    " \ 'spinner': ['fg', 'Function'],
+    " \ 'header':  ['fg', 'Comment']
+    " \ }
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fzf-preview configuration                                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <silent> <leader>f :FzfPreviewProjectFiles<CR>
+nnoremap <silent> <leader>b :FzfPreviewBuffers<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
