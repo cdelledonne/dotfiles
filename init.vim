@@ -68,6 +68,12 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" Fuzzy search in preview window
+Plug 'yuki-ycino/fzf-preview.vim'
+
+" Disable search highlighting when done searching
+Plug 'romainl/vim-cool'
+
 " Seamless navigation between tmux panes and vim splits
 Plug 'christoomey/vim-tmux-navigator'
 
