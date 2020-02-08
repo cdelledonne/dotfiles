@@ -48,8 +48,8 @@ Plug 'wincent/ferret'
 " Plug 'neovim/nvim-lsp'
 
 " Completion framework
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Completion sources for deoplete
 " Plug 'Shougo/neco-vim'
@@ -481,19 +481,30 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
     \ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 " Match colorscheme
+"
+" The same effect is achieved with
+"
+" export FZF_DEFAULT_OPTS="
+"     --color bg+:#282828,bg:#282828,border:#83a598,spinner:#928374,hl:#fe8019
+"     --color fg:#928374,header:#928374,info:#928374,pointer:#83a598
+"     --color marker:#b8bb26,fg+:#b8bb26,prompt:#83a598,hl+:#fe8019
+" "
+"
+" which is useful when running fzf outside Vim
+"
 " let g:fzf_colors = {
     " \ 'fg':      ['fg', 'Comment'],
     " \ 'bg':      ['bg', 'Normal'],
-    " \ 'hl':      ['fg', 'Statement'],
-    " \ 'fg+':     ['fg', 'Normal'],
+    " \ 'hl':      ['fg', 'Question'],
+    " \ 'fg+':     ['fg', 'Function'],
     " \ 'bg+':     ['bg', 'Normal'],
-    " \ 'hl+':     ['fg', 'Statement'],
+    " \ 'hl+':     ['fg', 'Question'],
     " \ 'info':    ['fg', 'Comment'],
-    " \ 'border':  ['fg', 'PreProc'],
-    " \ 'prompt':  ['fg', 'PreProc'],
-    " \ 'pointer': ['fg', 'Label'],
-    " \ 'marker':  ['fg', 'Label'],
-    " \ 'spinner': ['fg', 'Function'],
+    " \ 'border':  ['fg', 'Identifier'],
+    " \ 'prompt':  ['fg', 'Identifier'],
+    " \ 'pointer': ['fg', 'Identifier'],
+    " \ 'marker':  ['fg', 'Function'],
+    " \ 'spinner': ['fg', 'Comment'],
     " \ 'header':  ['fg', 'Comment']
     " \ }
 
@@ -501,7 +512,7 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 " fzf-preview configuration                                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <leader>f :FzfPreviewProjectFiles<CR>
+nnoremap <silent> <C-F> :FzfPreviewProjectFiles<CR>
 nnoremap <silent> <leader>b :FzfPreviewBuffers<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

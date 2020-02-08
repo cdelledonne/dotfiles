@@ -53,6 +53,7 @@ if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
 fi
 
 export EDITOR=nvim
+export BAT_THEME=gruvbox
 
 ################################################################################
 # Aliases                                                                      #
@@ -71,6 +72,12 @@ alias la='ls -FhAl'
 ################################################################################
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_DEFAULT_OPTS="
+    --color bg+:#282828,bg:#282828,border:#83a598,spinner:#928374,hl:#fe8019
+    --color fg:#928374,header:#928374,info:#928374,pointer:#83a598
+    --color marker:#b8bb26,fg+:#b8bb26,prompt:#83a598,hl+:#fe8019
+"
 
 ################################################################################
 # Oh My Zsh                                                                    #
