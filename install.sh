@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default directories
-CONFDIR=~/.config
+CONFDIR=${CONFDIR:-~/.config}
 
 # Dotfiles to link
 declare -a dotfiles=(
