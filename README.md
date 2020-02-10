@@ -5,3 +5,4 @@ $ ./install.sh
 
 TODO:
 - [ ] Install base packages (zsh, fzf, bat, ripgrep, vim-plug)
+- [] For macOS, install more packages (coreutils)

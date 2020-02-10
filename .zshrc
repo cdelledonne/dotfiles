@@ -79,15 +79,45 @@ export FZF_DEFAULT_OPTS="
     --color marker:#b8bb26,fg+:#b8bb26,prompt:#83a598,hl+:#fe8019
 "
 
+# Taken from https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER == sudo\ * ]]; then
+        LBUFFER="${LBUFFER#sudo }"
+    elif [[ $BUFFER == $EDITOR\ * ]]; then
+        LBUFFER="${LBUFFER#$EDITOR }"
+        LBUFFER="sudoedit $LBUFFER"
+    elif [[ $BUFFER == sudoedit\ * ]]; then
+        LBUFFER="${LBUFFER#sudoedit }"
+        LBUFFER="$EDITOR $LBUFFER"
+    else
+        LBUFFER="sudo $LBUFFER"
+    fi
+}
+zle -N sudo-command-line
+bindkey -M emacs '\e\e' sudo-command-line
+bindkey -M vicmd '\e\e' sudo-command-line
+bindkey -M viins '\e\e' sudo-command-line
+
 ################################################################################
 # Oh My Zsh                                                                    #
 ################################################################################
 
-export ZSH=$HOME/.oh-my-zsh
-DISABLE_LS_COLORS="true"
-ZSH_DISABLE_COMPFIX="true"
-plugins=(sudo)
-source $ZSH/oh-my-zsh.sh
+# export ZSH=$HOME/.oh-my-zsh
+# DISABLE_LS_COLORS="true"
+# ZSH_DISABLE_COMPFIX="true"
+# plugins=(sudo)
+# source $ZSH/oh-my-zsh.sh
+
+# Theme of the Git prompt info
+# ZSH_THEME_GIT_PROMPT_PREFIX="(%B%F{blue}"
+# ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b) "
+# ZSH_THEME_GIT_PROMPT_DIRTY="%B%F{red} *%f%b"
+# ZSH_THEME_GIT_PROMPT_CLEAN=""
+
+################################################################################
+# Prompt                                                                       #
+################################################################################
 
 # Prompt, part 1: hostname, only if in an ssh session
 if [[ "$SSH_CONNECTION" == "" ]]; then
@@ -99,14 +129,8 @@ fi
 # Prompt, part 2: current directory (not full path)
 PROMPT+='[%B%F{yellow}%1~%f%b] '
 
-# Prompt, part 3: Git branch and dirty status
-PROMPT+='$(git_prompt_info)'
+# Prompt, part 3: Git branch and dirty status (NEEDS Oh My Zsh)
+# PROMPT+='$(git_prompt_info)'
 
 # Prompt, part 4: dollar sign
 PROMPT+='$ '
-
-# Theme of the Git prompt info
-ZSH_THEME_GIT_PROMPT_PREFIX="(%B%F{blue}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b) "
-ZSH_THEME_GIT_PROMPT_DIRTY="%B%F{red} *%f%b"
-ZSH_THEME_GIT_PROMPT_CLEAN=""
