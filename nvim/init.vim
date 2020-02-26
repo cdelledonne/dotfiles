@@ -30,7 +30,7 @@ Plug 'Yggdroot/indentLine'
 
 " Markdown preview and additional tools
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-Plug 'plasticboy/vim-markdown'
+Plug 'cdelledonne/vim-markdown'
 
 " TOML syntax highlighting
 Plug 'cespare/vim-toml'
@@ -177,7 +177,8 @@ nnoremap <space> za
 command! RemoveTrailingSpaces %s/\s\+$//g | noh
 
 " Set insert mode cursor as block
-set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20
+" set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20
+set guicursor=
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline configuration                                                        "
