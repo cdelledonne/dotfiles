@@ -89,6 +89,8 @@ Plug 'lervag/vimtex'
 " Peek content of registers
 Plug 'junegunn/vim-peekaboo'
 
+Plug '~/Nextcloud/Developer/cdelledonne/vim-cmake'
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -550,6 +552,13 @@ let g:peekaboo_delay = 1000
 
 " Create Peekaboo window below current window
 let g:peekaboo_window = 'bel 30new'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-cmake configuration                                                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:cmake_console_size = 15
+let g:cmake_native_options = ['--no-print-directory']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Nvim LSP configuration                                                       "
