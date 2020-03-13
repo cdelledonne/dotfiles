@@ -5,7 +5,8 @@
 call plug#begin('~/.local/share/nvim/plug')
 
 " gruvbox color scheme
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 
 " Status/tabline
 Plug 'vim-airline/vim-airline'
@@ -30,7 +31,7 @@ Plug 'Yggdroot/indentLine'
 
 " Markdown preview and additional tools
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-Plug 'cdelledonne/vim-markdown'
+Plug 'cdelledonne/vim-markdown', { 'branch': 'insert-toc' }
 
 " TOML syntax highlighting
 Plug 'cespare/vim-toml'
@@ -221,7 +222,7 @@ function! AirlineInit()
     " let g:airline_section_z = airline#section#create(['%#__accent_bold#%{g:airline_symbols.linenr}%4l/%L%#__restore__#:%3v'])
     let g:airline_section_z = airline#section#create(['%#__accent_bold#%4l/%L%#__restore__#:%3v'])
 endfunction
-autocmd VimEnter * call AirlineInit()
+autocmd User AirlineAfterInit call AirlineInit()
 
 " Enable and configure tabline
 let g:airline#extensions#tabline#enabled = 1
@@ -232,20 +233,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " let g:airline#extensions#tabline#left_sep = ''
 " let g:airline#extensions#tabline#left_alt_sep = ''
 
-" Enable fugitive (git extension)
-let g:airline#extensions#fugitiveline#enabled = 1
-
-" Enable hunks to show VCS modifications
-let g:airline#extensions#hunks#enabled = 1
-
-" Enable YCM integration
-let g:airline#extensions#ycm#enabled = 1
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" fugitive configuration                                                       "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" nnoremap <silent> <leader>gs :Gstatus<CR>
+" let g:airline#extensions#term#enabled = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
@@ -558,7 +546,6 @@ let g:peekaboo_window = 'bel 30new'
 " vim-cmake configuration                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:cmake_console_size = 15
 let g:cmake_native_options = ['--no-print-directory']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
