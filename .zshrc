@@ -123,7 +123,7 @@ bindkey -M viins '\e\e' sudo-command-line
 if [[ "$SSH_CONNECTION" == "" ]]; then
     PROMPT=''
 else
-    PROMPT='{%B%F{magenta}$(hostname)%f%b} '
+    PROMPT='{%B%F{magenta}%m%f%b} '
 fi
 
 # Prompt, part 2: current directory (not full path)
