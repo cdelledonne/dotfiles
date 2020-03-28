@@ -5,7 +5,6 @@
 call plug#begin('~/.local/share/nvim/plug')
 
 " gruvbox color scheme
-" Plug 'morhetz/gruvbox'
 Plug 'gruvbox-community/gruvbox'
 
 " Status/tabline
@@ -29,6 +28,27 @@ Plug 'jiangmiao/auto-pairs'
 " Show indent lines
 Plug 'Yggdroot/indentLine'
 
+" Search (and replace) multiple files
+Plug 'wincent/ferret'
+
+" Fuzzy search (for buffers and multiple-entry selection)
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Disable search highlighting when done searching
+Plug 'romainl/vim-cool'
+
+" Seamless navigation between tmux panes and vim splits
+Plug 'christoomey/vim-tmux-navigator'
+
+" Quoting/parenthesizing made simple
+Plug 'tpope/vim-surround'
+
+" Allow repetition (dot command) for plugin mappings
+Plug 'tpope/vim-repeat'
+
+if $XDG_SESSION_TYPE != 'tty'
+
 " Markdown preview and additional tools
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'cdelledonne/vim-markdown', { 'branch': 'insert-toc' }
@@ -41,9 +61,6 @@ Plug 'SirVer/ultisnips'
 
 " Terminal wrapper
 Plug 'kassio/neoterm'
-
-" Search (and replace) multiple files
-Plug 'wincent/ferret'
 
 " Nvim LSP client configurations
 " Plug 'neovim/nvim-lsp'
@@ -62,27 +79,11 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 " Plug 'Shougo/neopairs.vim'
 " Plug 'Shougo/neosnippet.vim'
 
-" Language server client
+" Language server client add-ons
 Plug 'jackguo380/vim-lsp-cxx-highlight'
-
-" Fuzzy search (for buffers and multiple-entry selection)
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 
 " Fuzzy search in preview window
 Plug 'yuki-ycino/fzf-preview.vim'
-
-" Disable search highlighting when done searching
-Plug 'romainl/vim-cool'
-
-" Seamless navigation between tmux panes and vim splits
-Plug 'christoomey/vim-tmux-navigator'
-
-" Quoting/parenthesizing made simple
-Plug 'tpope/vim-surround'
-
-" Allow repetition (dot command) for plugin mappings
-Plug 'tpope/vim-repeat'
 
 " LaTeX autocompletion and other features
 Plug 'lervag/vimtex'
@@ -90,7 +91,10 @@ Plug 'lervag/vimtex'
 " Peek content of registers
 Plug 'junegunn/vim-peekaboo'
 
+" Local plugins
 Plug '~/Nextcloud/Developer/cdelledonne/vim-cmake'
+
+endif
 
 call plug#end()
 
@@ -193,23 +197,19 @@ if !exists('g:airline_symbols')
 endif
 
 " Enable powerline fonts
-" if has('gui_running')
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_left_alt_sep = '│'
 let g:airline_right_alt_sep = '│'
-" endif
 
 " Configure statusline symbols
-" if has('gui_running')
 let g:airline_symbols.branch = ''
 let g:airline_symbols.notexists = ' Ɇ'
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.dirty = ''
-" endif
 
 " Detect modified buffers
 let g:airline_detect_modified = 1
@@ -318,7 +318,7 @@ let g:UltiSnipsListSnippets        = '<C-s>'
 autocmd FileType cpp UltiSnipsAddFiletypes cpp.c
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CtrlSF configuration                                                         "
+" CtrlSF configuration (NOT USED)                                              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Focus CtrlSF window when search is done
@@ -328,7 +328,7 @@ let g:ctrlsf_auto_focus = { 'at' : 'done', 'duration_less_than' : 2000 }
 " Ferret configuration                                                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:FerretAutojump = 0
+let g:FerretAutojump = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Coc configuration                                                            "
@@ -465,7 +465,12 @@ let g:vimtex_compiler_progname = 'nvr'
 " fzf configuration                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" nnoremap <silent> <leader>f :FZF  --inline-info --prompt >\ <CR>
+if $XDG_SESSION_TYPE == 'tty'
+    nnoremap <silent> <C-F> :FZF --inline-info --prompt >\ <CR>
+else
+    nnoremap <silent> <C-F> :FzfPreviewProjectFiles<CR>
+    nnoremap <silent> <leader>b :FzfPreviewBuffers<CR>
+endif
 
 " Hide statusline in fzf buffers
 autocmd! FileType fzf
@@ -480,7 +485,6 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 "     --color bg+:#282828,bg:#282828,border:#83a598,spinner:#928374,hl:#fe8019
 "     --color fg:#928374,header:#928374,info:#928374,pointer:#83a598
 "     --color marker:#b8bb26,fg+:#b8bb26,prompt:#83a598,hl+:#fe8019
-" "
 "
 " which is useful when running fzf outside Vim
 "
@@ -499,13 +503,6 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
     " \ 'spinner': ['fg', 'Comment'],
     " \ 'header':  ['fg', 'Comment']
     " \ }
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" fzf-preview configuration                                                    "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <silent> <C-F> :FzfPreviewProjectFiles<CR>
-nnoremap <silent> <leader>b :FzfPreviewBuffers<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
