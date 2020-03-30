@@ -43,6 +43,9 @@ zstyle ':completion:*' special-dirs true
 # Environment                                                                  #
 ################################################################################
 
+# Workaround for some systems that define a custom LS_COLORS
+unset LS_COLORS
+
 # PATH
 export PATH=~/.local/bin:$PATH
 
