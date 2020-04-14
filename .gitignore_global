@@ -5,6 +5,7 @@
 # Vim files
 ###########
 *.sw[pon]
+*.lvimrc
 .vim/sessions/
 
 # Autocompletion/language server stuff

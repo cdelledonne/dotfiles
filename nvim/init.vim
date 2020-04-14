@@ -47,11 +47,15 @@ Plug 'tpope/vim-surround'
 " Allow repetition (dot command) for plugin mappings
 Plug 'tpope/vim-repeat'
 
+Plug 'embear/vim-localvimrc'
+Plug 'ARM9/arm-syntax-vim'
+
 if $XDG_SESSION_TYPE != 'tty'
 
 " Markdown preview and additional tools
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'cdelledonne/vim-markdown', { 'branch': 'insert-toc' }
+Plug 'godlygeek/tabular'
 
 " TOML syntax highlighting
 Plug 'cespare/vim-toml'
@@ -215,7 +219,7 @@ let g:airline_symbols.dirty = ''
 let g:airline_detect_modified = 1
 
 " Skip empty sections
-let g:airline_skip_empty_sections = 1
+let g:airline_skip_empty_sections = 0
 
 " Configure section z (current position in the file)
 function! AirlineInit()
@@ -273,7 +277,11 @@ let g:NERDSpaceDelims = 1
 " Use '#' delimiter (and not '# ') for python files
 let g:NERDCustomDelimiters = { 'python': { 'left': '#' } }
 
-" Insert comment in insert mode
+" Only define some key mappings
+let NERDCreateDefaultMappings = 0
+nmap <leader>ca <Plug>NERDCommenterAltDelims
+nmap <leader>cA <Plug>NERDCommenterAppend
+nmap <leader>c<Space> <Plug>NERDCommenterToggle
 imap <C-c> <Plug>NERDCommenterInsert
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -286,7 +294,8 @@ let g:indentLine_char = '│'
 
 " Enable for certain file types only
 let g:indentLine_fileType = [
-    \ 'c', 'cpp', 'python', 'bash', 'rust', 'vim', 'lua', 'yaml'
+    \ 'c', 'cpp', 'python', 'bash', 'rust', 'vim', 'lua', 'yaml', 'php',
+    \ 'javascript', 'html', 'css'
     \ ]
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -332,6 +341,15 @@ let g:ctrlsf_auto_focus = { 'at' : 'done', 'duration_less_than' : 2000 }
 let g:FerretAutojump = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-localvimrc configuration                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Store and restore decisions only if the answer was given in upper case (Y/N/A)
+let g:localvimrc_persistent = 1
+
+let g:localvimrc_persistence_file = expand('~/.config/localvimrc/persistent')
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Coc configuration                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -358,13 +376,14 @@ function! SetLSPShortcuts()
     vmap <silent> <leader>fs <Plug>(coc-format-selected)
     nmap <silent> <leader>rn <Plug>(coc-rename)
     nmap <silent> <leader>fx <Plug>(coc-fix-current)
-    nmap <silent> <leader>h  :call CocAction('doHover')<CR>
+    nmap <silent> <leader>hv :call CocActionAsync('doHover')<CR>
+    nmap <silent> <leader>hl :call CocActionAsync('highlight')<CR>
 endfunction()
 
 " Set key bindings for some specific file types
 augroup LSP
     autocmd!
-    autocmd FileType c,cpp,python call SetLSPShortcuts()
+    autocmd FileType c,cpp,python,php call SetLSPShortcuts()
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -544,7 +563,13 @@ let g:peekaboo_window = 'bel 30new'
 " vim-cmake configuration                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:cmake_native_options = ['--no-print-directory']
+let g:cmake_native_build_options = ['--no-print-directory']
+
+nmap <leader>cg <Plug>(CMakeGenerate)
+nmap <leader>cb <Plug>(CMakeBuild)
+nmap <leader>cc <Plug>(CMakeBuildClean)
+nmap <leader>ci <Plug>(CMakeInstall)
+nmap <leader>cq <Plug>(CMakeClose)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Nvim LSP configuration                                                       "
