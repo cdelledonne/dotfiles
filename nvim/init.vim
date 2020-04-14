@@ -281,7 +281,8 @@ imap <C-c> <Plug>NERDCommenterInsert
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Change default indent line character
-let g:indentLine_char = '┊'
+" let g:indentLine_char = '┊'
+let g:indentLine_char = '│'
 
 " Enable for certain file types only
 let g:indentLine_fileType = [
