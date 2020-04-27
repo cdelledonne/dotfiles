@@ -17,7 +17,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " File navigator
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 
 " Commenter
 Plug 'scrooloose/nerdcommenter'
@@ -73,6 +73,8 @@ Plug 'kassio/neoterm'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
+Plug 'liuchengxu/vista.vim'
+
 " Completion sources for deoplete
 " Plug 'Shougo/neco-vim'
 " Plug 'wellle/tmux-complete.vim'
@@ -112,7 +114,6 @@ if $COLORTERM == 'truecolor'
 endif
 
 " Color scheme
-set background=dark
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
@@ -191,6 +192,30 @@ command! RemoveTrailingSpaces %s/\s\+$//g | noh
 " Set insert mode cursor as block
 " set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20
 set guicursor=
+
+" Mouse support in normal and visual mode
+set mouse=nv
+
+highlight ThemeNormalNC ctermfg=223 ctermbg=234 guifg=#ebdbb2 guibg=#282828
+
+function! s:OnWinEnter() abort
+    set winhighlight=NormalNC:ThemeNormalNC
+    if &l:number
+        setlocal relativenumber
+    endif
+    setlocal cursorline
+endfunction
+
+function! s:OnWinLeave() abort
+    set winhighlight=NormalNC:ThemeNormalNC
+    if &l:number
+        setlocal norelativenumber
+    endif
+    setlocal nocursorline
+endfunction
+
+autocmd VimEnter,BufEnter,WinEnter * call s:OnWinEnter()
+autocmd BufLeave,WinLeave * call s:OnWinLeave()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline configuration                                                        "
@@ -383,8 +408,16 @@ endfunction()
 " Set key bindings for some specific file types
 augroup LSP
     autocmd!
-    autocmd FileType c,cpp,python,php call SetLSPShortcuts()
+    autocmd FileType c,cpp,python,php,javascript,typescript
+            \ call SetLSPShortcuts()
 augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vista configuration                                                          "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:vista_echo_cursor = 0
+let g:vista_blink = [0, 0]
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " deoplete configuration                                                       "
