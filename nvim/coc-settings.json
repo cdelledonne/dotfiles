@@ -23,6 +23,8 @@
 
     // Language servers configuration.
     "languageserver": {
+
+        // c, cpp, cuda, objc, objcpp
         "ccls": {
             "command": "ccls",
             "args": ["-log-file=/tmp/ccls.log", "-v=1"],
@@ -36,6 +38,8 @@
                 "clang": { "extraArgs": ["-Wno-extra", "-Wno-empty-body"] }
             }
         },
+
+        // php
         "intelephense": {
             "command": "intelephense",
             "args": ["--stdio"],
@@ -43,6 +47,21 @@
             "initializationOptions": {
                 "storagePath": "/tmp/intelephense"
             }
-        }
+        },
+
+        // python
+        "python-language-server": {
+            "command": "pyls",
+            "args": ["--log-file", "/tmp/pyls.log"],
+            "filetypes": ["python"]
+        },
+
+        // javascript, typescript
+        // "tsserver": {
+        //     "command": "typescript-language-server",
+        //     "args": ["--stdio", "--tsserver-log-file", "/tmp/tsserver.log"],
+        //     "filetypes": ["javascript", "javascriptreact", "javascript.jsx",
+        //                   "typescript", "typescriptreact", "typescript.tsx"]
+        // }
     }
 }
