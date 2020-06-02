@@ -97,8 +97,9 @@ Plug 'lervag/vimtex'
 " Peek content of registers
 Plug 'junegunn/vim-peekaboo'
 
-" Local plugins
-Plug '~/Nextcloud/Developer/cdelledonne/vim-cmake'
+" CMake projects
+" Plug 'cdelledonne/vim-cmake'
+Plug '~/Developer/Repositories/cdelledonne/vim-cmake'
 
 endif
 
@@ -128,7 +129,7 @@ set foldmethod=syntax
 set nofoldenable
 
 " Fold specific files based on indent
-autocmd FileType python,basic,yaml set foldmethod=indent
+autocmd FileType python,basic,yaml,toml set foldmethod=indent
 
 " Show line number
 set number
@@ -170,6 +171,9 @@ autocmd FileType tex,text,markdown,rst,gitcommit setlocal spell spelllang=en_us
 
 " Set text width for line breaks for textual files
 autocmd FileType tex,text,markdown,rst,gitcommit setlocal textwidth=80
+
+" Open .clang-format files as YAML files
+autocmd BufRead *.clang-format set filetype=yaml
 
 " Open .tex files as LaTeX files
 let g:tex_flavor='latex'
@@ -262,7 +266,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " let g:airline#extensions#tabline#left_sep = ''
 " let g:airline#extensions#tabline#left_alt_sep = ''
 
-" let g:airline#extensions#term#enabled = 0
+let g:airline#extensions#term#enabled = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
@@ -320,7 +324,7 @@ let g:indentLine_char = '│'
 " Enable for certain file types only
 let g:indentLine_fileType = [
     \ 'c', 'cpp', 'python', 'bash', 'rust', 'vim', 'lua', 'yaml', 'php',
-    \ 'javascript', 'html', 'css'
+    \ 'javascript', 'html', 'css', 'cmake'
     \ ]
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -596,11 +600,8 @@ let g:peekaboo_window = 'bel 30new'
 " vim-cmake configuration                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:cmake_native_build_options = ['--no-print-directory']
-
 nmap <leader>cg <Plug>(CMakeGenerate)
 nmap <leader>cb <Plug>(CMakeBuild)
-nmap <leader>cc <Plug>(CMakeBuildClean)
 nmap <leader>ci <Plug>(CMakeInstall)
 nmap <leader>cq <Plug>(CMakeClose)
 
