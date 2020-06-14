@@ -124,6 +124,9 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 
+" Tab behaviour for some config files
+autocmd FileType yaml,toml set shiftwidth=2 softtabstop=2
+
 " Set folding method but do not fold on start-up
 set foldmethod=syntax
 set nofoldenable
@@ -229,13 +232,6 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-" Enable powerline fonts
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_left_alt_sep = '│'
-let g:airline_right_alt_sep = '│'
-
 " Configure statusline symbols
 let g:airline_symbols.branch = ''
 let g:airline_symbols.notexists = ' Ɇ'
@@ -252,21 +248,19 @@ let g:airline_skip_empty_sections = 0
 
 " Configure section z (current position in the file)
 function! AirlineInit()
-    " let g:airline_section_z = airline#section#create(['%#__accent_bold#%{g:airline_symbols.linenr}%4l/%L%#__restore__#:%3v'])
-    let g:airline_section_z = airline#section#create(['%#__accent_bold#%4l/%L%#__restore__#:%3v'])
+    let g:airline_section_z = airline#section#create(
+            \ ['%#__accent_bold#%4l/%L%#__restore__#:%3v'])
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
+
+let g:airline#extensions#branch#enabled = 0
 
 " Enable and configure tabline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
-" let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-" let g:airline#extensions#tabline#left_sep = ''
-" let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
-let g:airline#extensions#term#enabled = 0
+" let g:airline#extensions#term#enabled = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
