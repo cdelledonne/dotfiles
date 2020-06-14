@@ -7,6 +7,7 @@ CONFDIR=${CONFDIR:-~/.config}
 declare -a dotfiles=(
     "alacritty"         "$CONFDIR"
     "bat"               "$CONFDIR"
+    "gitmux"            "$CONFDIR"
     "nvim"              "$CONFDIR"
     ".gitconfig"        "$HOME"
     ".gitignore_global" "$HOME"
