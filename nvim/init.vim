@@ -47,6 +47,9 @@ Plug 'tpope/vim-surround'
 " Allow repetition (dot command) for plugin mappings
 Plug 'tpope/vim-repeat'
 
+" Session manager
+Plug 'tpope/vim-obsession'
+
 Plug 'embear/vim-localvimrc'
 Plug 'ARM9/arm-syntax-vim'
 
@@ -54,7 +57,7 @@ if $XDG_SESSION_TYPE != 'tty'
 
 " Markdown preview and additional tools
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-Plug 'cdelledonne/vim-markdown', { 'branch': 'insert-toc' }
+Plug 'plasticboy/vim-markdown'
 Plug 'godlygeek/tabular'
 
 " TOML syntax highlighting
@@ -66,30 +69,13 @@ Plug 'SirVer/ultisnips'
 " Terminal wrapper
 Plug 'kassio/neoterm'
 
-" Nvim LSP client configurations
-" Plug 'neovim/nvim-lsp'
-
 " Completion framework
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'liuchengxu/vista.vim'
 
-" Completion sources for deoplete
-" Plug 'Shougo/neco-vim'
-" Plug 'wellle/tmux-complete.vim'
-" Plug 'Shougo/neco-syntax'
-" Plug 'Shougo/deoplete-lsp' " source: 'lsp'
-
-" Plugins for deoplete
-" Plug 'Shougo/neopairs.vim'
-" Plug 'Shougo/neosnippet.vim'
-
 " Language server client add-ons
 Plug 'jackguo380/vim-lsp-cxx-highlight'
-
-" Fuzzy search in preview window
-Plug 'yuki-ycino/fzf-preview.vim'
 
 " LaTeX autocompletion and other features
 Plug 'lervag/vimtex'
@@ -100,6 +86,9 @@ Plug 'junegunn/vim-peekaboo'
 " CMake projects
 " Plug 'cdelledonne/vim-cmake'
 Plug '~/Developer/Repositories/cdelledonne/vim-cmake'
+
+" File type icons (load as the last one)
+Plug 'ryanoasis/vim-devicons'
 
 endif
 
@@ -116,6 +105,7 @@ endif
 
 " Color scheme
 let g:gruvbox_italic=1
+let g:gruvbox_invert_selection = 0
 let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 
@@ -132,7 +122,7 @@ set foldmethod=syntax
 set nofoldenable
 
 " Fold specific files based on indent
-autocmd FileType python,basic,yaml,toml set foldmethod=indent
+autocmd FileType python,basic,yaml,toml,vim set foldmethod=indent
 
 " Show line number
 set number
@@ -203,6 +193,11 @@ set guicursor=
 " Mouse support in normal and visual mode
 set mouse=nv
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Custom theming                                                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Apply a slightly lighter backgroun on inactive windows
 highlight ThemeNormalNC ctermfg=223 ctermbg=234 guifg=#ebdbb2 guibg=#282828
 
 function! s:OnWinEnter() abort
@@ -260,7 +255,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
-" let g:airline#extensions#term#enabled = 0
+let g:airline#extensions#term#enabled = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
@@ -349,13 +344,6 @@ let g:UltiSnipsListSnippets        = '<C-s>'
 
 " Import C snippets into C++ files
 autocmd FileType cpp UltiSnipsAddFiletypes cpp.c
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CtrlSF configuration (NOT USED)                                              "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Focus CtrlSF window when search is done
-let g:ctrlsf_auto_focus = { 'at' : 'done', 'duration_less_than' : 2000 }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ferret configuration                                                         "
@@ -516,44 +504,19 @@ let g:vimtex_compiler_progname = 'nvr'
 " fzf configuration                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-if $XDG_SESSION_TYPE == 'tty'
-    nnoremap <silent> <C-F> :FZF --inline-info --prompt >\ <CR>
-else
-    nnoremap <silent> <C-F> :FzfPreviewProjectFiles<CR>
-    nnoremap <silent> <leader>b :FzfPreviewBuffers<CR>
-endif
+nnoremap <silent> <C-P> :Files<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
 
-" Hide statusline in fzf buffers
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-    \ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+" Hide statusline in fzf buffers, and map <ESC> to <C-C>
+augroup FZF
+    autocmd!
+    autocmd FileType fzf set laststatus=0 noshowmode noruler nonumber nornu
+        \ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler number rnu
+    autocmd FileType fzf tnoremap <ESC> <C-C>
+augroup END
 
-" Match colorscheme
-"
-" The same effect is achieved with
-"
-" export FZF_DEFAULT_OPTS="
-"     --color bg+:#282828,bg:#282828,border:#83a598,spinner:#928374,hl:#fe8019
-"     --color fg:#928374,header:#928374,info:#928374,pointer:#83a598
-"     --color marker:#b8bb26,fg+:#b8bb26,prompt:#83a598,hl+:#fe8019
-"
-" which is useful when running fzf outside Vim
-"
-" let g:fzf_colors = {
-    " \ 'fg':      ['fg', 'Comment'],
-    " \ 'bg':      ['bg', 'Normal'],
-    " \ 'hl':      ['fg', 'Question'],
-    " \ 'fg+':     ['fg', 'Function'],
-    " \ 'bg+':     ['bg', 'Normal'],
-    " \ 'hl+':     ['fg', 'Question'],
-    " \ 'info':    ['fg', 'Comment'],
-    " \ 'border':  ['fg', 'Identifier'],
-    " \ 'prompt':  ['fg', 'Identifier'],
-    " \ 'pointer': ['fg', 'Identifier'],
-    " \ 'marker':  ['fg', 'Function'],
-    " \ 'spinner': ['fg', 'Comment'],
-    " \ 'header':  ['fg', 'Comment']
-    " \ }
+" Use default colors defined in environment variable $FZF_DEFAULT_OPTS
+let g:fzf_colors = {}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
@@ -598,6 +561,12 @@ nmap <leader>cg <Plug>(CMakeGenerate)
 nmap <leader>cb <Plug>(CMakeBuild)
 nmap <leader>ci <Plug>(CMakeInstall)
 nmap <leader>cq <Plug>(CMakeClose)
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-devicons configuration                                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:webdevicons_enable_airline_tabline = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Nvim LSP configuration                                                       "
