@@ -76,10 +76,14 @@ alias la='ls -FhAl'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_OPTS="
+export FZF_DEFAULT_OPTS='
     --color bg+:#1d2021,bg:#1d2021,border:#83a598,spinner:#928374,hl:#fe8019
     --color fg:#928374,header:#928374,info:#928374,pointer:#83a598
-    --color marker:#b8bb26,fg+:#b8bb26,prompt:#83a598,hl+:#fe8019"
+    --color marker:#b8bb26,fg+:#b8bb26,prompt:#83a598,hl+:#fe8019'
+
+[ -x "$(command -v rg)" ] && export FZF_DEFAULT_COMMAND='
+    rg --files --hidden --follow --no-messages
+    --glob "!.git/*" --glob \!"* *"'
 
 # Taken from https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/sudo
 sudo-command-line() {

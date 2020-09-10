@@ -130,6 +130,9 @@ set number
 " Display keystrokes in the command line in normal mode
 set showcmd
 
+" Hide mode from command line
+set noshowmode
+
 " Hide buffers when abandoned
 set hidden
 
@@ -148,6 +151,9 @@ set diffopt+=vertical
 
 " Put new window to the right when using a vertical split
 set splitright
+
+" Show effects of some commands incrementally in a preview window
+set inccommand=split
 
 " Set update delay (in milliseconds)
 " set updatetime=100
@@ -197,6 +203,9 @@ set mouse=nv
 " Custom theming                                                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Highlight folds as comments
+highlight! link Folded Comment
+
 " Apply a slightly lighter backgroun on inactive windows
 highlight ThemeNormalNC ctermfg=223 ctermbg=234 guifg=#ebdbb2 guibg=#282828
 
@@ -235,12 +244,6 @@ let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.dirty = ''
 
-" Detect modified buffers
-let g:airline_detect_modified = 1
-
-" Skip empty sections
-let g:airline_skip_empty_sections = 0
-
 " Configure section z (current position in the file)
 function! AirlineInit()
     let g:airline_section_z = airline#section#create(
@@ -255,7 +258,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
-let g:airline#extensions#term#enabled = 0
+" let g:airline#extensions#term#enabled = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
@@ -313,7 +316,7 @@ let g:indentLine_char = '│'
 " Enable for certain file types only
 let g:indentLine_fileType = [
     \ 'c', 'cpp', 'python', 'bash', 'rust', 'vim', 'lua', 'yaml', 'php',
-    \ 'javascript', 'html', 'css', 'cmake'
+    \ 'javascript', 'html', 'css', 'cmake', 'go'
     \ ]
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -507,12 +510,11 @@ let g:vimtex_compiler_progname = 'nvr'
 nnoremap <silent> <C-P> :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 
-" Hide statusline in fzf buffers, and map <ESC> to <C-C>
+" Hide statusline in fzf buffers
 augroup FZF
     autocmd!
     autocmd FileType fzf set laststatus=0 noshowmode noruler nonumber nornu
         \ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler number rnu
-    autocmd FileType fzf tnoremap <ESC> <C-C>
 augroup END
 
 " Use default colors defined in environment variable $FZF_DEFAULT_OPTS
