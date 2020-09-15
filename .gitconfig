@@ -1,10 +1,12 @@
 [user]
 	name = Carlo Delle Donne
 	email = carlo.delle.donne@gmail.com
-[push]
-	default = simple
 [core]
 	excludesfile = ~/.gitignore_global
+[push]
+	default = simple
+[pull]
+	ff = only
 [diff]
 	tool = vimdiff3
 [difftool "vimdiff3"]
