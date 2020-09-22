@@ -115,14 +115,14 @@ set shiftwidth=4
 set softtabstop=4
 
 " Tab behaviour for some config files
-autocmd FileType yaml,toml set shiftwidth=2 softtabstop=2
+autocmd FileType yaml,toml setlocal shiftwidth=2 softtabstop=2
 
 " Set folding method but do not fold on start-up
 set foldmethod=syntax
 set nofoldenable
 
 " Fold specific files based on indent
-autocmd FileType python,basic,yaml,toml,vim set foldmethod=indent
+autocmd FileType python,basic,yaml,toml,vim setlocal foldmethod=indent
 
 " Show line number
 set number
@@ -172,7 +172,7 @@ autocmd FileType tex,text,markdown,rst,gitcommit setlocal spell spelllang=en_us
 autocmd FileType tex,text,markdown,rst,gitcommit setlocal textwidth=80
 
 " Open .clang-format files as YAML files
-autocmd BufRead *.clang-format set filetype=yaml
+autocmd BufRead *.clang-format setlocal filetype=yaml
 
 " Open .tex files as LaTeX files
 let g:tex_flavor='latex'
