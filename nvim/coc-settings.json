@@ -53,8 +53,24 @@
         "python-language-server": {
             "command": "pyls",
             "args": ["--log-file", "/tmp/pyls.log"],
-            "filetypes": ["python"]
-        },
+            "filetypes": ["python"],
+            "settings": {
+                "pyls": {
+                    "configurationSources": ["flake8"],
+                    "plugins": {
+                        "pycodestyle": {
+                            "enabled": false
+                        },
+                        "pyflakes": {
+                            "enabled": false
+                        },
+                        "flake8": {
+                            "enabled": true
+                        }
+                    }
+                }
+            }
+        }
 
         // javascript, typescript
         // "tsserver": {
