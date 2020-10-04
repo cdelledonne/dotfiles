@@ -98,6 +98,12 @@ call plug#end()
 " General settings                                                             "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" From :help provider-nodejs
+" By default, Nvim searches for 'neovim-node-host' using 'npm root -g', which
+" can be slow. To avoid this, set g:node_host_prog to the host path:
+"     let g:node_host_prog = '/usr/local/bin/neovim-node-host'
+let g:node_host_prog = '/usr/local/bin/neovim-node-host'
+
 " Enable true colors
 if $COLORTERM == 'truecolor'
     set termguicolors
