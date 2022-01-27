@@ -15,18 +15,14 @@ Plug 'airblade/vim-gitgutter'
 
 " Git wrapper
 Plug 'tpope/vim-fugitive'
-
-" File navigator
-Plug 'preservim/nerdtree'
+Plug 'tpope/vim-rhubarb'
+Plug 'shumphrey/fugitive-gitlab.vim'
 
 " Commenter
 Plug 'scrooloose/nerdcommenter'
 
 " Auto-close pairs
 Plug 'jiangmiao/auto-pairs'
-
-" Show indent lines
-Plug 'Yggdroot/indentLine'
 
 " Search (and replace) multiple files
 Plug 'wincent/ferret'
@@ -69,14 +65,6 @@ Plug 'SirVer/ultisnips'
 " Terminal wrapper
 Plug 'kassio/neoterm'
 
-" Completion framework
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-
-Plug 'liuchengxu/vista.vim'
-
-" Language server client add-ons
-Plug 'jackguo380/vim-lsp-cxx-highlight'
-
 " LaTeX autocompletion and other features
 Plug 'lervag/vimtex'
 
@@ -87,8 +75,27 @@ Plug 'junegunn/vim-peekaboo'
 " Plug 'cdelledonne/vim-cmake'
 Plug '~/Developer/Repositories/cdelledonne/vim-cmake'
 
-" File type icons (load as the last one)
-Plug 'ryanoasis/vim-devicons'
+" Dependencies
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+
+" Fuzzy finder
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'kyazdani42/nvim-web-devicons'  " Lua fork of vim-devicons
+
+" Plug 'tami5/lspsaga.nvim'
+
+" Dim inactive windows
+Plug 'sunjon/shade.nvim'
+
+" File explorer
+Plug 'kyazdani42/nvim-tree.lua'
+
+" Show indent lines
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 endif
 
@@ -124,11 +131,16 @@ set softtabstop=4
 autocmd FileType yaml,toml setlocal shiftwidth=2 softtabstop=2
 
 " Set folding method but do not fold on start-up
-set foldmethod=syntax
+" set foldmethod=syntax
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable
 
-" Fold specific files based on indent
-autocmd FileType python,basic,yaml,toml,vim setlocal foldmethod=indent
+" Fold specific files based on indent (should work with treesitter?)
+" autocmd FileType python,basic,yaml,toml,vim setlocal foldmethod=indent
+
+" Soft-wrapped lines will continue visually indented
+set breakindent
 
 " Show line number
 set number
@@ -183,6 +195,24 @@ autocmd BufRead *.clang-format setlocal filetype=yaml
 " Open .tex files as LaTeX files
 let g:tex_flavor='latex'
 
+" Custom commands
+command! RemoveTrailingSpaces %s/\s\+$//g | noh
+
+" Set insert mode cursor as block
+" set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20
+set guicursor=
+
+" Mouse support in normal and visual mode
+set mouse=nv
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Custom mappings                                                              "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Use <Tab> and <S-Tab> to navigate completion list
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 " Use Esc to exit terminal mode
 tnoremap <Esc> <C-\><C-n>
 
@@ -195,15 +225,19 @@ tnoremap <C-h> <C-\><C-n><C-w>h
 " Folding
 nnoremap <space> za
 
-" Custom commands
-command! RemoveTrailingSpaces %s/\s\+$//g | noh
-
-" Set insert mode cursor as block
-" set guicursor=n-v-c-sm:block,i-ci-ve:block,r-cr-o:hor20
-set guicursor=
-
-" Mouse support in normal and visual mode
-set mouse=nv
+" Formatting
+function! ToggleAutoFormat() abort
+    " Search for 'a' in formatoptions
+    let l:autoformat_active = match(&l:formatoptions, '\m\Ca') > 0
+    if l:autoformat_active
+        set formatoptions-=a
+        echo 'Automatic formatting turned OFF'
+    else
+        set formatoptions+=a
+        echo 'Automatic formatting turned ON'
+    endif
+endfunction
+nnoremap <silent> taf :call ToggleAutoFormat()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom theming                                                               "
@@ -212,11 +246,7 @@ set mouse=nv
 " Highlight folds as comments
 highlight! link Folded Comment
 
-" Apply a slightly lighter backgroun on inactive windows
-highlight ThemeNormalNC ctermfg=223 ctermbg=234 guifg=#ebdbb2 guibg=#282828
-
 function! s:OnWinEnter() abort
-    set winhighlight=NormalNC:ThemeNormalNC
     if &l:number
         setlocal relativenumber
     endif
@@ -224,15 +254,18 @@ function! s:OnWinEnter() abort
 endfunction
 
 function! s:OnWinLeave() abort
-    set winhighlight=NormalNC:ThemeNormalNC
     if &l:number
         setlocal norelativenumber
     endif
     setlocal nocursorline
 endfunction
 
+" Enable 'cursorline' and 'relativenumber' in active window only
 autocmd VimEnter,BufEnter,WinEnter * call s:OnWinEnter()
 autocmd BufLeave,WinLeave * call s:OnWinLeave()
+
+" But disable 'cursorline' in TelescopePrompt window
+autocmd FileType TelescopePrompt setlocal nocursorline
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline configuration                                                        "
@@ -243,7 +276,7 @@ if !exists('g:airline_symbols')
 endif
 
 " Configure statusline symbols
-let g:airline_symbols.branch = ''
+let g:airline_symbols.branch = '⎇ '
 let g:airline_symbols.notexists = ' Ɇ'
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
@@ -264,8 +297,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
-" let g:airline#extensions#term#enabled = 0
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -273,23 +304,10 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:gitgutter_signs = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NERDTree configuration                                                       "
+" fugitive configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Show hidden files and sort them first
-let NERDTreeShowHidden = 1
-let NERDTreeSortHiddenFirst = 1
-
-" Ignore some files
-let NERDTreeIgnore = ['.DS_Store', '\.swp$', '\~$']
-
-let NERDTreeStatusline = 'NERDTree'
-
-" Toggle window
-nnoremap <silent> <F11> :NERDTreeToggle<CR>
-
-" Focus window
-nnoremap <silent> <F10> :NERDTreeFocus<CR>
+let g:fugitive_gitlab_domains = ['https://gitlab.tudelft.nl']
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDCommenter configuration                                                  "
@@ -310,20 +328,6 @@ nmap <leader>ca <Plug>NERDCommenterAltDelims
 nmap <leader>cA <Plug>NERDCommenterAppend
 nmap <leader>c<Space> <Plug>NERDCommenterToggle
 imap <C-c> <Plug>NERDCommenterInsert
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" indentLine configuration                                                     "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Change default indent line character
-" let g:indentLine_char = '┊'
-let g:indentLine_char = '│'
-
-" Enable for certain file types only
-let g:indentLine_fileType = [
-    \ 'c', 'cpp', 'python', 'bash', 'rust', 'vim', 'lua', 'yaml', 'php',
-    \ 'javascript', 'html', 'css', 'cmake', 'go'
-    \ ]
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " AutoPairs configuration                                                      "
@@ -370,161 +374,33 @@ let g:localvimrc_persistent = 1
 let g:localvimrc_persistence_file = expand('~/.config/localvimrc/persistent')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Coc configuration                                                            "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Use <Tab> and <S-Tab> to navigate completion list
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Use <C-Space> to trigger completion
-inoremap <silent><expr> <C-Space> coc#refresh()
-
-" Highlight comments in JSON files
-autocmd FileType json syntax match Comment +\/\/.\+$+
-
-" Define key bindings
-function! SetLSPShortcuts()
-    nmap <silent> <leader>df <Plug>(coc-definition)
-    nmap <silent> <leader>dc <Plug>(coc-declaration)
-    nmap <silent> <leader>im <Plug>(coc-implementation)
-    nmap <silent> <leader>td <Plug>(coc-type-definition)
-    nmap <silent> <leader>dn <Plug>(coc-diagnostic-next)
-    nmap <silent> <leader>dp <Plug>(coc-diagnostic-previous)
-    nmap <silent> <leader>dl :CocList diagnostics<CR>
-    nmap <silent> <leader>rf <Plug>(coc-references)
-    vmap <silent> <leader>fs <Plug>(coc-format-selected)
-    nmap <silent> <leader>rn <Plug>(coc-rename)
-    nmap <silent> <leader>fx <Plug>(coc-fix-current)
-    nmap <silent> <leader>hv :call CocActionAsync('doHover')<CR>
-    nmap <silent> <leader>hl :call CocActionAsync('highlight')<CR>
-endfunction()
-
-" Set key bindings for some specific file types
-augroup LSP
-    autocmd!
-    autocmd FileType c,cpp,python,php,javascript,typescript
-            \ call SetLSPShortcuts()
-augroup END
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vista configuration                                                          "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:vista_echo_cursor = 0
-let g:vista_blink = [0, 0]
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" deoplete configuration                                                       "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" let g:deoplete#enable_at_startup = 1
-
-" Do not show preview
-" set completeopt-=preview
-
-" Use <Tab> and <S-Tab> to navigate completion list
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Enable around and buffer sources in some textual filetypes only
-" call deoplete#custom#source('around', 'filetypes', ['text', 'markdown'])
-" call deoplete#custom#source('buffer', 'filetypes', ['text', 'markdown'])
-
-" Enable tmux source in tmux files only
-" call deoplete#custom#source('tmux-complete', 'filetypes', ['tmux'])
-
-" Enable syntax source in some filetypes only
-" call deoplete#custom#source('syntax', 'filetypes', ['make', 'cmake'])
-" let g:necosyntax#max_syntax_lines = 50000
-
-" Trigger completion of some sources after typing 3 characters
-" call deoplete#custom#source('LanguageClient', 'min_pattern_length', 3)
-" call deoplete#custom#source('tmux-complete', 'min_pattern_length', 3)
-" call deoplete#custom#source('syntax', 'min_pattern_length', 3)
-" call deoplete#custom#source('lsp', 'min_pattern_length', 3)
-" call deoplete#custom#source('ultisnips', 'min_pattern_length', 3)
-
-" call deoplete#custom#source('lsp', 'mark', '[+]')
-" call deoplete#custom#source('ultisnips', 'mark', '[$]')
-
-" call deoplete#custom#source('lsp', 'rank', 1)
-" call deoplete#custom#source('ultisnips', 'rank', 2)
-" call deoplete#custom#source('ultisnips', 'rank', 2)
-
-" Disable the truncate feature
-" call deoplete#custom#source('_', 'max_abbr_width', 0)
-" call deoplete#custom#source('_', 'max_menu_width', 0)
-
-" LaTeX autocompletion with vimtex
-" call deoplete#custom#var('omni', 'input_patterns', {
-        " \ 'tex': g:vimtex#re#deoplete
-        " \ })
-
-" Close preview window when leaving INSERT mode
-" autocmd InsertLeave * silent! pclose!
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" neopairs configuration                                                       "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Autoclose parentheses when completing a function with deoplete
-" let g:neopairs#enable = 1
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" neosnippet configuration                                                     "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" let g:neosnippet#disable_runtime_snippets = 1
-" let g:neosnippet#enable_completed_snippet = 1
-" let g:neosnippet#enable_complete_done = 1
-
-" imap <C-K> <Plug>(neosnippet_expand_or_jump)
-" smap <C-K> <Plug>(neosnippet_expand_or_jump)
-" xmap <C-K> <Plug>(neosnippet_expand_target)
-
-" if has('conceal')
-  " set conceallevel=2 concealcursor=niv
-" endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-lsp-cxx-highlight configuration                                          "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Enable logging
-let g:lsp_cxx_hl_log_file = '/tmp/vim-lsp-cxx-hl.log'
-let g:lsp_cxx_hl_verbose = 1
-
-" Clear/change some highlight groups
-hi link LspCxxHlSymVariable   NONE
-hi link LspCxxHlSymParameter  NONE
-hi link LspCxxHlSymUnknown    NONE
-hi link LspCxxHlSymField      NONE
-hi link LspCxxHlSymEnumMember Constant
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimtex configuration                                                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Enable folding (should work with treesitter?)
+" let g:vimtex_fold_enabled = 1
+
+" Configure ToC
+let g:vimtex_toc_config = {
+        \ 'name': 'ToC ',
+        \ 'split_pos': 'vert topleft',
+        \ 'split_width': 30,
+        \ }
+
+" Do not open quickfix window if there are only compilation warnings
+let g:vimtex_quickfix_open_on_warning = 0
+
+augroup VIMTEX
+    autocmd!
+    " Center cursor vertically after jumping to ToC entry
+    autocmd User VimtexEventTocActivated execute 'normal! zz'
+augroup END
 
 " Workaround, check :help vimtex-faq-neovim
 let g:vimtex_compiler_progname = 'nvr'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" fzf configuration                                                            "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nnoremap <silent> <C-P> :Files<CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-
-" Hide statusline in fzf buffers
-augroup FZF
-    autocmd!
-    autocmd FileType fzf set laststatus=0 noshowmode noruler nonumber nornu
-        \ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler number rnu
-augroup END
-
-" Use default colors defined in environment variable $FZF_DEFAULT_OPTS
-let g:fzf_colors = {}
+" Use XeLaTeX as default engine for Latexmk
+" let g:vimtex_compiler_latexmk_engines['_'] = '-xelatex'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
@@ -571,16 +447,42 @@ nmap <leader>ci <Plug>(CMakeInstall)
 nmap <leader>cq <Plug>(CMakeClose)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-devicons configuration                                                   "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:webdevicons_enable_airline_tabline = 0
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Nvim LSP configuration                                                       "
+" nvim-lspconfig and lspsaga.nvim configuration                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Lua config file in ~/.config/nvim/lua
-" if has('nvim-0.5')
-    " lua require 'lspinit'
-" endif
+lua require('nvim-lspconfig-init')
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nvim-treesitter configuration                                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Lua config file in ~/.config/nvim/lua
+lua require('nvim-treesitter-init')
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Telescope configuration                                                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Lua config file in ~/.config/nvim/lua
+lua require('telescope-init')
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" shade configuration                                                          "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+lua require('shade').setup()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nvim-tree configuration                                                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Lua config file in ~/.config/nvim/lua
+lua require('nvim-tree-init')
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" indent-blankline configuration                                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Lua config file in ~/.config/nvim/lua
+lua require('indent-blankline-init')
