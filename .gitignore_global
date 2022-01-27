@@ -6,6 +6,7 @@
 ###########
 *.sw[pon]
 *.lvimrc
+*.latexmain
 .vim/sessions/
 Session.vim
 
@@ -18,3 +19,7 @@ compile_commands.json
 ######################
 *.py[cod]
 __pycache__
+
+# Tools and IDEs
+################
+.ipynb_checkpoints/
