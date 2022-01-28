@@ -209,6 +209,9 @@ set mouse=nv
 " Custom mappings                                                              "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Redefine leader to be ';'
+let mapleader = ";"
+
 " Use <Tab> and <S-Tab> to navigate completion list
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
