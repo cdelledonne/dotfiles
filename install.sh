@@ -6,7 +6,6 @@ CONFDIR=${CONFDIR:-$HOME/.config}
 # Dotfiles to link
 declare -a dotfiles=(
     "alacritty"         "$CONFDIR"
-    "bat"               "$CONFDIR"
     "fontconfig"        "$CONFDIR"
     "git"               "$CONFDIR"
     "gitmux"            "$CONFDIR"

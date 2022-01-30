@@ -6,7 +6,6 @@ $ ./install.sh
 | Dotfile             | Install location   |
 |:--------------------|:-------------------|
 | `alacritty/`        | `$CONFDIR`         |
-| `bat/`              | `$CONFDIR`         |
 | `fontconfig/`       | `$CONFDIR`         |
 | `git/`              | `$CONFDIR`         |
 | `gitmux/`           | `$CONFDIR`         |
@@ -24,5 +23,5 @@ before running the script.
 
 ### TODO
 
-- [ ] Install base packages (zsh, fzf, bat, ripgrep, vim-plug)
+- [ ] Install base packages (zsh, fzf, ripgrep, vim-plug)
 - [ ] For macOS, install more packages (coreutils)
