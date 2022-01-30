@@ -1,8 +1,6 @@
 [user]
 	name = Carlo Delle Donne
 	email = carlo.delle.donne@gmail.com
-[core]
-	excludesfile = ~/.gitignore_global
 [push]
 	default = simple
 [pull]

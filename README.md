@@ -8,17 +8,16 @@ $ ./install.sh
 | `alacritty/`        | `$CONFDIR`         |
 | `bat/`              | `$CONFDIR`         |
 | `fontconfig/`       | `$CONFDIR`         |
+| `git/`              | `$CONFDIR`         |
 | `gitmux/`           | `$CONFDIR`         |
 | `nvim/`             | `$CONFDIR`         |
-| `.gitconfig`        | `$HOME`            |
-| `.gitignore_global` | `$HOME`            |
 | `.pythonrc`         | `$HOME`            |
 | `.tmux.conf`        | `$HOME`            |
 | `.zshrc`            | `$HOME`            |
 
 At run-time, you can selectively choose which ones to install.
 
-By default, `$CONFDIR` equals `~/.config`.  To change that, run
+By default, `$CONFDIR` equals `$HOME/.config`.  To change that, run
 ```
 export CONFDIR=/some/other/path
 ```
