@@ -17,8 +17,11 @@ plugin.setup{
     defaults = {
         sorting_strategy = 'ascending',
         preview = false,
-        selection_caret = '  ',
-        multi_icon = '+ ',
+        scroll_strategy = 'limit',
+        prompt_prefix = '  ',
+        multi_icon = '  ',
+        entry_prefix = '   ',
+        selection_caret = '   ',
         layout_strategy = 'center',
         layout_config = {
             height = 24,  -- 4 lines of borders and 20 results
