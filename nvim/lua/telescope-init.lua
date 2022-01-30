@@ -18,10 +18,10 @@ plugin.setup{
         sorting_strategy = 'ascending',
         preview = false,
         scroll_strategy = 'limit',
-        prompt_prefix = '  ',
-        multi_icon = '  ',
-        entry_prefix = '   ',
-        selection_caret = '   ',
+        prompt_prefix = '   ',
+        multi_icon = '   ',
+        entry_prefix = '    ',
+        selection_caret = '    ',
         layout_strategy = 'center',
         layout_config = {
             height = 24,  -- 4 lines of borders and 20 results
@@ -103,7 +103,8 @@ link_hl_group('TelescopeNormal', 'Normal')
 link_hl_group('TelescopeSelectionCaret', 'TelescopeSelection')
 link_hl_group('TelescopeMultiSelection', 'Type')
 link_hl_group('TelescopeMatching', 'Special')
-link_hl_group('TelescopePromptPrefix', 'Identifier')
 
 -- Custom highlight groups
+link_hl_group('TelescopePromptPrefix', 'Normal')
 link_hl_group('TelescopeSelection', 'CursorLine')
+link_hl_group('TelescopeMultiIcon', 'Type')
