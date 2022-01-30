@@ -12,7 +12,6 @@ declare -a dotfiles=(
     "gitmux"            "$CONFDIR"
     "nvim"              "$CONFDIR"
     "tmux"              "$CONFDIR"
-    ".pythonrc"         "$HOME"
     ".zshrc"            "$HOME"
 )
 

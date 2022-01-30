@@ -12,7 +12,6 @@ $ ./install.sh
 | `gitmux/`           | `$CONFDIR`         |
 | `nvim/`             | `$CONFDIR`         |
 | `tmux/`             | `$CONFDIR`         |
-| `.pythonrc`         | `$HOME`            |
 | `.zshrc`            | `$HOME`            |
 
 At run-time, you can selectively choose which ones to install.

@@ -1,3 +1,0 @@
-# Enable Tab-triggered autocompletion
-import readline
-readline.parse_and_bind("tab: complete")
