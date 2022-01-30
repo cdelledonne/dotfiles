@@ -7,6 +7,8 @@ $ ./install.sh
 |:--------------------|:-------------------|
 | `alacritty/`        | `$CONFDIR`         |
 | `bat/`              | `$CONFDIR`         |
+| `fontconfig/`       | `$CONFDIR`         |
+| `gitmux/`           | `$CONFDIR`         |
 | `nvim/`             | `$CONFDIR`         |
 | `.gitconfig`        | `$HOME`            |
 | `.gitignore_global` | `$HOME`            |

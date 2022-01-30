@@ -9,6 +9,7 @@ declare -a dotfiles=(
     "bat"               "$CONFDIR"
     "gitmux"            "$CONFDIR"
     "nvim"              "$CONFDIR"
+    "fontconfig"        "$CONFDIR"
     ".gitconfig"        "$HOME"
     ".gitignore_global" "$HOME"
     ".pythonrc"         "$HOME"
