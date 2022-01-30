@@ -27,10 +27,6 @@ Plug 'jiangmiao/auto-pairs'
 " Search (and replace) multiple files
 Plug 'wincent/ferret'
 
-" Fuzzy search (for buffers and multiple-entry selection)
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
 " Disable search highlighting when done searching
 Plug 'romainl/vim-cool'
 
