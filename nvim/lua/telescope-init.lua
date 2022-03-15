@@ -96,15 +96,3 @@ map_picker('<leader>lg', 'live_grep')
 map_picker('<leader>s',  'grep_string')
 map_picker('<leader>ws', 'lsp_dynamic_workspace_symbols')
 map_picker('z=',         'spell_suggest')
-
--- Redefine some default Telescope highlight groups here, as they are otherwise
--- overwritten by the Gruvbox theme
-link_hl_group('TelescopeNormal', 'Normal')
-link_hl_group('TelescopeSelectionCaret', 'TelescopeSelection')
-link_hl_group('TelescopeMultiSelection', 'Type')
-link_hl_group('TelescopeMatching', 'Special')
-
--- Custom highlight groups
-link_hl_group('TelescopePromptPrefix', 'Normal')
-link_hl_group('TelescopeSelection', 'CursorLine')
-link_hl_group('TelescopeMultiIcon', 'Type')

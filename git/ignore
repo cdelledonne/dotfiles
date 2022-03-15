@@ -14,6 +14,8 @@ Session.vim
 ######################################
 compile_commands.json
 .ccls
+.ccls-cache/
+pyrightconfig.json
 
 # Python compiled code
 ######################

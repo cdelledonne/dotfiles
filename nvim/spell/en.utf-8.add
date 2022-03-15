@@ -110,3 +110,9 @@ latencies
 TDMA
 fidelities
 SDN
+QNPU
+QKD
+FPGA
+ASIC
+RTOS
+dephasing

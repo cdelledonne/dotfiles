@@ -81,3 +81,32 @@ augroup LSP
     autocmd FileType c,cpp,python,php,javascript,typescript
             \ call SetLSPShortcuts()
 augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vimtex configuration                                                         "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Enable folding (should work with treesitter?)
+" let g:vimtex_fold_enabled = 1
+
+" Configure ToC
+let g:vimtex_toc_config = {
+        \ 'name': 'ToC ',
+        \ 'split_pos': 'vert topleft',
+        \ 'split_width': 30,
+        \ }
+
+" Do not open quickfix window if there are only compilation warnings
+let g:vimtex_quickfix_open_on_warning = 0
+
+augroup VIMTEX
+    autocmd!
+    " Center cursor vertically after jumping to ToC entry
+    autocmd User VimtexEventTocActivated execute 'normal! zz'
+augroup END
+
+" Workaround, check :help vimtex-faq-neovim
+let g:vimtex_compiler_progname = 'nvr'
+
+" Use XeLaTeX as default engine for Latexmk
+" let g:vimtex_compiler_latexmk_engines['_'] = '-xelatex'

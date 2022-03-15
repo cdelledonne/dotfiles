@@ -44,23 +44,66 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 vim.o.updatetime = 1000
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()]]
 
+-- Advertise client capabilities to LSP server
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
 -- C/C++ language server
 plugin.ccls.setup{
     on_attach = on_attach,
-    cmd = { 'ccls', '-v=1', '-log-file=/tmp/ccls.log' };
+    cmd = { 'ccls', '-v=1', '-log-file=/tmp/ccls.log' },
     init_options = {
         cache = { directory = '/tmp/ccls' },
         clang = { extraArgs = { '-Wno-extra', '-Wno-empty-body' } },
         client = { snippetSupport = true },
         completion = { detailedLabel = false, caseSensitivity = 1 },
         highlight = { lsRanges = true },
-    };
+    },
+    capabilities = capabilities,
 }
 
 -- Python language server
 plugin.pyright.setup{
     on_attach = on_attach,
-    cmd = { 'pyright-langserver', '--stdio' }  -- Default
+    cmd = { 'pyright-langserver', '--stdio' },  -- Default
+    capabilities = capabilities,
+}
+
+-- LaTeX language server
+plugin.texlab.setup{
+    on_attach = on_attach,
+    cmd = { 'texlab' },  -- Default
+    settings = {
+        texlab = {
+            auxDirectory = 'build',  -- Non-default
+            bibtexFormatter = 'texlab',
+            build = {
+                args = {
+                    '-pdf',
+                    '-interaction=nonstopmode',
+                    '-synctex=1',
+                    '-outdir=build',  -- Non-default
+                    '-xelatex',  -- Non-default
+                    '%f'
+                },
+                executable = 'latexmk',
+                forwardSearchAfter = false,
+                onSave = false
+            },
+            chktex = {
+                onEdit = false,
+                onOpenAndSave = false
+            },
+            diagnosticsDelay = 300,
+            formatterLineLength = 100,  -- Non-default
+            forwardSearch = {
+                executable = 'evince-synctex',  -- Non-default
+                args = {'-f', '%l', '%p', ''}  -- Non-default
+            },
+            latexFormatter = 'latexindent',
+        }
+    },
+    capabilities = capabilities,
 }
 
 -- lspsaga

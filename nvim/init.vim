@@ -5,7 +5,7 @@
 call plug#begin('~/.local/share/nvim/plug')
 
 " gruvbox color scheme
-Plug 'gruvbox-community/gruvbox'
+Plug 'ellisonleao/gruvbox.nvim'
 
 " Status/tabline
 Plug 'vim-airline/vim-airline'
@@ -61,9 +61,6 @@ Plug 'SirVer/ultisnips'
 " Terminal wrapper
 Plug 'kassio/neoterm'
 
-" LaTeX autocompletion and other features
-Plug 'lervag/vimtex'
-
 " Peek content of registers
 Plug 'junegunn/vim-peekaboo'
 
@@ -92,6 +89,17 @@ Plug 'kyazdani42/nvim-tree.lua'
 
 " Show indent lines
 Plug 'lukas-reineke/indent-blankline.nvim'
+
+" Git diff GUI
+Plug 'sindrets/diffview.nvim'
+
+Plug 'folke/trouble.nvim'
+
+" Autocompletion
+Plug 'hrsh7th/cmp-nvim-lsp'  " LSP completion source
+Plug 'hrsh7th/cmp-path'      " Path completion source
+Plug 'onsails/lspkind-nvim'  " Icons for LSP completion items
+Plug 'hrsh7th/nvim-cmp'
 
 endif
 
@@ -182,8 +190,8 @@ autocmd FileType tex,text,markdown setlocal wrap linebreak
 " Enable spell checking for textual files
 autocmd FileType tex,text,markdown,rst,gitcommit setlocal spell spelllang=en_us
 
-" Set text width for line breaks for textual files
-autocmd FileType tex,text,markdown,rst,gitcommit setlocal textwidth=80
+" Set text width for line breaks for some filetypes
+autocmd FileType tex,text,markdown,rst,gitcommit,vim setlocal textwidth=80
 
 " Open .clang-format files as YAML files
 autocmd BufRead *.clang-format setlocal filetype=yaml
@@ -207,10 +215,6 @@ set mouse=nv
 
 " Redefine leader to be ';'
 let mapleader = ";"
-
-" Use <Tab> and <S-Tab> to navigate completion list
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Use Esc to exit terminal mode
 tnoremap <Esc> <C-\><C-n>
@@ -236,7 +240,7 @@ function! ToggleAutoFormat() abort
         echo 'Automatic formatting turned ON'
     endif
 endfunction
-nnoremap <silent> taf :call ToggleAutoFormat()<CR>
+nnoremap <silent> <leader>af :call ToggleAutoFormat()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom theming                                                               "
@@ -265,6 +269,13 @@ autocmd BufLeave,WinLeave * call s:OnWinLeave()
 
 " But disable 'cursorline' in TelescopePrompt window
 autocmd FileType TelescopePrompt setlocal nocursorline
+
+" Other highlight definitions
+highlight! link TelescopePromptPrefix Normal
+highlight! link TelescopeSelection CursorLine
+highlight! link TelescopeMatching Special
+highlight! link TelescopeMultiSelection Type
+highlight! link TelescopeMultiIcon Type
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline configuration                                                        "
@@ -373,35 +384,6 @@ let g:localvimrc_persistent = 1
 let g:localvimrc_persistence_file = expand('~/.config/localvimrc/persistent')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vimtex configuration                                                         "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Enable folding (should work with treesitter?)
-" let g:vimtex_fold_enabled = 1
-
-" Configure ToC
-let g:vimtex_toc_config = {
-        \ 'name': 'ToC ',
-        \ 'split_pos': 'vert topleft',
-        \ 'split_width': 30,
-        \ }
-
-" Do not open quickfix window if there are only compilation warnings
-let g:vimtex_quickfix_open_on_warning = 0
-
-augroup VIMTEX
-    autocmd!
-    " Center cursor vertically after jumping to ToC entry
-    autocmd User VimtexEventTocActivated execute 'normal! zz'
-augroup END
-
-" Workaround, check :help vimtex-faq-neovim
-let g:vimtex_compiler_progname = 'nvr'
-
-" Use XeLaTeX as default engine for Latexmk
-" let g:vimtex_compiler_latexmk_engines['_'] = '-xelatex'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown-preview configuration                                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -440,48 +422,25 @@ let g:peekaboo_window = 'bel 30new'
 " vim-cmake configuration                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let g:cmake_log_file = '/tmp/vim-cmake.log'
+
 nmap <leader>cg <Plug>(CMakeGenerate)
 nmap <leader>cb <Plug>(CMakeBuild)
 nmap <leader>ci <Plug>(CMakeInstall)
 nmap <leader>cq <Plug>(CMakeClose)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nvim-lspconfig and lspsaga.nvim configuration                                "
+" Lua plugins configuration                                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Lua config file in ~/.config/nvim/lua
+" Lua config files in ~/.config/nvim/lua
 lua require('nvim-lspconfig-init')
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nvim-treesitter configuration                                                "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Lua config file in ~/.config/nvim/lua
 lua require('nvim-treesitter-init')
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Telescope configuration                                                      "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Lua config file in ~/.config/nvim/lua
 lua require('telescope-init')
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" shade configuration                                                          "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-lua require('shade').setup()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nvim-tree configuration                                                      "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Lua config file in ~/.config/nvim/lua
 lua require('nvim-tree-init')
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" indent-blankline configuration                                               "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Lua config file in ~/.config/nvim/lua
 lua require('indent-blankline-init')
+lua require('nvim-cmp-init')
+
+" Config-less plugins
+lua require('shade').setup()
+lua require('diffview').setup()
