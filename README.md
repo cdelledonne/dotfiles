@@ -1,27 +1,31 @@
-This repository contains cdelledonne's dotfiles.  To install the dotfiles, run
+This repository contains cdelledonne's dotfiles. To install the dotfiles, run
+```sh
+./install.sh
 ```
-$ ./install.sh
+
+For more help, run
+```sh
+./install.sh --help
 ```
 
-| Dotfile             | Install location   |
-|:--------------------|:-------------------|
-| `alacritty/`        | `$CONFDIR`         |
-| `fontconfig/`       | `$CONFDIR`         |
-| `git/`              | `$CONFDIR`         |
-| `gitmux/`           | `$CONFDIR`         |
-| `nvim/`             | `$CONFDIR`         |
-| `tmux/`             | `$CONFDIR`         |
-| `.zshrc`            | `$HOME`            |
+| Dotfile       | Destination |
+|:--------------|:------------|
+| `alacritty/`  | `$CONFDIR`  |
+| `fontconfig/` | `$CONFDIR`  |
+| `git/`        | `$CONFDIR`  |
+| `gitmux/`     | `$CONFDIR`  |
+| `nvim/`       | `$CONFDIR`  |
+| `tmux/`       | `$CONFDIR`  |
+| `.zshrc`      | `$HOME`     |
 
-At run-time, you can selectively choose which ones to install.
+| Plugin     | Destination                            |
+|:-----------|:---------------------------------------|
+| `vim-plug` | `$DATADIR/nvim/site/autoload/plug.vim` |
+| `tpm`      | `$DATADIR/tmux/plugins/tpm`            |
 
-By default, `$CONFDIR` equals `$HOME/.config`.  To change that, run
+By default, `$CONFDIR` equals `$HOME/.config` and `$DATADIR` equals
+`$HOME/.local/share`. You can change them before running the script, e.g.:
+```sh
+export CONFDIR=/some/conf/path
+export DATADIR=/some/data/path
 ```
-export CONFDIR=/some/other/path
-```
-before running the script.
-
-### TODO
-
-- [ ] Install base packages (zsh, fzf, ripgrep, vim-plug)
-- [ ] For macOS, install more packages (coreutils)
