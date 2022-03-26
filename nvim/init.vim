@@ -45,8 +45,6 @@ Plug 'tpope/vim-obsession'
 Plug 'embear/vim-localvimrc'
 Plug 'ARM9/arm-syntax-vim'
 
-if $XDG_SESSION_TYPE != 'tty'
-
 " Markdown preview and additional tools
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'plasticboy/vim-markdown'
@@ -100,8 +98,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'  " LSP completion source
 Plug 'hrsh7th/cmp-path'      " Path completion source
 Plug 'onsails/lspkind-nvim'  " Icons for LSP completion items
 Plug 'hrsh7th/nvim-cmp'
-
-endif
 
 call plug#end()
 
@@ -421,8 +417,6 @@ let g:peekaboo_window = 'bel 30new'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-cmake configuration                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:cmake_log_file = '/tmp/vim-cmake.log'
 
 nmap <leader>cg <Plug>(CMakeGenerate)
 nmap <leader>cb <Plug>(CMakeBuild)
