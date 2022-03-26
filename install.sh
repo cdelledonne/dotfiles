@@ -190,6 +190,9 @@ install_dotfiles () {
             rm -rf "$target"
         fi
 
+        # Make sure parent directory of target exists
+        mkdir -p "${selected_dotfiles[$key]}"
+
         # Create a symlink to source at target
         ln -s "$source" "$target"
     done
