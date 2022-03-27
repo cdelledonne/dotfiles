@@ -134,6 +134,7 @@ autocmd FileType yaml,toml setlocal shiftwidth=2 softtabstop=2
 " set foldmethod=syntax
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
+set foldminlines=0
 set nofoldenable
 
 " Fold specific files based on indent (should work with treesitter?)

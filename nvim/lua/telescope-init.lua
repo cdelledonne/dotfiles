@@ -18,6 +18,7 @@ plugin.setup{
         sorting_strategy = 'ascending',
         preview = false,
         scroll_strategy = 'limit',
+        file_ignore_patterns = {'%.git'},
         prompt_prefix = '   ',
         multi_icon = '   ',
         entry_prefix = '    ',
