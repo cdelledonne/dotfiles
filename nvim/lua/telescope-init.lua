@@ -18,7 +18,7 @@ plugin.setup{
         sorting_strategy = 'ascending',
         preview = false,
         scroll_strategy = 'limit',
-        file_ignore_patterns = {'%.git'},
+        file_ignore_patterns = {'%.git/'},
         prompt_prefix = '   ',
         multi_icon = '   ',
         entry_prefix = '    ',
@@ -27,7 +27,7 @@ plugin.setup{
         layout_config = {
             height = 24,  -- 4 lines of borders and 20 results
         },
-        -- Join prompt and results window borders
+        -- Join borders of prompt and results windows
         borderchars = {
             prompt = {'─', '│', ' ', '│', '╭', '╮', '│', '│'},
             results = {'─', '│', '─', '│', '├', '┤', '╯', '╰'},
