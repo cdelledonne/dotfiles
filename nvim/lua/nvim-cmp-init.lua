@@ -5,8 +5,8 @@ plugin.setup{
     preselect = plugin.PreselectMode.None,
     -- Configure completion sources
     sources = plugin.config.sources{
-        { name = 'nvim_lsp', max_item_count = 10 },
-        { name = 'path', max_item_count = 10 },
+        { name = 'nvim_lsp', max_item_count = 20 },
+        { name = 'path', max_item_count = 20 },
         -- { name = 'vsnip' }, -- For vsnip users.
         -- { name = 'luasnip' }, -- For luasnip users.
         -- { name = 'ultisnips' }, -- For ultisnips users.
@@ -42,4 +42,16 @@ plugin.setup{
             },
         }),
     },
+    window = {
+        completion = plugin.config.window.bordered(),
+        documentation = plugin.config.window.bordered(),
+    },
 }
+
+plugin.setup.cmdline(':', {
+    mapping = plugin.mapping.preset.cmdline(),
+    sources = plugin.config.sources{
+        -- { name = 'path', max_item_count = 20 },
+        { name = 'cmdline', max_item_count = 20 },
+    },
+})

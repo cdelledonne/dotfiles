@@ -8,7 +8,8 @@ call plug#begin('~/.local/share/nvim/plug')
 Plug 'ellisonleao/gruvbox.nvim'
 
 " Status/tabline
-Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'akinsho/bufferline.nvim'
 
 " Show git modifications
 Plug 'airblade/vim-gitgutter'
@@ -72,10 +73,12 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 
+" Icons
+Plug 'kyazdani42/nvim-web-devicons'  " Lua fork of vim-devicons
+
 " Fuzzy finder
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'kyazdani42/nvim-web-devicons'  " Lua fork of vim-devicons
 
 " Plug 'tami5/lspsaga.nvim'
 
@@ -96,6 +99,7 @@ Plug 'folke/trouble.nvim'
 " Autocompletion
 Plug 'hrsh7th/cmp-nvim-lsp'  " LSP completion source
 Plug 'hrsh7th/cmp-path'      " Path completion source
+Plug 'hrsh7th/cmp-cmdline'   " Command line completion source
 Plug 'onsails/lspkind-nvim'  " Icons for LSP completion items
 Plug 'hrsh7th/nvim-cmp'
 
@@ -117,9 +121,8 @@ if $COLORTERM == 'truecolor'
 endif
 
 " Color scheme
-let g:gruvbox_italic=1
-let g:gruvbox_invert_selection = 0
-let g:gruvbox_contrast_dark = 'hard'
+" Gruvbox configuration must be called before loading colorscheme
+lua require('gruvbox-init')
 colorscheme gruvbox
 
 " Set tab behaviour
@@ -274,36 +277,6 @@ highlight! link TelescopeMultiSelection Type
 highlight! link TelescopeMultiIcon Type
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" airline configuration                                                        "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-" Configure statusline symbols
-let g:airline_symbols.branch = '⎇ '
-let g:airline_symbols.notexists = ' Ɇ'
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = '☰'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.dirty = ''
-
-" Configure section z (current position in the file)
-function! AirlineInit()
-    let g:airline_section_z = airline#section#create(
-            \ ['%#__accent_bold#%4l/%L%#__restore__#:%3v'])
-endfunction
-autocmd User AirlineAfterInit call AirlineInit()
-
-let g:airline#extensions#branch#enabled = 0
-
-" Enable and configure tabline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_min_count = 2
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gitgutter configuration                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -420,6 +393,7 @@ let g:peekaboo_window = 'bel 30new'
 
 nmap <leader>cg <Plug>(CMakeGenerate)
 nmap <leader>cb <Plug>(CMakeBuild)
+nmap <leader>ct <Plug>(CMakeBuild)
 nmap <leader>ci <Plug>(CMakeInstall)
 nmap <leader>cq <Plug>(CMakeClose)
 
@@ -434,6 +408,8 @@ lua require('telescope-init')
 lua require('nvim-tree-init')
 lua require('indent-blankline-init')
 lua require('nvim-cmp-init')
+lua require('lualine-init')
+lua require('bufferline-init')
 
 " Config-less plugins
 lua require('shade').setup()

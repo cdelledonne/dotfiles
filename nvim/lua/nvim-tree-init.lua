@@ -1,8 +1,3 @@
--- Global options must be set before sourcing the plugin
-vim.g.nvim_tree_icons = { default = '', symlink = '' }
-vim.g.nvim_tree_special_files = {}
-vim.g.nvim_tree_symlink_arrow = ' ➜ '
-
 local plugin = require('nvim-tree')
 
 local function map_command(keymap, command)
@@ -22,6 +17,17 @@ plugin.setup{
         dotfiles = true,
         custom = { '.DS_Store', '*.swp' },
     },
+    view = {
+        hide_root_folder = true,
+        signcolumn = 'no',
+    },
+    renderer = {
+        icons = {
+            symlink_arrow = ' ➜ ',
+            glyphs = { default = '', symlink = '' },
+        },
+        special_files = {},
+    }
 }
 
 map_command('<F10>', 'NvimTreeToggle')
