@@ -14,6 +14,7 @@ For more help, run
 | `fontconfig/` | `$CONFDIR`  |
 | `git/`        | `$CONFDIR`  |
 | `gitmux/`     | `$CONFDIR`  |
+| `lazygit/     | `$CONFDIR`  |
 | `nvim/`       | `$CONFDIR`  |
 | `tmux/`       | `$CONFDIR`  |
 | `.zshrc`      | `$HOME`     |
