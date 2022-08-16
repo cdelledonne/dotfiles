@@ -21,13 +21,6 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '[d',         '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', ']d',         '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-
-    -- lspsaga
-    -- buf_set_keymap('n', 'K',          '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>', opts)
-    -- buf_set_keymap('n', '[d',         '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<CR>', opts)
-    -- buf_set_keymap('n', ']d',         '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<CR>', opts)
-    -- buf_set_keymap('n', '<leader>rn', '<cmd>lua require("lspsaga.rename").rename()<CR>', opts)
-    -- buf_set_keymap('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', opts)
 end
 
 -- Customize how diagnostics are displayed
@@ -39,7 +32,6 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 
 -- Show line diagnostics automatically in hover window
 vim.o.updatetime = 1000
--- vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'lspsaga.diagnostic'.show_cursor_diagnostics()]]
 
 -- Advertise client capabilities to LSP server
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -95,7 +87,7 @@ plugin.texlab.setup{
             formatterLineLength = 100,  -- Non-default
             forwardSearch = {
                 executable = 'evince-synctex',  -- Non-default
-                args = {'-f', '%l', '%p', ''}  -- Non-default
+                args = { '-f', '%l', '%p', '' }  -- Non-default
             },
             latexFormatter = 'latexindent',
         }
@@ -103,32 +95,9 @@ plugin.texlab.setup{
     capabilities = capabilities,
 }
 
--- lspsaga
--- local lspsaga = require('lspsaga')
--- lspsaga.setup{
---     use_saga_diagnostic_sign = false,
---     border_style = 'round',
---     code_action_keys = { quit = '<ESC>' },
---     rename_action_keys = { quit = '<ESC>' },
---     code_action_prompt = { sign = false },
---     rename_prompt_prefix = ' ',
--- }
-
--- vim.cmd('highlight link LspSagaCodeActionBorder Identifier')
--- vim.cmd('highlight link LspSagaDefPreviewBorder Identifier')
--- vim.cmd('highlight link LspSagaDiagnosticBorder Identifier')
--- vim.cmd('highlight link LspSagaHoverBorder Identifier')
--- vim.cmd('highlight link LspSagaLspFinderBorder Identifier')
--- vim.cmd('highlight link LspSagaRenameBorder Identifier')
--- vim.cmd('highlight link LspSagaSignatureHelpBorder Identifier')
-
--- vim.cmd('highlight link LspSagaCodeActionTruncateLine Identifier')
--- vim.cmd('highlight link LspSagaDiagnosticTruncateLine Identifier')
--- vim.cmd('highlight link LspSagaDocTruncateLine Identifier')
-
--- vim.cmd('highlight link LspSagaDiagnosticHeader Identifier')
--- vim.cmd('highlight link LspSagaCodeActionTitle Identifier')
--- vim.cmd('highlight link LspSagaCodeActionContent Normal')
-
--- vim.cmd('highlight link LspSagaRenamePromptPrefix Identifier')
--- vim.cmd('highlight link LspSagaLightBulb Identifier')
+-- Vimscript language server
+plugin.vimls.setup{
+    on_attach = on_attach,
+    cmd = { "vim-language-server", "--stdio" },  -- Default
+    capabilities = capabilities,
+}

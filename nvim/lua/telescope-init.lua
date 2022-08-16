@@ -5,7 +5,7 @@ local function map_picker(keymap, picker)
         'n',
         keymap,
         string.format('<cmd>lua require("telescope.builtin").%s()<CR>', picker),
-        {noremap = true}
+        { noremap = true }
     )
 end
 
@@ -18,7 +18,7 @@ plugin.setup{
         sorting_strategy = 'ascending',
         preview = false,
         scroll_strategy = 'limit',
-        file_ignore_patterns = {'%.git/'},
+        file_ignore_patterns = { '%.git/' },
         prompt_prefix = '   ',
         multi_icon = '   ',
         entry_prefix = '    ',
@@ -29,9 +29,9 @@ plugin.setup{
         },
         -- Join borders of prompt and results windows
         borderchars = {
-            prompt = {'─', '│', ' ', '│', '╭', '╮', '│', '│'},
-            results = {'─', '│', '─', '│', '├', '┤', '╯', '╰'},
-            preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
+            prompt = { '─', '│', ' ', '│', '╭', '╮', '│', '│' },
+            results = { '─', '│', '─', '│', '├', '┤', '╯', '╰' },
+            preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
         },
     },
     pickers = {

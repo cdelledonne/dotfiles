@@ -23,4 +23,11 @@ plugin.setup{
     indent = {
         enable = true,
     },
+
+    -- playground = {
+    --     enable = true,
+    -- },
 }
+
+-- Highlight constructors as normal functions
+vim.api.nvim_set_hl(0, 'TSConstructor', { link = 'Function', default = true })

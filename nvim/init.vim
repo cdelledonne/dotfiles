@@ -4,41 +4,53 @@
 
 call plug#begin('~/.local/share/nvim/plug')
 
-" gruvbox color scheme
-Plug 'ellisonleao/gruvbox.nvim'
+" Editing
+Plug 'jiangmiao/auto-pairs'             " Automatically close brackets-like
+Plug 'tpope/vim-surround'               " Add brackets-like around elements
+Plug 'tpope/vim-repeat'                 " Enable dot repeat fog plugins
+Plug 'preservim/nerdcommenter'          " Comment/uncomment lines
+Plug 'wincent/ferret'                   " Search (and replace) multiple files
 
-" Status/tabline
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'akinsho/bufferline.nvim'
+" Git
+Plug 'tpope/vim-fugitive'               " Git management
+Plug 'tpope/vim-rhubarb'                " GitHub extension for vim-fugitive
+Plug 'shumphrey/fugitive-gitlab.vim'    " GitLab extension for vim-fugitive
+Plug 'sindrets/diffview.nvim'           " Git diff GUI
 
-" Show git modifications
-Plug 'airblade/vim-gitgutter'
+" UI components
+Plug 'kyazdani42/nvim-tree.lua'         " File explorer
+Plug 'nvim-lualine/lualine.nvim'        " Statusline
+Plug 'akinsho/bufferline.nvim'          " Tabline
 
-" Git wrapper
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'shumphrey/fugitive-gitlab.vim'
+" Navigation
+Plug 'christoomey/vim-tmux-navigator'   " Tmux integration
 
-" Commenter
-Plug 'scrooloose/nerdcommenter'
+" Styling
+Plug 'ellisonleao/gruvbox.nvim'         " Color scheme
+Plug 'kyazdani42/nvim-web-devicons'     " Lua fork of vim-devicons
+Plug 'jghauser/shade.nvim'              " Dim inactive windows
+Plug 'lukas-reineke/indent-blankline.nvim' " Show indent lines
 
-" Auto-close pairs
-Plug 'jiangmiao/auto-pairs'
+" Language server protocol
+Plug 'neovim/nvim-lspconfig'
 
-" Search (and replace) multiple files
-Plug 'wincent/ferret'
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter'  " Treesitter abstraction layer
+Plug 'nvim-treesitter/playground'       " Treesitter utilities
+
+" Debug adapter protocol
+
+" Autocompletion
+Plug 'hrsh7th/cmp-nvim-lsp'             " LSP completion source
+Plug 'hrsh7th/cmp-path'                 " Path completion source
+Plug 'hrsh7th/cmp-cmdline'              " Command line completion source
+Plug 'onsails/lspkind-nvim'             " Icons for LSP completion items
+Plug 'hrsh7th/nvim-cmp'                 " Autocompletion framework
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Disable search highlighting when done searching
 Plug 'romainl/vim-cool'
-
-" Seamless navigation between tmux panes and vim splits
-Plug 'christoomey/vim-tmux-navigator'
-
-" Quoting/parenthesizing made simple
-Plug 'tpope/vim-surround'
-
-" Allow repetition (dot command) for plugin mappings
-Plug 'tpope/vim-repeat'
 
 " Session manager
 Plug 'tpope/vim-obsession'
@@ -51,15 +63,6 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'plasticboy/vim-markdown'
 Plug 'godlygeek/tabular'
 
-" TOML syntax highlighting
-Plug 'cespare/vim-toml'
-
-" Code snippets
-Plug 'SirVer/ultisnips'
-
-" Terminal wrapper
-Plug 'kassio/neoterm'
-
 " Peek content of registers
 Plug 'junegunn/vim-peekaboo'
 
@@ -68,40 +71,14 @@ Plug 'junegunn/vim-peekaboo'
 Plug '~/Developer/Repositories/cdelledonne/vim-cmake'
 
 " Dependencies
-Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter'
-
-" Icons
-Plug 'kyazdani42/nvim-web-devicons'  " Lua fork of vim-devicons
 
 " Fuzzy finder
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
-" Plug 'tami5/lspsaga.nvim'
-
-" Dim inactive windows
-Plug 'sunjon/shade.nvim'
-
-" File explorer
-Plug 'kyazdani42/nvim-tree.lua'
-
-" Show indent lines
-Plug 'lukas-reineke/indent-blankline.nvim'
-
-" Git diff GUI
-Plug 'sindrets/diffview.nvim'
-
 Plug 'folke/trouble.nvim'
-
-" Autocompletion
-Plug 'hrsh7th/cmp-nvim-lsp'  " LSP completion source
-Plug 'hrsh7th/cmp-path'      " Path completion source
-Plug 'hrsh7th/cmp-cmdline'   " Command line completion source
-Plug 'onsails/lspkind-nvim'  " Icons for LSP completion items
-Plug 'hrsh7th/nvim-cmp'
 
 call plug#end()
 
@@ -134,9 +111,7 @@ set softtabstop=4
 autocmd FileType yaml,toml setlocal shiftwidth=2 softtabstop=2
 
 " Set folding method but do not fold on start-up
-" set foldmethod=syntax
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+set foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable
 
 " Fold specific files based on indent (should work with treesitter?)
@@ -277,12 +252,6 @@ highlight! link TelescopeMultiSelection Type
 highlight! link TelescopeMultiIcon Type
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gitgutter configuration                                                      "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:gitgutter_signs = 0
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fugitive configuration                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -313,29 +282,6 @@ imap <C-c> <Plug>NERDCommenterInsert
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let g:AutoPairsFlyMode = 1
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" UltiSnips configuration                                                      "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Open snippet file in a split (horizontal or vertical, depending on context)
-let g:UltiSnipsEditSplit = 'context'
-
-" Search snippets in the 'ultisnips' directory, relative to this file
-let g:UltiSnipsSnippetDirectories = ['ultisnips']
-
-" Unmap default CTRL-J and CTRL-K in insert mode
-let g:i_CTRL_J = 'off'
-let g:i_CTRL_K = 'off'
-
-" Remap triggers
-let g:UltiSnipsExpandTrigger       = '<C-e>'
-let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-let g:UltiSnipsListSnippets        = '<C-s>'
-
-" Import C snippets into C++ files
-autocmd FileType cpp UltiSnipsAddFiletypes cpp.c
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ferret configuration                                                         "
@@ -402,15 +348,15 @@ nmap <leader>cq <Plug>(CMakeClose)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Lua config files in ~/.config/nvim/lua
-lua require('nvim-lspconfig-init')
-lua require('nvim-treesitter-init')
-lua require('telescope-init')
-lua require('nvim-tree-init')
-lua require('indent-blankline-init')
-lua require('nvim-cmp-init')
-lua require('lualine-init')
 lua require('bufferline-init')
+lua require('indent-blankline-init')
+lua require('lualine-init')
+lua require('nvim-cmp-init')
+lua require('nvim-lspconfig-init')
+lua require('nvim-tree-init')
+lua require('nvim-treesitter-init')
+lua require('shade-init')
+lua require('telescope-init')
 
 " Config-less plugins
-lua require('shade').setup()
 lua require('diffview').setup()

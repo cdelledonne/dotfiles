@@ -23,10 +23,10 @@ plugin.setup{
     },
     -- Configure key mappings
     mapping = {
-        ['<Tab>'] = plugin.mapping(plugin.mapping.select_next_item(), {'i', 'c'}),
-        ['<S-Tab>'] = plugin.mapping(plugin.mapping.select_prev_item(), {'i', 'c'}),
-        ['<C-C>'] = plugin.mapping(plugin.mapping.abort(), {'i'}),
-        ['<C-Y>'] = plugin.mapping(plugin.mapping.complete(), {'i', 'c'}),
+        ['<Tab>'] = plugin.mapping(plugin.mapping.select_next_item(), { 'i', 'c' }),
+        ['<S-Tab>'] = plugin.mapping(plugin.mapping.select_prev_item(), { 'i', 'c' }),
+        ['<C-C>'] = plugin.mapping(plugin.mapping.abort(), { 'i' }),
+        ['<C-Y>'] = plugin.mapping(plugin.mapping.complete(), { 'i', 'c' }),
         -- Disable unused default mappings
         ['<C-E>'] = plugin.config.disable,
         ['<Up>'] = plugin.config.disable,

@@ -5,7 +5,7 @@ local function map_command(keymap, command)
         'n',
         keymap,
         string.format('<cmd>%s<CR>', command),
-        {noremap = true}
+        { noremap = true }
     )
 end
 
