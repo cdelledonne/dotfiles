@@ -1,6 +1,6 @@
-local plugin = require('bufferline')
+local bufferline = require('bufferline')
 
-plugin.setup{
+bufferline.setup({
     options = {
         -- indicator_icon = '│',
         -- indicator_icon = '█',
@@ -24,7 +24,7 @@ plugin.setup{
             },
         },
     },
-}
+})
 
 -- options = {
 --         -- numbers = "none",

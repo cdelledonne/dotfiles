@@ -1,11 +1,12 @@
-local plugin = require('nvim-treesitter.configs')
+local treesitter = require('nvim-treesitter.configs')
 
-plugin.setup{
+treesitter.setup({
     ensure_installed = {
         'bash', 'bibtex', 'c', 'cmake', 'comment', 'cpp', 'css', 'dockerfile',
         'go', 'html', 'java', 'javascript', 'json', 'json5', 'jsonc', 'latex',
-        'llvm', 'lua', 'make', 'markdown', 'ninja', 'perl', 'php', 'python',
-        'regex', 'ruby', 'rust', 'toml', 'typescript', 'verilog', 'vim', 'yaml'
+        'llvm', 'lua', 'make', 'markdown', 'markdown_inline', 'ninja', 'perl',
+        'php', 'python', 'regex', 'rst', 'ruby', 'rust', 'toml', 'typescript',
+        'verilog', 'vim', 'yaml',
     },
     sync_install = false,
     highlight = {
@@ -27,7 +28,7 @@ plugin.setup{
     -- playground = {
     --     enable = true,
     -- },
-}
+})
 
 -- Highlight constructors as normal functions
 vim.api.nvim_set_hl(0, 'TSConstructor', { link = 'Function', default = true })

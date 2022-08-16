@@ -1,19 +1,10 @@
-local plugin = require('telescope')
-
-local function map_picker(keymap, picker)
-    vim.api.nvim_set_keymap(
-        'n',
-        keymap,
-        string.format('<cmd>lua require("telescope.builtin").%s()<CR>', picker),
-        { noremap = true }
-    )
-end
+local telescope = require('telescope')
 
 local function link_hl_group(group, target)
     vim.api.nvim_exec(string.format('hi! link %s %s', group, target), false)
 end
 
-plugin.setup{
+telescope.setup({
     defaults = {
         sorting_strategy = 'ascending',
         preview = false,
@@ -81,19 +72,7 @@ plugin.setup{
             case_mode = "smart_case",
         },
     },
-}
+})
 
 -- Extensions
-plugin.load_extension('fzf')
-
--- Map pickers
-map_picker('<C-P>',      'find_files')
-map_picker('<C-Space>',  'commands')
-map_picker('<leader>b',  'buffers')
-map_picker('<leader>ds', 'lsp_document_symbols')
-map_picker('<leader>gb', 'git_branches')
-map_picker('<leader>h',  'help_tags')
-map_picker('<leader>lg', 'live_grep')
-map_picker('<leader>s',  'grep_string')
-map_picker('<leader>ws', 'lsp_dynamic_workspace_symbols')
-map_picker('z=',         'spell_suggest')
+telescope.load_extension('fzf')

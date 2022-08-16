@@ -1,8 +1,8 @@
-local plugin = require('gruvbox')
+local gruvbox = require('gruvbox')
 
-plugin.setup{
+gruvbox.setup({
     contrast = 'hard',
     overrides = {
         String = { italic = false },
     }
-}
+})

@@ -1,4 +1,4 @@
-local plugin = require('lualine')
+local lualine = require('lualine')
 
 local vimcmake = {
     sections = {
@@ -40,13 +40,13 @@ local nvimtree = {
     filetypes = { 'NvimTree' } ,
 }
 
-plugin.setup{
+lualine.setup({
     -- options = {
-        -- section_separators = '',
-        -- component_separators = '',
-        -- section_separators = { left = '', right = '' },
-        -- component_separators = { left = '', right = '' }
-        -- globalstatus = true,
+    -- section_separators = '',
+    -- component_separators = '',
+    -- section_separators = { left = '', right = '' },
+    -- component_separators = { left = '', right = '' }
+    -- globalstatus = true,
     -- },
     sections = {
         lualine_b = { 'diff', 'diagnostics' },
@@ -82,4 +82,4 @@ plugin.setup{
         vimcmake,
         nvimtree,
     },
-}
+})

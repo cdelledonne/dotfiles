@@ -1,4 +1,4 @@
-local plugin = require('lspconfig')
+local lspconfig = require('lspconfig')
 
 -- Use an on_attach function to only map the following keys after the language
 -- server attaches to the current buffer
@@ -38,7 +38,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- C/C++ language server
-plugin.ccls.setup{
+lspconfig.ccls.setup({
     on_attach = on_attach,
     cmd = { 'ccls', '-v=1', '-log-file=/tmp/ccls.log' },
     init_options = {
@@ -49,17 +49,17 @@ plugin.ccls.setup{
         highlight = { lsRanges = true },
     },
     capabilities = capabilities,
-}
+})
 
 -- Python language server
-plugin.pyright.setup{
+lspconfig.pyright.setup({
     on_attach = on_attach,
     cmd = { 'pyright-langserver', '--stdio' },  -- Default
     capabilities = capabilities,
-}
+})
 
 -- LaTeX language server
-plugin.texlab.setup{
+lspconfig.texlab.setup({
     on_attach = on_attach,
     cmd = { 'texlab' },  -- Default
     settings = {
@@ -93,11 +93,11 @@ plugin.texlab.setup{
         }
     },
     capabilities = capabilities,
-}
+})
 
 -- Vimscript language server
-plugin.vimls.setup{
+lspconfig.vimls.setup({
     on_attach = on_attach,
     cmd = { "vim-language-server", "--stdio" },  -- Default
     capabilities = capabilities,
-}
+})

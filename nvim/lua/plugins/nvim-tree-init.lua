@@ -1,15 +1,6 @@
-local plugin = require('nvim-tree')
+local nvimtree = require('nvim-tree')
 
-local function map_command(keymap, command)
-    vim.api.nvim_set_keymap(
-        'n',
-        keymap,
-        string.format('<cmd>%s<CR>', command),
-        { noremap = true }
-    )
-end
-
-plugin.setup{
+nvimtree.setup({
     -- Disable git integration
     git = { enable = false },
     -- Hide hidden files, and hide some system files
@@ -28,7 +19,4 @@ plugin.setup{
         },
         special_files = {},
     }
-}
-
-map_command('<F10>', 'NvimTreeToggle')
-map_command('<F11>', 'NvimTreeFocus')
+})
