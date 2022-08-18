@@ -38,33 +38,36 @@ autocmd FileType TelescopePrompt setlocal nocursorline
 
 " Change highlight of sign column
 highlight clear SignColumn
-highlight link CursorLineSign CursorLine
+highlight! link CursorLineSign CursorLine
 
-" Telescope highlight definitions
+" TreeSitter custom highlights
+highlight! link TSConstructor Function
+
+" Telescope custom highlights
 highlight! link TelescopePromptPrefix Normal
 highlight! link TelescopeSelection CursorLine
 highlight! link TelescopeMatching Special
 highlight! link TelescopeMultiSelection Type
 highlight! link TelescopeMultiIcon Type
 
-" DAP UI highlight definitions
-highlight link DapUIVariable Identifier
-highlight link DapUIScope DashboardHeader
-highlight link DapUIType Type
-highlight link DapUIValue None
-highlight link DapUIModifiedValue Constant
-highlight link DapUIDecoration Operator
-highlight link DapUIThread DashboardHeader
-highlight link DapUIStoppedThread DapUIThread
-highlight link DapUIFrameName Function
-highlight link DapUISource Identifier
-highlight link DapUILineNumber Type
-highlight link DapUIFloatBorder None
-highlight link DapUIWatchesEmpty DashboardHeader
-highlight link DapUIWatchesValue Operator
-highlight link DapUIWatchesError Operator
-highlight link DapUIBreakpointsPath DashboardHeader
-highlight link DapUIBreakpointsInfo Keyword
-highlight link DapUIBreakpointsCurrentLine Function
-highlight link DapUIBreakpointsLine DapUILineNumber
-highlight link DapUIBreakpointsDisabledLine LineNr
+" DAP UI custom highlights
+highlight! link DapUIVariable Identifier
+highlight! link DapUIScope DashboardHeader
+highlight! link DapUIType Type
+highlight! link DapUIValue None
+highlight! link DapUIModifiedValue Constant
+highlight! link DapUIDecoration Operator
+highlight! link DapUIThread DashboardHeader
+highlight! link DapUIStoppedThread DapUIThread
+highlight! link DapUIFrameName Function
+highlight! link DapUISource Identifier
+highlight! link DapUILineNumber Type
+highlight! link DapUIFloatBorder None
+highlight! link DapUIWatchesEmpty DashboardHeader
+highlight! link DapUIWatchesValue Operator
+highlight! link DapUIWatchesError Operator
+highlight! link DapUIBreakpointsPath DashboardHeader
+highlight! link DapUIBreakpointsInfo Keyword
+highlight! link DapUIBreakpointsCurrentLine Function
+highlight! link DapUIBreakpointsLine DapUILineNumber
+highlight! link DapUIBreakpointsDisabledLine LineNr

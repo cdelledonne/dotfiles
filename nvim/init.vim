@@ -43,6 +43,7 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter'  " Treesitter abstraction layer
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/playground'       " Treesitter utilities
 
 " Language server protocol (LSP)
@@ -53,11 +54,13 @@ Plug 'mfussenegger/nvim-dap'            " DAP client implementation
 Plug 'rcarriga/nvim-dap-ui'             " UI for nvim-dap
 
 " Autocompletion
-Plug 'hrsh7th/cmp-nvim-lsp'             " LSP completion source
-Plug 'hrsh7th/cmp-path'                 " Path completion source
-Plug 'hrsh7th/cmp-cmdline'              " Command line completion source
-Plug 'onsails/lspkind-nvim'             " Icons for LSP completion items
 Plug 'hrsh7th/nvim-cmp'                 " Autocompletion framework
+Plug 'hrsh7th/cmp-nvim-lsp'             " LSP completion source for nvim-cmp
+Plug 'hrsh7th/cmp-path'                 " Path completion source for nvim-cmp
+Plug 'hrsh7th/cmp-cmdline'              " Command completion source for nvim-cmp
+Plug 'L3MON4D3/LuaSnip'                 " Snippets
+Plug 'saadparwaiz1/cmp_luasnip'         " Snippet completion source for nvim-cmp
+Plug 'onsails/lspkind-nvim'             " Icons for LSP completion items
 
 " Language-specific tools
 " Plug 'cdelledonne/vim-cmake'            " CMake projects
@@ -82,10 +85,10 @@ function! s:Source(file) abort
 endfunction
 
 " General settings
-call s:Source('vimscript/utils.vim')    " User-defined functions and commands
-call s:Source('vimscript/globals.vim')  " General settings
-call s:Source('vimscript/mappings.vim') " Global key mappings
-call s:Source('vimscript/styling.vim')  " Highlighting and styling
+call s:Source('vimscript/utils.vim')
+call s:Source('vimscript/globals.vim')
+call s:Source('vimscript/mappings.vim')
+call s:Source('vimscript/styling.vim')
 
 " Vimscript plugins configuration
 call s:Source('vimscript/plugins/autopairs-init.vim')

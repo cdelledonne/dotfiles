@@ -1,5 +1,26 @@
 local cmp = require('cmp')
 local lspkind = require('lspkind')
+local luasnip = require('luasnip')
+
+local tab_mapping = function(fallback)
+    if cmp.visible() then
+        cmp.select_next_item()
+    elseif luasnip.jumpable(1) then
+        luasnip.jump(1)
+    else
+        fallback()
+    end
+end
+
+local shift_tab_mapping = function(fallback)
+    if cmp.visible() then
+        cmp.select_prev_item()
+    elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+    else
+        fallback()
+    end
+end
 
 cmp.setup({
     preselect = cmp.PreselectMode.None,
@@ -7,26 +28,20 @@ cmp.setup({
     sources = cmp.config.sources{
         { name = 'nvim_lsp', max_item_count = 20 },
         { name = 'path', max_item_count = 20 },
-        -- { name = 'vsnip' }, -- For vsnip users.
-        -- { name = 'luasnip' }, -- For luasnip users.
-        -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- { name = 'snippy' }, -- For snippy users.
+        { name = 'luasnip' },
     },
     -- Configure snippet engine
     snippet = {
         expand = function(args)
-            -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+            luasnip.lsp_expand(args.body)
         end,
     },
     -- Configure key mappings
     mapping = {
-        ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
-        ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
-        ['<C-C>'] = cmp.mapping(cmp.mapping.abort(), { 'i' }),
-        ['<C-Y>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<Tab>'] = cmp.mapping(tab_mapping, { 'i', 'c', 's' }),
+        ['<S-Tab>'] = cmp.mapping(shift_tab_mapping, { 'i', 'c', 's' }),
+        ['<C-C>'] = cmp.mapping(cmp.mapping.abort(), { 'i', 'c' }),
+        ['<C-Y>'] = cmp.mapping(cmp.mapping.confirm(), { 'i' }),
         -- Disable unused default mappings
         ['<C-E>'] = cmp.config.disable,
     },
