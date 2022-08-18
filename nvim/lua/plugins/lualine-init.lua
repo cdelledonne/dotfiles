@@ -41,13 +41,13 @@ local nvimtree = {
 }
 
 lualine.setup({
-    -- options = {
-    -- section_separators = '',
-    -- component_separators = '',
-    -- section_separators = { left = '', right = '' },
-    -- component_separators = { left = '', right = '' }
-    -- globalstatus = true,
-    -- },
+    options = {
+        -- section_separators = '',
+        -- component_separators = '',
+        -- section_separators = { left = '', right = '' },
+        -- component_separators = { left = '', right = '' }
+        globalstatus = true,
+    },
     sections = {
         lualine_b = { 'diff', 'diagnostics' },
         lualine_c = {

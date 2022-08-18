@@ -45,11 +45,12 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'  " Treesitter abstraction layer
 Plug 'nvim-treesitter/playground'       " Treesitter utilities
 
-" Language server protocol
-Plug 'neovim/nvim-lspconfig'
+" Language server protocol (LSP)
+Plug 'neovim/nvim-lspconfig'            " LSP clients configurations
 
-" Debug adapter protocol
-" TODO
+" Debug adapter protocol (DAP)
+Plug 'mfussenegger/nvim-dap'            " DAP client implementation
+Plug 'rcarriga/nvim-dap-ui'             " UI for nvim-dap
 
 " Autocompletion
 Plug 'hrsh7th/cmp-nvim-lsp'             " LSP completion source
@@ -100,6 +101,7 @@ lua require('plugins/bufferline-init')
 lua require('plugins/indent-blankline-init')
 lua require('plugins/lualine-init')
 lua require('plugins/nvim-cmp-init')
+lua require('plugins/nvim-dap-init')
 lua require('plugins/nvim-lspconfig-init')
 lua require('plugins/nvim-tree-init')
 lua require('plugins/nvim-treesitter-init')

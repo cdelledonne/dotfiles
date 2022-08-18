@@ -42,6 +42,15 @@ nnoremap z=         <cmd>Telescope spell_suggest<CR>
 
 nnoremap <leader>mp <Plug>MarkdownPreviewToggle
 
+nnoremap <silent> <leader>dc <cmd>lua require('dap').continue()<CR>
+nnoremap <silent> <leader>dn <cmd>lua require('dap').step_over()<CR>
+nnoremap <silent> <leader>di <cmd>lua require('dap').step_into()<CR>
+nnoremap <silent> <leader>do <cmd>lua require('dap').step_out()<CR>
+nnoremap <silent> <leader>db <cmd>lua require('dap').toggle_breakpoint()<CR>
+nnoremap <silent> <leader>dB <cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <leader>dt <cmd>lua require('dap').terminate()<CR>
+nnoremap <silent> <leader>dh <cmd>lua require('dapui').eval()<CR>
+
 " Plugins - insert mode
 
 inoremap <C-c> <Plug>NERDCommenterInsert

@@ -23,10 +23,10 @@ cmp.setup({
     },
     -- Configure key mappings
     mapping = {
-        ['<Tab>'] = cmp.mapping(cmp.select_next_item, { 'i', 'c' }),
-        ['<S-Tab>'] = cmp.mapping(cmp.select_prev_item, { 'i', 'c' }),
-        ['<C-C>'] = cmp.mapping(cmp.abort, { 'i' }),
-        ['<C-Y>'] = cmp.mapping(cmp.complete, { 'i', 'c' }),
+        ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+        ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+        ['<C-C>'] = cmp.mapping(cmp.mapping.abort(), { 'i' }),
+        ['<C-Y>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         -- Disable unused default mappings
         ['<C-E>'] = cmp.config.disable,
     },
