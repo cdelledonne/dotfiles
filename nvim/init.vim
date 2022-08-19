@@ -31,6 +31,7 @@ Plug 'wincent/ferret'                   " Search (and replace) multiple files
 Plug 'nvim-lua/plenary.nvim'            " Dependency for telescope.nvim
 Plug 'nvim-telescope/telescope.nvim'    " Extensible fuzzy-finder
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'crispgm/telescope-heading.nvim'
 
 " Styling
 Plug 'ellisonleao/gruvbox.nvim'         " Color scheme

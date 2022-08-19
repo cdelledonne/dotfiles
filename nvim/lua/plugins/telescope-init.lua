@@ -71,8 +71,12 @@ telescope.setup({
             override_file_sorter = true,
             case_mode = 'smart_case',
         },
+        heading = {
+            treesitter = true,
+        },
     },
 })
 
 -- Extensions
 telescope.load_extension('fzf')
+telescope.load_extension('heading')

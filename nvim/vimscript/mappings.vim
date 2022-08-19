@@ -34,7 +34,7 @@ nnoremap <leader>sc <cmd>Telescope commands<CR>
 nnoremap <leader>sd <cmd>Telescope lsp_document_symbols<CR>
 nnoremap <leader>sf <cmd>Telescope find_files<CR>
 nnoremap <leader>sg <cmd>Telescope git_branches<CR>
-nnoremap <leader>sh <cmd>Telescope help_tags<CR>
+nnoremap <leader>sh <cmd>silent Telescope heading<CR>
 nnoremap <leader>sl <cmd>Telescope live_grep<CR>
 nnoremap <leader>ss <cmd>Telescope grep_string<CR>
 nnoremap <leader>sw <cmd>Telescope lsp_dynamic_workspace_symbols<CR>
