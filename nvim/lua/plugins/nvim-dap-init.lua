@@ -19,6 +19,18 @@ dap.listeners.before.event_exited['dapui'] = function() dapui.close() end
 -- UI
 dapui.setup({
     expand_lines = false,
+    layouts = {
+        {
+            elements = { 'stacks', 'breakpoints', 'scopes', 'watches' },
+            size = 40,
+            position = 'left',
+        },
+        {
+            elements = { 'console', 'repl' },
+            size = 0.25,
+            position = 'bottom',
+        },
+    },
     floating = {
         border = 'rounded',
     },
