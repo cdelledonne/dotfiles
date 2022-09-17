@@ -10,13 +10,16 @@ telescope.setup({
         preview = false,
         scroll_strategy = 'limit',
         file_ignore_patterns = { '%.git/' },
-        prompt_prefix = '   ',
-        multi_icon = '   ',
-        entry_prefix = '    ',
+        prompt_prefix   = '   ',
         selection_caret = '    ',
+        -- entry_prefix = '    ',
+        -- multi_icon = '   ',
+        -- color_devicons = false,
+        results_title = false,
         layout_strategy = 'center',
         layout_config = {
-            height = 24,  -- 4 lines of borders and 20 results
+            height = 24,    -- 4 lines of borders and 20 results
+            mirror = true,  -- invert position of results and preview
         },
         -- Join borders of prompt and results windows
         borderchars = {
@@ -27,33 +30,16 @@ telescope.setup({
     },
     pickers = {
         find_files = {
-            results_title = false,
             hidden = true,
         },
-        commands = {
-            results_title = false,
-        },
         buffers = {
-            results_title = false,
             sort_mru = true,
         },
-        lsp_document_symbols = {
-            results_title = false,
-        },
         lsp_dynamic_workspace_symbols = {
-            results_title = false,
-        },
-        git_branches = {
-            results_title = false,
-        },
-        help_tags = {
-            results_title = false,
-        },
-        live_grep = {
-            results_title = false,
-        },
-        grep_string = {
-            results_title = false,
+            path_display = { 'shorten' },
+            -- symbol_highlight = { field = 'TSField' },
+            -- symbol_width = 50,
+            -- show_line = true,
         },
         spell_suggest = {
             results_title = false,
