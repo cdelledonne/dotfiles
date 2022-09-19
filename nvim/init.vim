@@ -20,7 +20,6 @@ Plug 'sindrets/diffview.nvim'           " Git diff GUI
 " UI components
 Plug 'kyazdani42/nvim-tree.lua'         " File explorer
 Plug 'nvim-lualine/lualine.nvim'        " Statusline
-Plug 'akinsho/bufferline.nvim'          " Tabline
 Plug 'folke/trouble.nvim'               " Lists GUI
 
 " Navigation
@@ -37,7 +36,7 @@ Plug 'crispgm/telescope-heading.nvim'
 Plug 'ellisonleao/gruvbox.nvim'         " Color scheme
 Plug 'ARM9/arm-syntax-vim'              " Syntax highlighting for ARM assembly
 Plug 'kyazdani42/nvim-web-devicons'     " Lua fork of vim-devicons
-Plug 'jghauser/shade.nvim'              " Dim inactive windows
+Plug 'levouh/tint.nvim'                 " Dim inactive windows
 Plug 'romainl/vim-cool'                 " Disable search highlights when moving
 Plug 'lukas-reineke/indent-blankline.nvim'
                                         " Show indent lines
@@ -101,7 +100,6 @@ call s:Source('vimscript/plugins/nerdcommenter-init.vim')
 call s:Source('vimscript/plugins/peekaboo-init.vim')
 
 " Lua plugins configuration
-lua require('plugins/bufferline-init')
 lua require('plugins/indent-blankline-init')
 lua require('plugins/lualine-init')
 lua require('plugins/nvim-cmp-init')
@@ -109,7 +107,7 @@ lua require('plugins/nvim-dap-init')
 lua require('plugins/nvim-lspconfig-init')
 lua require('plugins/nvim-tree-init')
 lua require('plugins/nvim-treesitter-init')
-lua require('plugins/shade-init')
+lua require('plugins/tint-init')
 lua require('plugins/telescope-init')
 
 " Lua config-less plugins
