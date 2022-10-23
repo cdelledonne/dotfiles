@@ -72,7 +72,7 @@ Plug 'tpope/vim-obsession'              " Session manager
 Plug 'embear/vim-localvimrc'            " Local project options
 
 " Local plugins
-Plug '~/Developer/Repositories/cdelledonne/vim-cmake'
+Plug '~/Workspace/Repositories/cdelledonne/vim-cmake'
 
 call plug#end()
 

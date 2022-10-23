@@ -25,70 +25,83 @@ end
 
 -- Advertise client capabilities to LSP server
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
--- C/C++ language server
-lspconfig.ccls.setup({
+-- C/C++ language server with ccls
+-- lspconfig.ccls.setup({
+--     cmd = { 'ccls', '-v=1', '-log-file=/tmp/ccls.log' },
+--     init_options = {
+--         cache = { directory = '/tmp/ccls' },
+--         clang = { extraArgs = { '-Wno-extra', '-Wno-empty-body' } },
+--         client = { snippetSupport = true },
+--         completion = { detailedLabel = false, caseSensitivity = 1 },
+--         highlight = { lsRanges = true },
+--     },
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+-- })
+
+-- C/C++ language server with clangd
+lspconfig.clangd.setup({
+    cmd = { 'clangd' },
     on_attach = on_attach,
-    cmd = { 'ccls', '-v=1', '-log-file=/tmp/ccls.log' },
-    init_options = {
-        cache = { directory = '/tmp/ccls' },
-        clang = { extraArgs = { '-Wno-extra', '-Wno-empty-body' } },
-        client = { snippetSupport = true },
-        completion = { detailedLabel = false, caseSensitivity = 1 },
-        highlight = { lsRanges = true },
-    },
     capabilities = capabilities,
 })
 
 -- Python language server
 lspconfig.pyright.setup({
+    cmd = { 'pyright-langserver', '--stdio' },
     on_attach = on_attach,
-    cmd = { 'pyright-langserver', '--stdio' },  -- Default
     capabilities = capabilities,
 })
 
 -- LaTeX language server
 lspconfig.texlab.setup({
-    on_attach = on_attach,
-    cmd = { 'texlab' },  -- Default
+    cmd = { 'texlab' },
     settings = {
         texlab = {
-            auxDirectory = 'build',  -- Non-default
+            auxDirectory = 'build',
             bibtexFormatter = 'texlab',
             build = {
+                executable = 'tectonic',
                 args = {
-                    '-pdf',
-                    '-interaction=nonstopmode',
-                    '-synctex=1',
-                    '-outdir=build',  -- Non-default
-                    '-xelatex',  -- Non-default
-                    '%f'
+                    '-X',
+                    'compile',
+                    '%f',
+                    '--keep-intermediates',
+                    '--keep-logs',
+                    '--synctex',
+                    '--outdir', 'build',
                 },
-                executable = 'latexmk',
+                -- executable = 'latexmk',
+                -- args = {
+                --     '-pdf',
+                --     '-interaction=nonstopmode',
+                --     '-synctex=1',
+                --     '-outdir=build',  -- NOT default
+                --     '-xelatex',  -- NOT default
+                --     '%f'
+                -- },
                 forwardSearchAfter = false,
-                onSave = false
-            },
-            chktex = {
-                onEdit = false,
-                onOpenAndSave = false
+                onSave = false,
             },
             diagnosticsDelay = 300,
-            formatterLineLength = 100,  -- Non-default
+            formatterLineLength = 100,
             forwardSearch = {
-                executable = 'evince-synctex',  -- Non-default
-                args = { '-f', '%l', '%p', '' }  -- Non-default
+                executable = 'evince-synctex',
+                -- args = { '-f', '%l', '%p', '' },
+                args = { '-f', '%l', '%p', '"code -g %f:%l"' },
             },
             latexFormatter = 'latexindent',
         }
     },
+    on_attach = on_attach,
     capabilities = capabilities,
 })
 
 -- Vimscript language server
 lspconfig.vimls.setup({
+    cmd = { 'vim-language-server', '--stdio' },
     on_attach = on_attach,
-    cmd = { "vim-language-server", "--stdio" },  -- Default
     capabilities = capabilities,
 })
-

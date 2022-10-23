@@ -66,8 +66,9 @@ autocmd FileType tex,text,markdown,rst,gitcommit setlocal spell spelllang=en_us
 " Set text width for line breaks for some filetypes
 autocmd FileType tex,text,markdown,rst,gitcommit,vim setlocal textwidth=80
 
-" Open .clang-format files as YAML files
+" Open .clangd and .clang-format files as YAML files
 autocmd BufRead *.clang-format setlocal filetype=yaml
+autocmd BufRead *.clangd setlocal filetype=yaml
 
 " Open .tex files as LaTeX files
 let g:tex_flavor='latex'

@@ -35,9 +35,9 @@ dap.configurations.c = dap.configurations.cpp
 
 -- Python adapter
 dap.adapters.python = {
-    type = 'executable';
-    command = vim.fn.expand('~/.local/share/virtualenvs/debugpy/bin/python');
-    args = { '-m', 'debugpy.adapter' };
+    type = 'executable',
+    command = 'python',
+    args = { '-m', 'debugpy.adapter' },
     id = 'debugpy',
 }
 
