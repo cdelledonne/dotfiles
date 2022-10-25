@@ -107,8 +107,8 @@ lua require('plugins/nvim-dap-init')
 lua require('plugins/nvim-lspconfig-init')
 lua require('plugins/nvim-tree-init')
 lua require('plugins/nvim-treesitter-init')
-lua require('plugins/tint-init')
 lua require('plugins/telescope-init')
+lua require('plugins/tint-init')
 
 " Lua config-less plugins
 lua require('diffview').setup()
