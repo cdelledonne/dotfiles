@@ -10,7 +10,7 @@ set shiftwidth=4
 set softtabstop=4
 
 " Tab behaviour for some config files
-autocmd FileType yaml,toml setlocal shiftwidth=2 softtabstop=2
+autocmd FileType yaml,toml,markdown setlocal shiftwidth=2 softtabstop=2
 
 " Set folding method but do not fold on start-up
 set foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
