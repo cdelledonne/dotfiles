@@ -71,3 +71,13 @@ highlight! link DapUIBreakpointsInfo Keyword
 highlight! link DapUIBreakpointsCurrentLine Function
 highlight! link DapUIBreakpointsLine DapUILineNumber
 highlight! link DapUIBreakpointsDisabledLine LineNr
+
+" Trouble custom highlight
+highlight! link TroubleCount Constant
+highlight! link TroubleFoldIcon Type
+highlight! link TroubleSignError TroubleError
+highlight! link TroubleSignHint TroubleHint
+highlight! link TroubleSignInformation TroubleInformation
+highlight! link TroubleSignOther TroubleOther
+highlight! link TroubleSignWarning TroubleWarning
+highlight! link TroubleText None
