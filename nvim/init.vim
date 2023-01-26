@@ -21,6 +21,8 @@ Plug 'sindrets/diffview.nvim'           " Git diff GUI
 Plug 'kyazdani42/nvim-tree.lua'         " File explorer
 Plug 'nvim-lualine/lualine.nvim'        " Statusline
 Plug 'folke/trouble.nvim'               " Lists GUI
+Plug 'SmiteshP/nvim-navic'              " Dependency of barbecue.nvim 
+Plug 'utilyre/barbecue.nvim'            " Winbar 
 
 " Navigation
 Plug 'christoomey/vim-tmux-navigator'   " Tmux integration
@@ -100,6 +102,7 @@ call s:Source('vimscript/plugins/nerdcommenter-init.vim')
 call s:Source('vimscript/plugins/peekaboo-init.vim')
 
 " Lua plugins configuration
+lua require('plugins/barbecue-init')
 lua require('plugins/indent-blankline-init')
 lua require('plugins/lualine-init')
 lua require('plugins/nvim-cmp-init')
