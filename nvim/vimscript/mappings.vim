@@ -19,10 +19,6 @@ nnoremap <silent> <leader>rt <cmd>call RemoveTrailingSpaces()<CR>
 nnoremap <leader>tt <cmd>NvimTreeToggle<CR>
 nnoremap <leader>tf <cmd>NvimTreeFocus<CR>
 
-nnoremap <leader>c<Space> <Plug>NERDCommenterToggle
-nnoremap <leader>cA <Plug>NERDCommenterAppend
-nnoremap <leader>ca <Plug>NERDCommenterAltDelims
-
 nnoremap <leader>cb <Plug>(CMakeBuild)
 nnoremap <leader>cg <Plug>(CMakeGenerate)
 nnoremap <leader>ci <Plug>(CMakeInstall)
@@ -50,7 +46,3 @@ nnoremap <silent> <leader>db <cmd>lua require('dap').toggle_breakpoint()<CR>
 nnoremap <silent> <leader>dB <cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
 nnoremap <silent> <leader>dt <cmd>lua require('dap').terminate()<CR>
 nnoremap <silent> <leader>dh <cmd>lua require('dapui').eval()<CR>
-
-" Plugins - insert mode
-
-inoremap <C-c> <Plug>NERDCommenterInsert

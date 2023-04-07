@@ -15,7 +15,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', 'gr',         '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', '<leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<leader>fm', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n', '<leader>fm', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 
     buf_set_keymap('n', 'K',          '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', '[d',         '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -60,8 +60,6 @@ lspconfig.texlab.setup({
     cmd = { 'texlab' },
     settings = {
         texlab = {
-            auxDirectory = 'build',
-            bibtexFormatter = 'texlab',
             build = {
                 executable = 'tectonic',
                 args = {
@@ -73,26 +71,24 @@ lspconfig.texlab.setup({
                     '--synctex',
                     '--outdir', 'build',
                 },
-                -- executable = 'latexmk',
-                -- args = {
-                --     '-pdf',
-                --     '-interaction=nonstopmode',
-                --     '-synctex=1',
-                --     '-outdir=build',  -- NOT default
-                --     '-xelatex',  -- NOT default
-                --     '%f'
-                -- },
                 forwardSearchAfter = false,
                 onSave = false,
             },
-            diagnosticsDelay = 300,
+            auxDirectory = 'build',
+            latexFormatter = 'latexindent',
+            bibtexFormatter = 'texlab',
             formatterLineLength = 100,
+            latexindent = {
+                ['modifyLineBreaks'] = true,
+                -- Not the cleanest solution, but couldn't find anything else 
+                ['local'] = vim.fn.getcwd() .. '/latexindent.yaml',
+            },
+            diagnosticsDelay = 300,
             forwardSearch = {
                 executable = 'evince-synctex',
                 -- args = { '-f', '%l', '%p', '' },
                 args = { '-f', '%l', '%p', '"code -g %f:%l"' },
             },
-            latexFormatter = 'latexindent',
         }
     },
     on_attach = on_attach,

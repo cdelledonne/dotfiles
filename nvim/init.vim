@@ -5,10 +5,10 @@
 call plug#begin('~/.local/share/nvim/plug')
 
 " Editing
-Plug 'jiangmiao/auto-pairs'             " Automatically close brackets-like
+Plug 'windwp/nvim-autopairs'            " Automatically close brackets-like
 Plug 'tpope/vim-surround'               " Add brackets-like around elements
 Plug 'tpope/vim-repeat'                 " Enable dot repeat fog plugins
-Plug 'preservim/nerdcommenter'          " Comment/uncomment lines
+Plug 'numToStr/Comment.nvim'            " Comment/uncomment lines 
 Plug 'junegunn/vim-peekaboo'            " Peek content of registers
 
 " Git
@@ -93,12 +93,10 @@ call s:Source('vimscript/mappings.vim')
 call s:Source('vimscript/styling.vim')
 
 " Vimscript plugins configuration
-call s:Source('vimscript/plugins/autopairs-init.vim')
 call s:Source('vimscript/plugins/ferret-init.vim')
 call s:Source('vimscript/plugins/fugitive-init.vim')
 call s:Source('vimscript/plugins/localvimrc-init.vim')
 call s:Source('vimscript/plugins/markdown-preview-init.vim')
-call s:Source('vimscript/plugins/nerdcommenter-init.vim')
 call s:Source('vimscript/plugins/peekaboo-init.vim')
 
 " Lua plugins configuration
@@ -115,4 +113,6 @@ lua require('plugins/tint-init')
 lua require('plugins/trouble-init')
 
 " Lua config-less plugins
+lua require('Comment').setup()
 lua require('diffview').setup()
+lua require('nvim-autopairs').setup()
