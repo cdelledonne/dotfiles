@@ -26,6 +26,7 @@ datadir=${DATADIR:-$HOME/.local/share}
 # Default dotfiles and destination paths
 declare -A dotfiles
 dotfiles["alacritty"]="$confdir"
+dotfiles["kitty"]="$confdir"
 dotfiles["fontconfig"]="$confdir"
 dotfiles["git"]="$confdir"
 dotfiles["gitmux"]="$confdir"
