@@ -178,15 +178,10 @@ def _calc_elements_len(elements: List[Dict[str, Any]]) -> int:
 
 
 def _is_running_pager(active_window: Window) -> bool:
-    cmdline = active_window.child.foreground_cmdline
-    print(cmdline)
-    if (
-        len(cmdline) >= 2
-        and cmdline[0] == "python"
-        and Path(cmdline[1]).name == "nvim-pager.py"
-    ):
-        return True
-    return False
+    try:
+        return Path(active_window.child.argv[0]).name == "nvim-pager.py"
+    except:
+        return False
 
 
 def _get_system_info(active_window: Window) -> Dict[str, Any]:
@@ -200,6 +195,8 @@ def _get_system_info(active_window: Window) -> Dict[str, Any]:
         # The propery "child_is_remote" is True when the command being executed is a
         # standard "ssh" command, without using the SSH kitten
         ssh_cmdline = active_window.child.foreground_cmdline
+        # FIXME: The command line is not what we're looking for when running a nested SSH
+        # connection, i.e. it shows the command to connect to the jump server
     else:
         # The command line is not an empty list in case we're running the ssh kitten
         ssh_cmdline = active_window.ssh_kitten_cmdline()
