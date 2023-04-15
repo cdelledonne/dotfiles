@@ -12,6 +12,7 @@ from kitty.fast_data_types import (
     Color,
     Screen,
     get_boss,
+    get_options,
 )
 from kitty.tab_bar import (
     Dict,
@@ -253,7 +254,8 @@ def draw_tab(
     Returns:
         int: Cursor positions after drawing current tab.
     """
-
+ 
+    opts = get_options()
     colors = {}
 
     # Base foreground and background colors
@@ -311,7 +313,10 @@ def draw_tab(
 
         # Move cursor horizontally so that right-hand side status is right-aligned
         rhs_status_len = _calc_elements_len(elements)
-        screen.cursor.x = math.ceil(screen.columns / 2 + end / 2) - rhs_status_len
+        if opts.tab_bar_align == "center":
+            screen.cursor.x = math.ceil(screen.columns / 2 + end / 2) - rhs_status_len
+        else:  # opts.tab_bar_align == "left"
+            screen.cursor.x = screen.columns - rhs_status_len
 
         for element in elements:
             _draw_element(
@@ -326,7 +331,7 @@ def draw_tab(
                 padded=False,
                 accented=element["accented"],
                 icon=element["icon"],
-                soft_sep=PADDING,
+                soft_sep=PADDING if element is not elements[-1] else None,
             )
 
     return end
