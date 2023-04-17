@@ -191,14 +191,13 @@ def _get_system_info(active_window: Window) -> Dict[str, Any]:
     is_ssh = False
 
     ssh_cmdline = []
+    # The propery "child_is_remote" is True when the command being executed is a
+    # standard "ssh" command, without using the SSH kitten
     if active_window.child_is_remote:
-        # The propery "child_is_remote" is True when the command being executed is a
-        # standard "ssh" command, without using the SSH kitten
-        ssh_cmdline = active_window.child.foreground_cmdline
-        # FIXME: The command line is not what we're looking for when running a nested SSH
-        # connection, i.e. it shows the command to connect to the jump server
+        procs = sorted(active_window.child.foreground_processes, key=lambda p: p["pid"])
+        ssh_cmdline = procs[0]["cmdline"]
+    # The command line is not an empty list in case we're running the ssh kitten
     else:
-        # The command line is not an empty list in case we're running the ssh kitten
         ssh_cmdline = active_window.ssh_kitten_cmdline()
 
     if ssh_cmdline != []:
