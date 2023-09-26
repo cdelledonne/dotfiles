@@ -2,26 +2,35 @@ import getpass
 import math
 import socket
 from pathlib import Path
+from time import monotonic
 from typing import Any, Callable, Dict, List, Optional
 
-from kittens.ssh.main import get_connection_data
+from kittens.ssh.utils import get_connection_data
 from paramiko import SSHConfig
 
 from kitty.boss import Boss
 from kitty.fast_data_types import (
+    GLFW_MOUSE_BUTTON_LEFT,
+    GLFW_MOUSE_BUTTON_MIDDLE,
+    GLFW_PRESS,
+    GLFW_RELEASE,
     Color,
     Screen,
+    current_focused_os_window_id,
     get_boss,
     get_options,
+    get_click_interval,
 )
 from kitty.tab_bar import (
     Dict,
     DrawData,
     ExtraData,
+    TabBar,
     TabBarData,
     as_rgb,
     draw_title,
 )
+from kitty.tabs import TabMouseEvent
 from kitty.utils import color_as_int
 from kitty.window import Window
 
@@ -225,6 +234,67 @@ def _get_system_info(active_window: Window) -> Dict[str, Any]:
     return {"user": user, "host": host, "is_ssh": is_ssh}
 
 
+def _get_git_info() -> Dict[str, Any]:
+    return {"branch": "main"}
+
+
+def _register_button(first_cell: int, last_cell: int, action: Callable) -> None:
+    button = Button(first_cell, last_cell, action)
+    buttons.append(button)
+
+
+def _button_at(tab_bar: TabBar, x: int) -> Optional[Button]:
+    if tab_bar.laid_out_once:
+        cell = (x - tab_bar.window_geometry.left) // tab_bar.cell_width
+        for button in buttons:
+            if button.first_cell <= cell <= button.last_cell:
+                return button
+    return None
+
+
+def _handle_click(self, x: int, button: int, modifiers: int, action: int) -> None:
+    tab_idx = self.tab_bar.tab_at(x)
+    now = monotonic()
+    if tab_idx is None:
+        if (
+            button == GLFW_MOUSE_BUTTON_LEFT
+            and action == GLFW_RELEASE
+            and len(self.recent_mouse_events) > 2
+        ):
+            ci = get_click_interval()
+            prev, prev2 = self.recent_mouse_events[-1], self.recent_mouse_events[-2]
+            if (
+                prev.button == button
+                and prev2.button == button
+                and prev.action == GLFW_PRESS
+                and prev2.action == GLFW_RELEASE
+                and prev.tab_idx is None
+                and prev2.tab_idx is None
+                and now - prev.at <= ci
+                and now - prev2.at <= 2 * ci
+            ):  # double click
+                self.new_tab()
+                self.recent_mouse_events.clear()
+                return
+    else:
+        if action == GLFW_PRESS and button == GLFW_MOUSE_BUTTON_LEFT:
+            self.set_active_tab_idx(tab_idx)
+        elif (
+            button == GLFW_MOUSE_BUTTON_MIDDLE
+            and action == GLFW_RELEASE
+            and self.recent_mouse_events
+        ):
+            p = self.recent_mouse_events[-1]
+            if p.button == button and p.action == GLFW_PRESS and p.tab_idx == tab_idx:
+                tab = self.tabs[tab_idx]
+                get_boss().close_tab(tab)
+    self.recent_mouse_events.append(
+        TabMouseEvent(button, modifiers, action, now, tab_idx)
+    )
+    if len(self.recent_mouse_events) > 5:
+        self.recent_mouse_events.popleft()
+
+
 def draw_tab(
     draw_data: DrawData,
     screen: Screen,
@@ -250,7 +320,7 @@ def draw_tab(
     Returns:
         int: Cursor positions after drawing current tab.
     """
- 
+
     opts = get_options()
     colors = {}
 
@@ -329,5 +399,12 @@ def draw_tab(
                 icon=element["icon"],
                 soft_sep=PADDING if element is not elements[-1] else None,
             )
+
+        # Patch behavior of mouse click on tab bar
+        os_window_id = current_focused_os_window_id()
+        tm = boss.os_window_map.get(os_window_id)
+        if tm is not None:
+            tm.handle_click_on_tab = _handle_click.__get__(tm)
+            tb = tm.tab_bar
 
     return end
