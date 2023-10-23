@@ -1,6 +1,7 @@
 import getpass
 import math
 import socket
+import subprocess
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 
@@ -8,20 +9,8 @@ from kittens.ssh.utils import get_connection_data
 from paramiko import SSHConfig
 
 from kitty.boss import Boss
-from kitty.fast_data_types import (
-    Color,
-    Screen,
-    get_boss,
-    get_options,
-)
-from kitty.tab_bar import (
-    Dict,
-    DrawData,
-    ExtraData,
-    TabBarData,
-    as_rgb,
-    draw_title,
-)
+from kitty.fast_data_types import Color, Screen, get_boss, get_options
+from kitty.tab_bar import Dict, DrawData, ExtraData, TabBarData, as_rgb, draw_title
 from kitty.utils import color_as_int
 from kitty.window import Window
 
@@ -225,8 +214,23 @@ def _get_system_info(active_window: Window) -> Dict[str, Any]:
     return {"user": user, "host": host, "is_ssh": is_ssh}
 
 
-def _get_git_info() -> Dict[str, Any]:
-    return {"is_git_repo": True, "branch": "main"}
+def _get_git_info(active_window: Window, is_ssh: bool) -> Dict[str, Any]:
+    # Git info currently only works in non-remote windows
+    if is_ssh:
+        return {"is_git_repo": False, "branch": ""}
+
+    cwd = active_window.cwd_of_child
+    proc = subprocess.run(
+        ["git", "branch", "--show-current"], capture_output=True, cwd=cwd
+    )
+
+    # If the command fails we're probably not in a Git repo (note that often the command
+    # does not error out, so checking the stderr protects against false negatives)
+    if proc.returncode != 0 or len(proc.stderr) > 0:
+        return {"is_git_repo": False, "branch": ""}
+
+    branch = str(proc.stdout, "utf-8").strip() or "DETACHED"
+    return {"is_git_repo": True, "branch": branch}
 
 
 def draw_tab(
@@ -302,10 +306,10 @@ def draw_tab(
         assert isinstance(active_window, Window)
 
         is_running_pager = _is_running_pager(active_window)
-        git_info = _get_git_info()
-        is_git_repo, branch = git_info["is_git_repo"], git_info["branch"]
         sys_info = _get_system_info(active_window)
         user, host, is_ssh = sys_info["user"], sys_info["host"], sys_info["is_ssh"]
+        git_info = _get_git_info(active_window, is_ssh)
+        is_git_repo, branch = git_info["is_git_repo"], git_info["branch"]
 
         elements = list()
         if is_running_pager:
