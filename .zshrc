@@ -71,7 +71,7 @@ fi
 alias ll='ls -Fhl'
 alias la='ls -FhAl'
 
-alias kssh='kitty +kitten ssh'
+alias kssh='kitten ssh'
 
 ################################################################################
 # Add-ons                                                                      #
