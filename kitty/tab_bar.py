@@ -184,13 +184,18 @@ def _get_system_info(active_window: Window) -> Dict[str, Any]:
     # standard "ssh" command, without using the SSH kitten
     if active_window.child_is_remote:
         procs = sorted(active_window.child.foreground_processes, key=lambda p: p["pid"])
-        ssh_cmdline = procs[0]["cmdline"]
+        for p in procs:
+            if p["cmdline"][0] == "ssh":
+                ssh_cmdline = p["cmdline"]
     # The command line is not an empty list in case we're running the ssh kitten
     else:
         ssh_cmdline = active_window.ssh_kitten_cmdline()
 
     if ssh_cmdline != []:
         is_ssh = True
+        # Remove "-tt" argument from SSH cmdline, if present, because the function
+        # get_connection_data() doesn't handle that properly
+        ssh_cmdline = filter(lambda item: item != "-tt", ssh_cmdline)
         conn_data = get_connection_data(ssh_cmdline)
         if conn_data:
             conn_data_hostname = conn_data.hostname
