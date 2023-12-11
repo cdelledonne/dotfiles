@@ -1,4 +1,4 @@
-local barbecue = require('barbecue')
+local barbecue = require("barbecue")
 
 barbecue.setup({
     -- show_modified = true,

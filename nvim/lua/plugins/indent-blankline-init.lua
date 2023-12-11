@@ -1,5 +1,5 @@
-local ibl = require('ibl')
-local hooks = require('ibl.hooks')
+local ibl = require("ibl")
+local hooks = require("ibl.hooks")
 
 ibl.setup({
     scope = {
@@ -9,7 +9,7 @@ ibl.setup({
     },
     -- max_indent_increase = 1,
     -- show_first_indent_level = false,
-    -- filetype_exclude = { 'help', 'NvimTree' },
+    -- filetype_exclude = { "help", "NvimTree" },
     -- show_trailing_blankline_indent = false,
     -- show_current_context = true,
     -- use_treesitter = true,

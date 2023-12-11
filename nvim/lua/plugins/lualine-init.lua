@@ -1,63 +1,63 @@
-local lualine = require('lualine')
+local lualine = require("lualine")
 
 local vimcmake = {
     sections = {
         lualine_a = {
-            function() return 'CMake' end
+            function() return "CMake" end
         },
         lualine_b = {
             function()
-                local project_dir = vim.fn['cmake#GetInfo']().project_dir
-                local project_name = vim.fn.fnamemodify(project_dir, ':t')
+                local project_dir = vim.fn["cmake#GetInfo"]().project_dir
+                local project_name = vim.fn.fnamemodify(project_dir, ":t")
                 return project_name
             end,
-            function() return vim.fn['cmake#GetInfo']().config end,
+            function() return vim.fn["cmake#GetInfo"]().config end,
         },
         lualine_c = {
-            function() return vim.fn['cmake#GetInfo']().status end,
+            function() return vim.fn["cmake#GetInfo"]().status end,
         },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' }
+        lualine_y = { "progress" },
+        lualine_z = { "location" }
     },
     inactive_sections = {
         lualine_c = {
-            function() return 'CMake' end,
-            function() return vim.fn['cmake#GetInfo']().config end,
-            function() return vim.fn['cmake#GetInfo']().status end,
+            function() return "CMake" end,
+            function() return vim.fn["cmake#GetInfo"]().config end,
+            function() return vim.fn["cmake#GetInfo"]().status end,
         },
-        lualine_x = { 'location' },
+        lualine_x = { "location" },
     },
-    filetypes = { 'vimcmake' } ,
+    filetypes = { "vimcmake" } ,
 }
 
 local nvimtree = {
     sections = {
-        lualine_a = { function() return 'Files' end },
+        lualine_a = { function() return "Files" end },
     },
     inactive_sections = {
-        lualine_c = { function() return 'Files' end },
+        lualine_c = { function() return "Files" end },
     },
-    filetypes = { 'NvimTree' } ,
+    filetypes = { "NvimTree" } ,
 }
 
 lualine.setup({
     options = {
-        -- section_separators = '',
-        -- component_separators = '',
-        -- section_separators = { left = '', right = '' },
-        -- component_separators = { left = '', right = '' }
+        -- section_separators = "",
+        -- component_separators = "",
+        -- section_separators = { left = "", right = "" },
+        -- component_separators = { left = "", right = "" },
         globalstatus = true,
     },
     sections = {
-        lualine_b = { 'diff', 'diagnostics' },
+        lualine_b = { "diff", "diagnostics" },
         lualine_c = {
             {
-                'filename',
+                "filename",
                 path = 1,  -- relative path
                 symbols = {
-                    modified = ' פֿ',
-                    readonly = ' ',
-                    unnamed = '[No Name]',
+                    modified = " ",
+                    readonly = " ",
+                    unnamed = "[No Name]",
                 },
             },
         },
@@ -65,20 +65,20 @@ lualine.setup({
     inactive_sections = {
         lualine_c = {
             {
-                'filename',
+                "filename",
                 path = 1,  -- relative path
                 symbols = {
-                    modified = ' פֿ',
-                    readonly = ' ',
-                    unnamed = '[No Name]',
+                    modified = " ",
+                    readonly = " ",
+                    unnamed = "[No Name]",
                 },
             },
         },
     },
     extensions = {
-        'fugitive',
-        'man',
-        'quickfix',
+        "fugitive",
+        "man",
+        "quickfix",
         vimcmake,
         nvimtree,
     },

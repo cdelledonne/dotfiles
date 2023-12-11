@@ -1,4 +1,4 @@
-local trouble = require('trouble')
+local trouble = require("trouble")
 
 trouble.setup({
     padding = false,

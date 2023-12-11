@@ -1,8 +1,8 @@
-local gruvbox = require('gruvbox')
+local gruvbox = require("gruvbox")
 
 gruvbox.setup({
     undercurl = true,
-    contrast = 'hard',
+    contrast = "hard",
     overrides = {
         String = { italic = false },
     }
