@@ -5,8 +5,13 @@ local function fname_to_hguard(args, parent)
     return sn(nil, { i(1, hguard) })
 end
 
+local main = s(
+    { trig = "main", desc = "main(int argc, char* argv[])" },
+    fmt("main(int argc, char* argv[])", {})
+)
+
 local hguard = s(
-    { trig = "hguard", desc = "#ifndef … #define … #endif" },
+    { trig = "hguard", desc = "#ifndef … #define … #endif", name = "Header guard" },
     fmt([[
         #ifndef {}
         #define {}
@@ -19,5 +24,6 @@ local hguard = s(
 )
 
 return {
+    main,
     hguard,
 }
