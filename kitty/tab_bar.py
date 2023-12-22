@@ -33,6 +33,7 @@ RIGHT_SEP = ""
 SOFT_SEP = "│"
 PADDING = " "
 BRANCH_ICON = "󰘬"
+ELLIPSIS = "…"
 USER_ICON = ""
 HOST_ICON = "󱡶"
 PAGER_ICON = "󰦪"
@@ -42,6 +43,8 @@ SOFT_SEP_COLOR = Color(89, 89, 89)
 FILLED_ICON_BG_COLOR = Color(89, 89, 89)
 ACCENTED_BG_COLOR = Color(30, 104, 199)
 ACCENTED_ICON_BG_COLOR = Color(53, 132, 228)
+
+MAX_BRANCH_LEN = 21
 
 MIN_TAB_LEN = (
     len(LEFT_SEP)
@@ -235,6 +238,12 @@ def _get_git_info(active_window: Window, is_ssh: bool) -> Dict[str, Any]:
         return {"is_git_repo": False, "branch": ""}
 
     branch = str(proc.stdout, "utf-8").strip() or "DETACHED"
+    if len(branch) > MAX_BRANCH_LEN:
+        start_len = (MAX_BRANCH_LEN - 1) // 2
+        end_len = MAX_BRANCH_LEN - start_len - 1
+        branch = branch[:start_len] + ELLIPSIS + branch[-end_len:]
+        print(start_len, end_len, len(branch))
+
     return {"is_git_repo": True, "branch": branch}
 
 
