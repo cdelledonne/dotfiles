@@ -16,7 +16,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap("n", "gr",         "<cmd>lua vim.lsp.buf.references()<CR>", opts)
     buf_set_keymap("n", "<leader>td", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
     buf_set_keymap("n", "<leader>fm", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
-
+    buf_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
     buf_set_keymap("n", "K",          "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
     buf_set_keymap("n", "[d",         "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
     buf_set_keymap("n", "]d",         "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
@@ -27,25 +27,20 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
--- C/C++ language server with ccls
--- lspconfig.ccls.setup({
---     cmd = { "ccls", "-v=1", "-log-file=/tmp/ccls.log" },
---     init_options = {
---         cache = { directory = "/tmp/ccls" },
---         clang = { extraArgs = { "-Wno-extra", "-Wno-empty-body" } },
---         client = { snippetSupport = true },
---         completion = { detailedLabel = false, caseSensitivity = 1 },
---         highlight = { lsRanges = true },
---     },
---     on_attach = on_attach,
---     capabilities = capabilities,
--- })
-
 -- C/C++ language server with clangd
 lspconfig.clangd.setup({
     cmd = { "clangd" },
     on_attach = on_attach,
     capabilities = capabilities,
+    on_new_config = function(config, root_dir)
+        if vim.g.clangd_query_driver ~= nil then
+            config.cmd = {
+                "clangd",
+                "--query-driver",
+                vim.g.clangd_query_driver,
+            }
+        end
+    end
 })
 
 -- Python language server

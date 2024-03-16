@@ -1,2 +1,10 @@
 gui:
-  showIcons: true
+  nerdFontsVersion: "3"
+
+customCommands:
+  - key: F
+    context: remoteBranches
+    command: git fetch --prune
+    description: Remove remote tracking branches that no longer exist remotely
+    loadingText: Pruning remote tracking branches...
+    stream: true

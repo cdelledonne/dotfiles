@@ -5,10 +5,10 @@ treesitter.setup({
 
     ensure_installed = {
         "bash", "bibtex", "c", "cmake", "comment", "cpp", "css", "dockerfile",
-        "go", "html", "java", "javascript", "json", "json5", "jsonc", "latex",
-        "llvm", "lua", "make", "markdown", "markdown_inline", "ninja", "perl",
-        "php", "python", "regex", "rst", "ruby", "rust", "toml", "typescript",
-        "verilog", "vim", "yaml",
+        "doxygen", "go", "html", "java", "javascript", "json", "json5",
+        "jsonc", "latex", "llvm", "lua", "make", "markdown", "markdown_inline",
+        "ninja", "perl", "php", "python", "regex", "rst", "ruby", "rust",
+        "toml", "typescript", "verilog", "vim", "yaml",
     },
 
     highlight = {

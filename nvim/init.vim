@@ -23,6 +23,7 @@ Plug 'nvim-lualine/lualine.nvim'        " Statusline
 Plug 'folke/trouble.nvim'               " Lists GUI
 Plug 'SmiteshP/nvim-navic'              " Dependency of barbecue.nvim 
 Plug 'utilyre/barbecue.nvim'            " Winbar 
+Plug 'stevearc/dressing.nvim'           " Improve the default vim.ui interfaces
 
 " Navigation
 Plug 'christoomey/vim-tmux-navigator'   " Tmux integration
@@ -65,7 +66,7 @@ Plug 'saadparwaiz1/cmp_luasnip'         " Snippet completion source for nvim-cmp
 Plug 'onsails/lspkind-nvim'             " Icons for LSP completion items
 
 " Language-specific tools
-" Plug 'cdelledonne/vim-cmake'            " CMake projects
+Plug 'cdelledonne/vim-cmake'            " CMake projects
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
                                         " Markdown preview
 
@@ -73,8 +74,10 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'tpope/vim-obsession'              " Session manager
 Plug 'embear/vim-localvimrc'            " Local project options
 
+Plug 'danymat/neogen'
+
 " Local plugins
-Plug '~/Workspace/Repositories/cdelledonne/vim-cmake'
+" Plug '~/Workspace/Repositories/cdelledonne/vim-cmake'
 
 call plug#end()
 
@@ -104,6 +107,7 @@ lua require('plugins/barbecue-init')
 lua require('plugins/indent-blankline-init')
 lua require('plugins/lualine-init')
 lua require('plugins/luasnip-init')
+lua require('plugins/neogen-init')
 lua require('plugins/nvim-cmp-init')
 lua require('plugins/nvim-dap-init')
 lua require('plugins/nvim-lspconfig-init')
@@ -116,4 +120,5 @@ lua require('plugins/trouble-init')
 " Lua config-less plugins
 lua require('Comment').setup()
 lua require('diffview').setup()
+lua require('dressing').setup()
 lua require('nvim-autopairs').setup()
