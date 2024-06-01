@@ -12,11 +12,8 @@ Session.vim
 
 # Autocompletion/language server stuff
 ######################################
-compile_commands.json
-.ccls
-.ccls-cache/
 .cache/clangd/
-.clangd
+compile_commands.json
 pyrightconfig.json
 
 # Python compiled code
