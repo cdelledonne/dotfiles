@@ -77,9 +77,6 @@ Plug 'embear/vim-localvimrc'            " Local project options
 
 Plug 'danymat/neogen'
 
-" Local plugins
-" Plug '~/Workspace/Repositories/cdelledonne/vim-cmake'
-
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
