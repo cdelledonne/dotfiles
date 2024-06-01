@@ -8,7 +8,7 @@ treesitter.setup({
         "doxygen", "go", "html", "java", "javascript", "json", "json5",
         "jsonc", "latex", "llvm", "lua", "make", "markdown", "markdown_inline",
         "ninja", "perl", "php", "python", "regex", "rst", "ruby", "rust",
-        "toml", "typescript", "verilog", "vim", "yaml",
+        "toml", "typescript", "verilog", "vim", "vimdoc", "yaml",
     },
 
     highlight = {
