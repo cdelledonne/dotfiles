@@ -42,14 +42,21 @@ local nvimtree = {
 
 lualine.setup({
     options = {
-        -- section_separators = "",
-        -- component_separators = "",
-        -- section_separators = { left = "", right = "" },
-        -- component_separators = { left = "", right = "" },
         globalstatus = true,
     },
     sections = {
-        lualine_b = { "diff", "diagnostics" },
+        lualine_b = {
+            function()
+                local configs = vim.fn["cmake#GetInfo"]().configs
+                if #configs == 0 then
+                    return ""
+                else
+                    return "󰔷 " .. vim.fn["cmake#GetInfo"]().config
+                end
+            end,
+            "diff",
+            "diagnostics",
+        },
         lualine_c = {
             {
                 "filename",
@@ -82,4 +89,15 @@ lualine.setup({
         vimcmake,
         nvimtree,
     },
+    tabline = {
+        lualine_a = {{ "tabs", mode = 2 }},
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {}
+    },
 })
+
+-- Set this here because the setup() function overrides it
+vim.o.showtabline = 1
