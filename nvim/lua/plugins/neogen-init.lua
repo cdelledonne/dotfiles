@@ -29,4 +29,5 @@ neogen.setup({
             },
         },
     },
+    placeholders_hl = "None",
 })
