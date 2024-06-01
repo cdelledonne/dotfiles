@@ -1,5 +1,5 @@
 local telescope = require("telescope")
-local trouble = require("trouble.providers.telescope")
+local trouble = require("trouble.sources.telescope")
 
 local function link_hl_group(group, target)
     vim.api.nvim_exec(string.format("hi! link %s %s", group, target), false)
@@ -29,8 +29,8 @@ telescope.setup({
             preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         },
         mappings = {
-            n = { ["<C-T>"] = trouble.open_with_trouble },
-            i = { ["<C-T>"] = trouble.open_with_trouble },
+            n = { ["<C-T>"] = trouble.open },
+            i = { ["<C-T>"] = trouble.open },
         },
     },
     pickers = {
