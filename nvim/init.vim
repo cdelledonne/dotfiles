@@ -54,6 +54,7 @@ Plug 'neovim/nvim-lspconfig'            " LSP clients configurations
 
 " Debug adapter protocol (DAP)
 Plug 'mfussenegger/nvim-dap'            " DAP client implementation
+Plug 'nvim-neotest/nvim-nio'            " Dependency of nvim-dap-ui
 Plug 'rcarriga/nvim-dap-ui'             " UI for nvim-dap
 
 " Autocompletion

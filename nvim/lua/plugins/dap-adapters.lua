@@ -66,4 +66,3 @@ dap.configurations.python = {
         console = "integratedTerminal",
     },
 }
-
