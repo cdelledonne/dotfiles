@@ -10,7 +10,7 @@ from paramiko import SSHConfig
 
 from kitty.boss import Boss
 from kitty.fast_data_types import Color, Screen, get_boss, get_options
-from kitty.tab_bar import Dict, DrawData, ExtraData, TabBarData, as_rgb, draw_title
+from kitty.tab_bar import DrawData, ExtraData, TabBarData, as_rgb, draw_title
 from kitty.utils import color_as_int
 from kitty.window import Window
 
