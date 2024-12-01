@@ -11,7 +11,7 @@ nvimtree.setup({
         -- Hide hidden files
         dotfiles = true,
         -- Hide some system files
-        custom = { ".DS_Store", "*.swp" },
+        custom = { ".DS_Store", "*.swp", "__pycache__" },
     },
     -- Disable git integration
     git = { enable = false },
