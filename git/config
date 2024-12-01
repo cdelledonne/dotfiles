@@ -13,3 +13,6 @@
 	tool = vimdiff3
 [mergetool "vimdiff3"]
 	path = nvim
+[credential]
+	helper = cache --timeout 21600
+	helper = oauth
