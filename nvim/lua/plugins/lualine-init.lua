@@ -51,7 +51,7 @@ lualine.setup({
                 if #configs == 0 then
                     return ""
                 else
-                    return "󰔷 " .. vim.fn["cmake#GetInfo"]().config
+                    return " " .. vim.fn["cmake#GetInfo"]().config
                 end
             end,
             "diff",
