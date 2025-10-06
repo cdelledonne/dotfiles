@@ -1,5 +1,3 @@
-local lspconfig = require("lspconfig")
-
 -- Use an on_attach function to only map the following keys after the language
 -- server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -28,30 +26,21 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- C/C++ language server with clangd
-lspconfig.clangd.setup({
+vim.lsp.config.clangd = {
     cmd = { "clangd" },
     on_attach = on_attach,
     capabilities = capabilities,
-    on_new_config = function(config, root_dir)
-        if vim.g.clangd_query_driver ~= nil then
-            config.cmd = {
-                "clangd",
-                "--query-driver",
-                vim.g.clangd_query_driver,
-            }
-        end
-    end
-})
+}
 
 -- Python language server
-lspconfig.pyright.setup({
+vim.lsp.config.pyright = {
     cmd = { "pyright-langserver", "--stdio" },
     on_attach = on_attach,
     capabilities = capabilities,
-})
+}
 
 -- LaTeX language server
-lspconfig.texlab.setup({
+vim.lsp.config.texlab = {
     cmd = { "texlab" },
     settings = {
         texlab = {
@@ -88,11 +77,19 @@ lspconfig.texlab.setup({
     },
     on_attach = on_attach,
     capabilities = capabilities,
-})
+}
 
 -- Vimscript language server
-lspconfig.vimls.setup({
+vim.lsp.config.vimls = {
     cmd = { "vim-language-server", "--stdio" },
     on_attach = on_attach,
     capabilities = capabilities,
+}
+
+-- Enable configs
+vim.lsp.enable({
+    "clangd",
+    "pyright",
+    "texlab",
+    "vimls",
 })
