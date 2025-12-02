@@ -44,9 +44,9 @@ syntax keyword erpcType binary list
 " ------------------------------------------------------------------------------
 syntax match erpcUserType '\%(\<struct\s\+\|\<enum\s\+\|\<union\s\+\|\<interface\s\+\|\<type\s\+\)\@<=[A-Za-z_][A-Za-z0-9_]*'
 " Matches a capitalized identifier followed by a lowercase one, e.g. 'Person who'
-syntax match erpcUserType '\<[A-Z][A-Za-z0-9_]*\>\ze\s\+\h\w*\s*[),]' containedin=ALLBUT,erpcComment,erpcDocComment
+syntax match erpcUserType '\<[A-Z][A-Za-z0-9_]*\>\ze\s\+\h\w*\s*\(@\h\w*\)\?[),]' containedin=ALLBUT,erpcComment,erpcDocComment
 " Match a capitalized identifier (custom type) before a member name, ending with newline or '}'
-syntax match erpcUserType '^\s*\zs[A-Z][A-Za-z0-9_]*\>\ze\s\+\h\w*\s*\($\|}\)' containedin=ALLBUT,erpcComment,erpcDocComment
+syntax match erpcUserType '^\s*\zs[A-Z][A-Za-z0-9_]*\>\ze\s\+\h\w*\s*\(@\h\w*\)\?\($\|}\)' containedin=ALLBUT,erpcComment,erpcDocComment
 " Match a capitalized identifier immediately after '->'
 syntax match erpcUserType '\%(\s*->\s*\)\@<=[A-Z][A-Za-z0-9_]*\>' containedin=ALLBUT,erpcComment,erpcDocComment
 
