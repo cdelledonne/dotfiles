@@ -46,7 +46,7 @@ cmp.setup({
         ["<C-E>"] = cmp.config.disable,
     },
     formatting = {
-        fields = { "abbr", "kind", "menu" },
+        -- fields = { "abbr", "kind", "menu" },
         format = lspkind.cmp_format({
             symbol_map = {
                 Module = "󰏗",

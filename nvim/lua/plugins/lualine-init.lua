@@ -43,6 +43,7 @@ local nvimtree = {
 lualine.setup({
     options = {
         globalstatus = true,
+        always_show_tabline = false,
     },
     sections = {
         lualine_b = {

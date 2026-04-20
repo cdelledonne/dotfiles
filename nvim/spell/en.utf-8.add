@@ -138,3 +138,12 @@ SharePoint
 Mira050
 I2C
 this
+RTS
+CTS
+HWFC
+UART
+BLE
+EVK
+RPC
+eRPC
+WebSocket
