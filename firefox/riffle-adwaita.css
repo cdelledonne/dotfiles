@@ -1,0 +1,165 @@
+/* Riffle custom CSS — Adwaita-ish dark */
+
+#quick-outline-container,
+#quick-outline-container * {
+  font-family:
+    "Adwaita Sans",
+    Cantarell,
+    Inter,
+    "Noto Sans",
+    system-ui,
+    sans-serif !important;
+  box-sizing: border-box;
+}
+
+#quick-outline-container {
+  --qo-bg-color: #242424;
+  --qo-text-color: #eeeeec;
+  --qo-border-color: #3d3846;
+  --qo-input-bg: #2f2f2f;
+  --qo-input-border: #4a4a4a;
+
+  --qo-item-hover-bg: #383838;
+  --qo-item-selected-bg: #1c71d8;
+  --qo-item-selected-text: #ffffff;
+
+  --qo-toggle-color: #9a9996;
+  --qo-toggle-hover-color: #ffffff;
+  --qo-number-color: #9a9996;
+
+  --qo-scrollbar-thumb: #5e5c64;
+  --qo-scrollbar-track: #2b2b2b;
+
+  --qo-shadow-color: rgba(0, 0, 0, 0.32);
+  --qo-search-match-bg: rgba(28, 113, 216, 0.18);
+  --qo-selection-indicator-color: #78aeed;
+  --qo-highlight-bg: rgba(53, 132, 228, 0.35);
+
+  color: var(--qo-text-color);
+  background: var(--qo-bg-color);
+
+  border: 1px solid var(--qo-border-color);
+  border-radius: 12px;
+  box-shadow:
+    0 18px 48px var(--qo-shadow-color),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+
+  padding: 8px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+/* Search input */
+#quick-outline-container input[type="search"] {
+  display: block;
+  width: 100%;
+  margin: 0 0 8px 0;
+  padding: 10px 12px;
+
+  border: 1px solid var(--qo-input-border);
+  border-radius: 10px;
+  background: var(--qo-input-bg);
+  color: var(--qo-text-color);
+
+  min-width: 0;
+  max-width: 100%;
+}
+
+#quick-outline-container input[type="search"]::placeholder {
+  color: #9a9996;
+  opacity: 1;
+}
+
+#quick-outline-container input[type="search"]:focus {
+  outline: none;
+  border-color: #3584e4;
+  box-shadow: 0 0 0 2px rgba(53, 132, 228, 0.30);
+}
+
+/* List container */
+#quick-outline-container .outline-list-container {
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+/* Rows */
+#quick-outline-container .outline-item-wrapper {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+
+  margin: 1px 0;
+  padding: 7px 10px 7px 8px;
+  border-radius: 9px;
+}
+
+/* Hover */
+#quick-outline-container li:hover > .outline-item-wrapper {
+  background-color: var(--qo-item-hover-bg);
+}
+
+/* Selected row */
+#quick-outline-container li.selected > .outline-item-wrapper {
+  background-color: var(--qo-item-selected-bg);
+  color: var(--qo-item-selected-text);
+}
+
+/* Left selection bar */
+#quick-outline-container li.selected::before {
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  border-radius: 999px;
+  background-color: var(--qo-selection-indicator-color);
+}
+
+/* Numbering */
+#quick-outline-container .outline-item-number {
+  flex: 0 0 auto;
+  min-width: 2.4em;
+  margin-right: 10px;
+  color: var(--qo-number-color);
+  opacity: 0.95;
+}
+
+/* Heading text */
+#quick-outline-container .outline-item-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Make selected row text definitely white */
+#quick-outline-container li.selected .outline-item-text,
+#quick-outline-container li.selected .outline-item-number {
+  color: var(--qo-item-selected-text);
+}
+
+/* Toggle arrows */
+#quick-outline-container .toggle,
+#quick-outline-container .toggle-placeholder {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+}
+
+/* Scrollbar */
+#quick-outline-container .outline-list-container {
+  scrollbar-width: thin;
+}
+
+#quick-outline-container .outline-list-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+#quick-outline-container .outline-list-container::-webkit-scrollbar-thumb {
+  background-color: var(--qo-scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid var(--qo-scrollbar-track);
+}
