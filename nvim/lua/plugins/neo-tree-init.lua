@@ -38,7 +38,7 @@ neotree.setup({
             use_filtered_colors = false,
         },
         modified = {
-            symbol = " ",
+            symbol = " ",
         },
         name = {
             use_filtered_colors = false,
@@ -52,24 +52,27 @@ neotree.setup({
     window = {
         mappings = {
             -- Focus node without leaving Neo-tree window
-            ["F"] = function (state)
-                local node = state.tree:get_node()
-                local utils = require("neo-tree.utils")
-                local command = require("neo-tree.command")
-                local function refocus_tree()
-                    command.execute({
-                        action = "focus",
-                        source = state.name,
-                        position = state.current_position or state.position,
-                    })
-                end
-                if state.name == "filesystem" and utils.is_expandable(node) then
-                    state.commands.toggle_node(state)
-                    return
-                end
-                state.commands.open(state)
-                refocus_tree()
-            end,
+            ["F"] = {
+                function(state)
+                    local node = state.tree:get_node()
+                    local utils = require("neo-tree.utils")
+                    local command = require("neo-tree.command")
+                    local function refocus_tree()
+                        command.execute({
+                            action = "focus",
+                            source = state.name,
+                            position = state.current_position or state.position,
+                        })
+                    end
+                    if state.name == "filesystem" and utils.is_expandable(node) then
+                        state.commands.toggle_node(state)
+                        return
+                    end
+                    state.commands.open(state)
+                    refocus_tree()
+                end,
+                desc = "focus_node",
+            },
         },
     },
     filesystem = {
