@@ -61,8 +61,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
--- Show line diagnostics automatically in hover window
--- vim.o.updatetime = 1000
-
 -- Setup language servers
-require("plugins/lsp-servers")
+require("config/lsp-servers")

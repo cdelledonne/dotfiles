@@ -66,6 +66,7 @@ vim.pack.add({
 require("config/globals")
 require("config/mappings")
 require("config/utils")
+require("config/lsp")
 
 -- Vimscript plugins configuration.
 local function SourceVimscript(file)
@@ -87,7 +88,6 @@ require("plugins/luasnip-init")
 require("plugins/neo-tree-init")
 require("plugins/neogen-init")
 require("plugins/nvim-cmp-init")
-require("plugins/nvim-lspconfig-init")
 require("plugins/telescope-init")
 require("plugins/trouble-init")
 -- require("plugins/nvim-dap-init")
