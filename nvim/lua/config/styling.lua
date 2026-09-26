@@ -14,6 +14,17 @@ local function apply_highlights()
     vim.api.nvim_set_hl(0, "SignColumn", {})
     vim.api.nvim_set_hl(0, "CursorLineSign", { link = "CursorLine" })
 
+    -- Change highlight of fold column.
+    vim.api.nvim_set_hl(0, "FoldColumn", { link = "Comment" })
+    vim.api.nvim_set_hl(0, "CursorLineFold", {
+        fg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg,
+        bg = vim.api.nvim_get_hl(0, { name = "CursorLine" }).bg,
+    })
+
+    -- Change highlights and borders of floating windows.
+    vim.api.nvim_set_hl(0, "NormalFloat", {})
+    vim.api.nvim_set_hl(0, "FloatBorder", {})
+
     -- TreeSitter custom highlights.
     vim.api.nvim_set_hl(0, "TSConstructor", { link = "Function" })
 

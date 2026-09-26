@@ -15,9 +15,9 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 
 -- Set folding method but do not fold on start-up
-vim.opt.foldenable = false
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldenable = false
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
 -- Fold specific files based on indent (should work with treesitter?)
 -- vim.api.nvim_create_autocmd("FileType", {

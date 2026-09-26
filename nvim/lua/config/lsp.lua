@@ -4,32 +4,15 @@ vim.diagnostic.config({
     signs = false,
 })
 
--- Customize highlights and borders of floating windows
-vim.cmd("highlight! link NormalFloat None")
-vim.cmd("highlight! link FloatBorder None")
-
-local orig_open_floating_preview = vim.lsp.util.open_floating_preview
-
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = opts.border or {
-        { "╭", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╮", "FloatBorder" },
-        { "│", "FloatBorder" },
-        { "╯", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╰", "FloatBorder" },
-        { "│", "FloatBorder" },
-    }
-    return orig_open_floating_preview(contents, syntax, opts, ...)
+local lsp_format = function()
+    vim.lsp.buf.format({ async = true })
 end
 
-local jump_prev_diag = function()
+local diag_jump_prev = function()
     vim.diagnostic.jump({ count = -1, float = true })
 end
 
-local jump_next_diag = function()
+local diag_jump_next = function()
     vim.diagnostic.jump({ count = 1, float = true })
 end
 
@@ -50,13 +33,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
         map("n", "gi", vim.lsp.buf.implementation, "LSP: implementation")
         map("n", "gr", vim.lsp.buf.references, "LSP: references")
         map("n", "<leader>td", vim.lsp.buf.type_definition, "LSP: type definition")
-        map("n", "<leader>fm", function()
-            vim.lsp.buf.format({ async = true })
-        end, "LSP: format")
+        map("n", "<leader>fm", lsp_format, "LSP: format")
         map("n", "<leader>ca", vim.lsp.buf.code_action, "LSP: code action")
         map("n", "K", vim.lsp.buf.hover, "LSP: hover")
-        map("n", "[d", jump_prev_diag, "Diagnostics: previous")
-        map("n", "]d", jump_next_diag, "Diagnostics: next")
+        map("n", "[d", diag_jump_prev, "Diagnostics: previous")
+        map("n", "]d", diag_jump_next, "Diagnostics: next")
         map("n", "<leader>rn", vim.lsp.buf.rename, "LSP: rename")
     end,
 })
