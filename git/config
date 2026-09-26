@@ -6,8 +6,8 @@
 [pull]
 	ff = only
 [diff]
-	tool = vimdiff3
-[difftool "vimdiff3"]
+	tool = vimdiff
+[difftool "vimdiff"]
 	path = nvim
 [merge]
 	tool = vimdiff3
